@@ -8,5 +8,4 @@ public class Ball : MonoBehaviour
     public int health;
     public float speed;
     public bool isTouched = false;
-
 }

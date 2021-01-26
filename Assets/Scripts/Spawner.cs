@@ -21,9 +21,17 @@ public class Spawner : MonoBehaviour
         {
             ChooseRandomly();
             var obj = Instantiate(prefab, this.transform.position, this.transform.rotation) as GameObject;
-            obj.GetComponent<Rigidbody>().AddForce(target.transform.position * Time.fixedDeltaTime * ballSpeed, ForceMode.Impulse);
+            var rb = obj.GetComponent<Rigidbody>();
+            Vector3 v = target.transform.position - obj.transform.position;
+            rb.AddForce(v * Time.fixedDeltaTime * ballSpeed, ForceMode.Impulse);
+            obj.transform.rotation = LookAtTarget(target.transform.position - obj.transform.position);
             yield return new WaitForSeconds(spawnTime);
         }
+    }
+
+    Quaternion LookAtTarget(Vector3 v)
+    {
+        return Quaternion.Euler(0, Mathf.Atan2(v.z, v.x) * -Mathf.Rad2Deg + 180, 90);
     }
 
     void ChooseRandomly()

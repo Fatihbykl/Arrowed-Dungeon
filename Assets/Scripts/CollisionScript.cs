@@ -17,6 +17,7 @@ public class CollisionScript : MonoBehaviour
 
             rb.AddForce(direction.normalized * strength, ForceMode.Impulse);
             collision.gameObject.GetComponent<Ball>().isTouched = true;
+            collision.collider.transform.rotation = Quaternion.Euler(0, Mathf.Atan2(direction.z, direction.x) * -Mathf.Rad2Deg + 180, 90);
         }
     }
 }

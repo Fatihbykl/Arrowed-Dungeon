@@ -18,6 +18,7 @@ public class WallBounce : MonoBehaviour
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
             rb.velocity = direction * Mathf.Max(speed, 3f);
+            transform.rotation = Quaternion.Euler(0, Mathf.Atan2(direction.z, direction.x) * -Mathf.Rad2Deg + 180, 90);
         }
     }
 
