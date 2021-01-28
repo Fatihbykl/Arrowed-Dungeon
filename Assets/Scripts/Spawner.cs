@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
 
     Quaternion LookAtTarget(Vector3 v)
     {
-        return Quaternion.Euler(0, Mathf.Atan2(v.z, v.x) * -Mathf.Rad2Deg + 180, 90);
+        return Quaternion.Euler(0, Mathf.Atan2(v.z, v.x) * -Mathf.Rad2Deg + 90, 0);
     }
 
     void ChooseRandomly()
