@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
             ChooseRandomly();
             var obj = Instantiate(prefab, this.transform.position, this.transform.rotation) as GameObject;
             var rb = obj.GetComponent<Rigidbody>();
-            Vector3 v = target.transform.position - obj.transform.position;
+            Vector3 v = (target.transform.position - obj.transform.position).normalized;
             rb.AddForce(v * Time.fixedDeltaTime * ballSpeed, ForceMode.Impulse);
             obj.transform.rotation = LookAtTarget(target.transform.position - obj.transform.position);
             yield return new WaitForSeconds(spawnTime);
