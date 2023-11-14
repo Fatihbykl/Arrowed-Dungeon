@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    int health = 1;
+    [SerializeField] private int health = 1;
+    private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -12,7 +18,20 @@ public class PlayerHealth : MonoBehaviour
         {
             health -= 1;
             if (health <= 0)
-                Time.timeScale = 0; // oyun bitti
+            {
+                StartCoroutine(Die());
+            }
+                
         }
+    }
+
+    private IEnumerator Die()
+    {
+        // Play the animation for getting suck in
+        animator.SetTrigger("death");
+
+        yield return new WaitForSeconds(3); // oyun bitti
+        Time.timeScale = 0;
+
     }
 }

@@ -9,10 +9,16 @@ public class CharacterMovement : MonoBehaviour
     public float speed = 6;
     public float gravity = -9.81f;
     public Vector3 direction;
-    Vector3 velocity;
+    private Vector3 velocity;
+    private Animator animator;
 
     float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -25,10 +31,12 @@ public class CharacterMovement : MonoBehaviour
         //gravity
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
         //walk
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         direction = new Vector3(horizontal, 0f, vertical).normalized;
+        animator.SetFloat("directionMagnitude", direction.magnitude);
 
         if (direction.magnitude >= 0.1f)
         {
