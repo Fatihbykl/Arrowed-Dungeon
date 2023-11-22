@@ -7,16 +7,22 @@ public class CollisionScript : MonoBehaviour
     public float strength;
     Vector3 lastVelocity;
     Rigidbody rb;
+    Ball arrow;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        arrow = this.GetComponent<Ball>();
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if (!arrow.isAlive)
+        {
+            return;
+        }
         if (collision.collider.tag == "Shield")
         {
-            CheckHealth();
+            CheckHealth(collision);
         }
         if (this.gameObject != null)
         {
@@ -33,22 +39,27 @@ public class CollisionScript : MonoBehaviour
         lastVelocity = rb.velocity;
     }
 
-    bool CheckHealth()
+    void CheckHealth(Collision collision)
     {
         var obj = this.GetComponent<Ball>();
         obj.health -= 1;
         int health = obj.health;
         if (health <= 0)
         {
-            Destroy(this.gameObject);
-            return false;
+            //Destroy(this.gameObject);
+            var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
+            direction.y = -9.81f;
+            rb.velocity = direction;
+            //rb.mass = 1;
+            
+            rb.constraints = RigidbodyConstraints.None;
+            arrow.isAlive = false;
         }
         else
         {
             //change materials for arrow that has more than one health
             if (obj.materials[health - 1])
                 obj.GetComponent<MeshRenderer>().material = obj.materials[health - 1];
-            return true;
         }
     }
 }

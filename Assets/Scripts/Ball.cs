@@ -7,4 +7,5 @@ public class Ball : MonoBehaviour
     public Material[] materials;
     public int health;
     public float speed;
+    public bool isAlive = true;
 }

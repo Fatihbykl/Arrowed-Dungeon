@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.15
+      scalar: 0.3
       minScalar: 0.25
       maxCurve:
         serializedVersion: 2
@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4856,7 +4856,7 @@ GameObject:
   - component: {fileID: 8281855563494721500}
   - component: {fileID: 4808205556900468609}
   - component: {fileID: 2920325991494904623}
-  - component: {fileID: 6099790636590889678}
+  - component: {fileID: 834183868709462289}
   m_Layer: 8
   m_Name: arrow_1
   m_TagString: Ball
@@ -4872,14 +4872,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6593180110761669668}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.3339624, y: 0.653176, z: 2.0656128}
   m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8008480134758380}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3550044930563139222
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4988,8 +4988,9 @@ MonoBehaviour:
   - {fileID: -1580535799172915004, guid: 76ed468eeb0efde4d8a3d94389bcb062, type: 3}
   health: 1
   speed: 250
---- !u!135 &6099790636590889678
-SphereCollider:
+  isAlive: 1
+--- !u!136 &834183868709462289
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5006,6 +5007,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.33370477
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.025161285
+  m_Height: 0.6102981
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -0.019210318}

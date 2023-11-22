@@ -5,15 +5,16 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public CharacterController controller;
-
     public float speed = 6;
     public float gravity = -9.81f;
     public Vector3 direction;
+    public float turnSmoothTime = 0.1f;
+    public bool isActive = true;
+
     private Vector3 velocity;
     private Animator animator;
-
-    float turnSmoothVelocity;
-    public float turnSmoothTime = 0.1f;
+    private float turnSmoothVelocity;
+    
 
     private void Start()
     {
@@ -22,11 +23,8 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-
-        if (controller.isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+        if (!isActive) { return; }
+        if (controller.isGrounded && velocity.y < 0){ velocity.y = -2f; }
 
         //gravity
         velocity.y += gravity * Time.deltaTime;
