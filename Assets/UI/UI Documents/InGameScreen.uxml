@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Stylesheets/ingame.uss?fileID=7433441132597879392&amp;guid=36a238aa29bc3cf488d2b35c61461950&amp;type=3#ingame" />
+    <ui:VisualElement name="topRow" style="flex-grow: 1; flex-direction: row; height: 13%; width: 100%; position: absolute; -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&amp;guid=669297b410f647842bf0cb32fb779550&amp;type=3#KdamThmorPro-Regular&apos;); color: rgb(255, 255, 255); margin-top: 10px;">
+        <ui:VisualElement name="health" class="statRow" style="border-left-color: rgb(255, 136, 136); border-right-color: rgb(255, 136, 136); border-top-color: rgb(255, 136, 136); border-bottom-color: rgb(255, 136, 136);">
+            <ui:VisualElement name="heartIcon" class="statIcon" style="background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=-2043333513&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Heart01_BrightBG&apos;);" />
+            <ui:Label text="1" class="statText" />
+        </ui:VisualElement>
+        <ui:VisualElement name="points" class="statRow" style="border-left-color: rgb(255, 194, 90); border-right-color: rgb(255, 194, 90); border-top-color: rgb(255, 194, 90); border-bottom-color: rgb(255, 194, 90);">
+            <ui:VisualElement name="pointsIcon" class="statIcon" style="background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=749509126&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Coin_BrightBG&apos;); -unity-background-image-tint-color: rgb(255, 194, 90);" />
+            <ui:Label text="123456" class="statText" />
+        </ui:VisualElement>
+        <ui:VisualElement name="key" class="statRow" style="border-left-color: rgb(202, 221, 156); border-right-color: rgb(202, 221, 156); border-top-color: rgb(202, 221, 156); border-bottom-color: rgb(202, 221, 156);">
+            <ui:VisualElement name="pointsIcon" class="statIcon" style="background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=472646816&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Key_BrightBG&apos;); -unity-background-image-tint-color: rgb(202, 221, 156);" />
+            <ui:Label text="1/2" class="statText" />
+        </ui:VisualElement>
+        <ui:VisualElement name="brokenArrow" class="statRow" style="border-left-color: rgb(72, 175, 214); border-right-color: rgb(72, 175, 214); border-top-color: rgb(72, 175, 214); border-bottom-color: rgb(72, 175, 214);">
+            <ui:VisualElement name="shieldIcon" class="statIcon" style="background-image: url(&apos;project://database/Assets/UI/Icons/BrightIcons.png?fileID=-2081245629&amp;guid=132358e9bf26b60458b731bf001e31db&amp;type=3#Shield_Bright&apos;); -unity-background-image-tint-color: rgb(72, 175, 214);" />
+            <ui:Label text="123456" class="statText" />
+        </ui:VisualElement>
+        <ui:VisualElement name="pause" class="statRow" style="flex-grow: 1; flex-basis: 50%; background-color: rgba(0, 0, 0, 0);" />
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="pauseButton" class="statRow" style="border-left-color: rgb(255, 136, 136); border-right-color: rgb(255, 136, 136); border-top-color: rgb(255, 136, 136); border-bottom-color: rgb(255, 136, 136); width: 7%;">
+            <ui:VisualElement name="pauseIcon" class="statIcon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=1095640251&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Pause_BrightBG&apos;); -unity-background-image-tint-color: rgb(255, 136, 136);" />
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>

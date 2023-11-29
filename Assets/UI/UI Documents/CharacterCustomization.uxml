@@ -1,0 +1,161 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/stylesheet.uss?fileID=7433441132597879392&amp;guid=280268e16df0f6c4aa101e006b4bd0d2&amp;type=3#stylesheet" />
+    <ui:VisualElement name="customization" style="flex-grow: 1; width: 50%; height: 100%; align-self: flex-end; justify-content: center; align-items: center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; display: flex; visibility: visible; transition-duration: 2s; overflow: hidden; transition-property: all;">
+        <ui:VisualElement name="BackgroundChar" class="background" style="flex-grow: 1; height: 100%; align-self: auto; width: 100%; padding-top: 30px; padding-right: 30px; padding-bottom: 30px; padding-left: 30px; align-items: flex-start; justify-content: flex-start; display: flex; transition-duration: 2s; transition-property: width;">
+            <ui:Label tabindex="-1" text="Character Customization" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" class="menu-title" />
+            <ui:VisualElement name="hr" class="hr-box">
+                <ui:VisualElement class="customization-row">
+                    <ui:Label tabindex="-1" text="Shoes" parse-escape-sequences="true" display-tooltip-when-elided="true" class="radio-group-label" />
+                    <ui:VisualElement name="customizationRadioGroup" style="width: 70%;">
+                        <ui:GroupBox name="shoesRadioGroup" style="flex-direction: row; width: 100%; align-self: auto; justify-content: flex-end;">
+                            <ui:RadioButton class="radio-button-with-bg">
+                                <ui:VisualElement name="blueBackground" class="radio-button-background" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="1" class="radio-button-with-bg">
+                                <ui:VisualElement name="yellowBackground" class="radio-button-background" style="background-color: rgb(202, 221, 156);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="2" class="radio-button-with-bg">
+                                <ui:VisualElement name="greyBackground" class="radio-button-background" style="background-color: rgb(84, 82, 82);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="3" class="radio-button-with-bg">
+                                <ui:VisualElement name="redBackground" class="radio-button-background" style="background-color: rgb(255, 136, 136);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="4" class="radio-button-with-bg">
+                                <ui:VisualElement name="purpleBackground" class="radio-button-background" style="background-color: rgb(248, 90, 255);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="5" class="radio-button-with-bg">
+                                <ui:VisualElement name="orangeBackground" class="radio-button-background" style="background-color: rgb(255, 194, 90);" />
+                            </ui:RadioButton>
+                        </ui:GroupBox>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="customization-row">
+                    <ui:Label tabindex="-1" text="Pants" parse-escape-sequences="true" display-tooltip-when-elided="true" class="radio-group-label" />
+                    <ui:VisualElement name="customizationRadioGroup">
+                        <ui:GroupBox name="pantsRadioGroup">
+                            <ui:RadioButton class="radio-button-with-bg">
+                                <ui:VisualElement name="blueBackground" class="radio-button-background" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="1" class="radio-button-with-bg">
+                                <ui:VisualElement name="yellowBackground" class="radio-button-background" style="background-color: rgb(202, 221, 156);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="2" class="radio-button-with-bg">
+                                <ui:VisualElement name="greyBackground" class="radio-button-background" style="background-color: rgb(84, 82, 82);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="3" class="radio-button-with-bg">
+                                <ui:VisualElement name="redBackground" class="radio-button-background" style="background-color: rgb(255, 136, 136);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="4" class="radio-button-with-bg">
+                                <ui:VisualElement name="purpleBackground" class="radio-button-background" style="background-color: rgb(248, 90, 255);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="5" class="radio-button-with-bg">
+                                <ui:VisualElement name="orangeBackground" class="radio-button-background" style="background-color: rgb(255, 194, 90);" />
+                            </ui:RadioButton>
+                        </ui:GroupBox>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="customization-row">
+                    <ui:Label tabindex="-1" text="T-Shirt" parse-escape-sequences="true" display-tooltip-when-elided="true" class="radio-group-label" />
+                    <ui:VisualElement name="customizationRadioGroup">
+                        <ui:GroupBox name="tshirtRadioGroup">
+                            <ui:RadioButton class="radio-button-with-bg">
+                                <ui:VisualElement name="blueBackground" class="radio-button-background" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="1" class="radio-button-with-bg">
+                                <ui:VisualElement name="yellowBackground" class="radio-button-background" style="background-color: rgb(202, 221, 156);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="2" class="radio-button-with-bg">
+                                <ui:VisualElement name="greyBackground" class="radio-button-background" style="background-color: rgb(84, 82, 82);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="3" class="radio-button-with-bg">
+                                <ui:VisualElement name="redBackground" class="radio-button-background" style="background-color: rgb(255, 136, 136);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="4" class="radio-button-with-bg">
+                                <ui:VisualElement name="purpleBackground" class="radio-button-background" style="background-color: rgb(248, 90, 255);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="5" class="radio-button-with-bg">
+                                <ui:VisualElement name="orangeBackground" class="radio-button-background" style="background-color: rgb(255, 194, 90);" />
+                            </ui:RadioButton>
+                        </ui:GroupBox>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="customization-row">
+                    <ui:Label tabindex="-1" text="Eyebrows" parse-escape-sequences="true" display-tooltip-when-elided="true" class="radio-group-label" />
+                    <ui:VisualElement name="customizationRadioGroup">
+                        <ui:GroupBox name="eyebrowsRadioGroup">
+                            <ui:RadioButton class="radio-button-with-bg">
+                                <ui:VisualElement name="blueBackground" class="radio-button-background" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="1" class="radio-button-with-bg">
+                                <ui:VisualElement name="yellowBackground" class="radio-button-background" style="background-color: rgb(202, 221, 156);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="2" class="radio-button-with-bg">
+                                <ui:VisualElement name="greyBackground" class="radio-button-background" style="background-color: rgb(84, 82, 82);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="3" class="radio-button-with-bg">
+                                <ui:VisualElement name="redBackground" class="radio-button-background" style="background-color: rgb(255, 136, 136);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="4" class="radio-button-with-bg">
+                                <ui:VisualElement name="purpleBackground" class="radio-button-background" style="background-color: rgb(248, 90, 255);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="5" class="radio-button-with-bg">
+                                <ui:VisualElement name="orangeBackground" class="radio-button-background" style="background-color: rgb(255, 194, 90);" />
+                            </ui:RadioButton>
+                        </ui:GroupBox>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="customization-row">
+                    <ui:Label tabindex="-1" text="Eyes" parse-escape-sequences="true" display-tooltip-when-elided="true" class="radio-group-label" />
+                    <ui:VisualElement name="customizationRadioGroup">
+                        <ui:GroupBox name="eyesRadioGroup">
+                            <ui:RadioButton class="radio-button-with-bg">
+                                <ui:VisualElement name="blueBackground" class="radio-button-background" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="1" class="radio-button-with-bg">
+                                <ui:VisualElement name="yellowBackground" class="radio-button-background" style="background-color: rgb(202, 221, 156);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="2" class="radio-button-with-bg">
+                                <ui:VisualElement name="greyBackground" class="radio-button-background" style="background-color: rgb(84, 82, 82);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="3" class="radio-button-with-bg">
+                                <ui:VisualElement name="redBackground" class="radio-button-background" style="background-color: rgb(255, 136, 136);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="4" class="radio-button-with-bg">
+                                <ui:VisualElement name="purpleBackground" class="radio-button-background" style="background-color: rgb(248, 90, 255);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="5" class="radio-button-with-bg">
+                                <ui:VisualElement name="orangeBackground" class="radio-button-background" style="background-color: rgb(255, 194, 90);" />
+                            </ui:RadioButton>
+                        </ui:GroupBox>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="customization-row">
+                    <ui:Label tabindex="-1" text="Hair" parse-escape-sequences="true" display-tooltip-when-elided="true" class="radio-group-label" />
+                    <ui:VisualElement name="customizationRadioGroup">
+                        <ui:GroupBox name="hairRadioGroup">
+                            <ui:RadioButton class="radio-button-with-bg">
+                                <ui:VisualElement name="blueBackground" class="radio-button-background" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="1" class="radio-button-with-bg">
+                                <ui:VisualElement name="yellowBackground" class="radio-button-background" style="background-color: rgb(202, 221, 156);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="2" class="radio-button-with-bg">
+                                <ui:VisualElement name="greyBackground" class="radio-button-background" style="background-color: rgb(84, 82, 82);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="3" class="radio-button-with-bg">
+                                <ui:VisualElement name="redBackground" class="radio-button-background" style="background-color: rgb(255, 136, 136);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="4" class="radio-button-with-bg">
+                                <ui:VisualElement name="purpleBackground" class="radio-button-background" style="background-color: rgb(248, 90, 255);" />
+                            </ui:RadioButton>
+                            <ui:RadioButton tabindex="5" class="radio-button-with-bg">
+                                <ui:VisualElement name="orangeBackground" class="radio-button-background" style="background-color: rgb(255, 194, 90);" />
+                            </ui:RadioButton>
+                        </ui:GroupBox>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="backButton" class="back-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,13 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/stylesheet.uss?fileID=7433441132597879392&amp;guid=280268e16df0f6c4aa101e006b4bd0d2&amp;type=3#stylesheet" />
-    <ui:VisualElement name="VisElem" style="width: 50%; height: 100%; align-self: flex-end; align-items: center; justify-content: center; -unity-font: initial;">
+    <ui:VisualElement name="VisElem" style="width: 50%; height: 100%; align-self: flex-end; align-items: center; justify-content: center; -unity-font: initial; transition-duration: 0s; overflow: hidden;">
         <ui:VisualElement name="Background" class="background" style="-unity-font: initial;">
             <ui:Label tabindex="-1" text="Arrowed Dungeon" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 31px; -unity-text-align: upper-center; margin-bottom: 20px; color: rgb(248, 248, 248); -unity-font: url(&apos;project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&amp;guid=669297b410f647842bf0cb32fb779550&amp;type=3#KdamThmorPro-Regular&apos;); -unity-font-definition: initial; -unity-text-outline-width: 2px; -unity-text-outline-color: rgb(51, 51, 51);" />
-            <ui:Button text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button" />
-            <ui:Button text="Shop" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button" />
-            <ui:Button text="Character Customization" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button" />
-            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button" />
-            <ui:Button text="Quit" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" class="button" />
+            <ui:Button text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" name="playButton" class="button" />
+            <ui:Button text="Shop" parse-escape-sequences="true" display-tooltip-when-elided="true" name="shopButton" class="button" />
+            <ui:Button text="Character Customization" parse-escape-sequences="true" display-tooltip-when-elided="true" name="customizationButton" class="button" />
+            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settingsButton" class="button" />
+            <ui:Button text="Quit" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="quitButton" class="button" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
