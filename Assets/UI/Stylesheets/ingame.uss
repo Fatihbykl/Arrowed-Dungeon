@@ -52,3 +52,69 @@
     width: 60%;
     -unity-text-align: middle-center;
 }
+
+.destroyer-skill {
+    flex-grow: 1;
+    height: 30%;
+    position: absolute;
+    width: 30%;
+    top: 0;
+    margin-left: 0;
+    right: 0;
+    border-left-color: rgb(255, 100, 110);
+    border-right-color: rgb(255, 100, 110);
+    border-top-color: rgb(255, 100, 110);
+    border-bottom-color: rgb(255, 100, 110);
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    border-bottom-left-radius: 35px;
+}
+
+.freeze-skill {
+    flex-grow: 1;
+    height: 30%;
+    position: absolute;
+    width: 30%;
+    margin-left: 0;
+    bottom: 0;
+    right: 0;
+    border-left-color: rgb(117, 123, 255);
+    border-right-color: rgb(117, 123, 255);
+    border-top-color: rgb(117, 123, 255);
+    border-bottom-color: rgb(117, 123, 255);
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    border-bottom-left-radius: 35px;
+}
+
+.immortal-skill {
+    flex-grow: 1;
+    height: 30%;
+    position: absolute;
+    width: 30%;
+    margin-left: 0;
+    align-self: center;
+    bottom: 35%;
+    right: 35%;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    border-bottom-left-radius: 35px;
+    border-left-color: rgb(255, 246, 93);
+    border-right-color: rgb(255, 246, 93);
+    border-top-color: rgb(255, 246, 93);
+    border-bottom-color: rgb(255, 246, 93);
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.freeze-skill > #icon {
+}
+
+.immortal-skill > #icon {
+}
+
+#Skills > Button {
+    background-color: rgba(0, 0, 0, 0.59);
+}

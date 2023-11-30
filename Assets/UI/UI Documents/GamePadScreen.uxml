@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Joystick" style="position: absolute; width: 45%; height: 50%; bottom: 0; left: 0;">
+        <ui:VisualElement name="JoystickBack" style="flex-grow: 1; align-items: stretch; justify-content: center;">
+            <ui:VisualElement name="JoystickHandle" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/Handle_Outline_Arrows.png?fileID=2800000&amp;guid=5eda94a9dcf71e445ad17e3c065d1460&amp;type=3#Handle_Outline_Arrows&apos;); -unity-background-scale-mode: scale-to-fit; width: 20%; align-self: center; height: 30%; position: absolute;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
