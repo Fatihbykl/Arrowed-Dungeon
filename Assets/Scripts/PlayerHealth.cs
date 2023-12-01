@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag == "Ball" && collision.collider.GetComponent<Ball>().isAlive)
+        if(collision.collider.tag == "Arrow" && collision.collider.GetComponent<Arrow>().isAlive)
         {
             health -= 1;
             if (health == 0)

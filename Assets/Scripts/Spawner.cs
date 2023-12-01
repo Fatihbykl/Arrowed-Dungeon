@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject[] prefabs;
-    
-    public float spawnTime = 1f;
-    private GameObject target;
+    [SerializeField]
     private GameObject prefab;
-    private float ballSpeed;
+    
+    private float spawnTime;
+    private GameObject target;
+    private float arrowSpeed;
+    private Color particleColor;
     
     // Start is called before the first frame update
     void Start()
     {
+        var arrow = prefab.GetComponent<Arrow>();
+        var crossbowRenderer = GetComponentInParent<Renderer>();
+
         target = GameObject.FindGameObjectWithTag("Player");
+        arrowSpeed = arrow.arrowType.baseSpeed;
+        spawnTime = arrow.arrowType.spawnSeconds;
+        particleColor = arrow.arrowType.arrowMetalSideColor;
+
+        // Set crossbow colors
+        crossbowRenderer.materials[0].color = arrow.arrowType.arrowTailColor;
+        crossbowRenderer.materials[1].color = arrow.arrowType.arrowMetalSideColor;
+
         StartCoroutine(Spawn());
     }
 
@@ -22,13 +34,15 @@ public class Spawner : MonoBehaviour
     {
         while (true)
         {
-            ChooseRandomly();
             var obj = Instantiate(prefab, this.transform.position, this.transform.rotation) as GameObject;
-            var rb = obj.GetComponent<Rigidbody>();
+            var ps = obj.GetComponentInChildren<ParticleSystem>();
+            ParticleSystem.MainModule ma = ps.main;
+            ma.startColor = particleColor;
+
             Vector3 v = (obj.transform.position - this.gameObject.transform.parent.position).normalized;
-            Debug.Log(v);
-            rb.AddForce(v * Time.fixedDeltaTime * ballSpeed, ForceMode.Impulse);
+            obj.GetComponent<Rigidbody>().AddForce(v * Time.fixedDeltaTime * arrowSpeed, ForceMode.Impulse);
             obj.transform.rotation = LookAtTarget(target.transform.position - obj.transform.position);
+
             yield return new WaitForSeconds(spawnTime);
         }
     }
@@ -38,9 +52,4 @@ public class Spawner : MonoBehaviour
         return Quaternion.Euler(0, Mathf.Atan2(v.z, v.x) * -Mathf.Rad2Deg + 90, 0);
     }
 
-    void ChooseRandomly()
-    {
-        prefab = prefabs[Random.Range(0, prefabs.Length)];
-        ballSpeed = prefab.GetComponent<Ball>().speed;
-    }
 }

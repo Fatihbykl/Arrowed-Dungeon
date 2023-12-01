@@ -50,13 +50,10 @@ public class CharacterMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         //walk
-        //float horizontal = Input.GetAxisRaw("Horizontal");
-        //float vertical = Input.GetAxisRaw("Vertical");
         float horizontal = m_JoystickDelta.x;
         float vertical = m_JoystickDelta.y;
-        //Debug.Log(horizontal + " " + vertical);
+
         direction = new Vector3(horizontal, 0f, -vertical).normalized;
-        Debug.Log($"{direction}");
         animator.SetFloat("directionMagnitude", direction.magnitude);
 
         if (direction.magnitude >= 0.1f)

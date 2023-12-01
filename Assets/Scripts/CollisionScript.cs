@@ -7,12 +7,12 @@ public class CollisionScript : MonoBehaviour
     public float strength;
     Vector3 lastVelocity;
     Rigidbody rb;
-    Ball arrow;
+    Arrow arrow;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        arrow = this.GetComponent<Ball>();
+        arrow = this.GetComponent<Arrow>();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -41,7 +41,7 @@ public class CollisionScript : MonoBehaviour
 
     void CheckHealth(Collision collision)
     {
-        var obj = this.GetComponent<Ball>();
+        var obj = this.GetComponent<Arrow>();
         obj.health -= 1;
         int health = obj.health;
         if (health <= 0)
@@ -57,9 +57,7 @@ public class CollisionScript : MonoBehaviour
         }
         else
         {
-            //change materials for arrow that has more than one health
-            if (obj.materials[health - 1])
-                obj.GetComponent<MeshRenderer>().material = obj.materials[health - 1];
+            // change materials or color for arrow that has more than one health
         }
     }
 }
