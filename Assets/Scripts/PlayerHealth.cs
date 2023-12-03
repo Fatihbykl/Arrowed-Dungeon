@@ -15,17 +15,14 @@ public class PlayerHealth : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void TakeDamage(int damage = 1)
     {
-        if(collision.collider.tag == "Arrow" && collision.collider.GetComponent<Arrow>().isAlive)
+        health -= damage;
+        if (health <= 0)
         {
-            health -= 1;
-            if (health == 0)
-            {
-                StartCoroutine(Die());
-            }
-                
+            StartCoroutine(Die());
         }
+        GameplayEvents.PlayerGetDamaged.Invoke(health);
     }
 
     private IEnumerator Die()

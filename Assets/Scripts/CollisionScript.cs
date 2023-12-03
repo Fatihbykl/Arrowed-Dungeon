@@ -4,60 +4,55 @@ using UnityEngine;
 
 public class CollisionScript : MonoBehaviour
 {
-    public float strength;
-    Vector3 lastVelocity;
-    Rigidbody rb;
-    Arrow arrow;
+    private Arrow arrow;
 
     private void Start()
     {
-        rb = this.GetComponent<Rigidbody>();
         arrow = this.GetComponent<Arrow>();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (!arrow.isAlive)
-        {
-            return;
-        }
-        if (collision.collider.tag == "Shield")
-        {
-            CheckHealth(collision);
-        }
-        if (this.gameObject != null)
-        {
-            var speed = lastVelocity.magnitude;
-            var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
+        if (!arrow.isAlive || this.gameObject == null) { return; }
 
-            rb.velocity = direction * Mathf.Max(speed, 3f);
-            transform.rotation = Quaternion.Euler(0, Mathf.Atan2(direction.z, direction.x) * -Mathf.Rad2Deg + 90, 0);
-        }
-    }
-
-    void Update()
-    {
-        lastVelocity = rb.velocity;
-    }
-
-    void CheckHealth(Collision collision)
-    {
-        var obj = this.GetComponent<Arrow>();
-        obj.health -= 1;
-        int health = obj.health;
-        if (health <= 0)
+        var contactPoint = collision.GetContact(0).normal;
+        if(collision.collider.tag == "Player")
         {
-            //Destroy(this.gameObject);
-            var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
-            direction.y = -9.81f;
-            rb.velocity = direction;
-            //rb.mass = 1;
-            
-            rb.constraints = RigidbodyConstraints.None;
-            arrow.isAlive = false;
+            PlayerHealth player = collision.collider.gameObject.GetComponentInParent<PlayerHealth>();
+            if (arrow.arrowType.type == ArrowTypeName.Killer)
+            {
+                player.TakeDamage(50);
+            }
+            else
+            {
+                player.TakeDamage();
+            }
         }
-        else
+        else if (collision.collider.tag == "Shield")
         {
-            // change materials or color for arrow that has more than one health
+            if (arrow.arrowType.type == ArrowTypeName.Killer)
+            {
+                PlayerHealth player = collision.collider.gameObject.GetComponentInParent<PlayerHealth>();
+                player.TakeDamage(50);
+            }
+            else if (arrow.arrowType.type == ArrowTypeName.ShieldBreaker) 
+            {
+                // break the shield
+            }
+            else
+            {
+                arrow.TakeDamage(contactPoint);
+            }
+        }
+        else if (collision.collider.tag == "Wall")
+        {
+            if (arrow.arrowType.type == ArrowTypeName.Killer)
+            {
+                arrow.TakeDamage(contactPoint, 50);
+            }
+            else
+            {
+                arrow.ArrowReflect(contactPoint);
+            }
         }
     }
 }
