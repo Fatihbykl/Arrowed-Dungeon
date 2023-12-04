@@ -55,7 +55,7 @@ public class Arrow : MonoBehaviour
     private void ArrowDyingAnim(Vector3 contactPoint)
     {
         var direction = Vector3.Reflect(lastVelocity.normalized, contactPoint);
-        //direction.y = -9.81f;
+        direction.y = -9.81f;
         rb.velocity = direction;
 
         rb.constraints = RigidbodyConstraints.None;

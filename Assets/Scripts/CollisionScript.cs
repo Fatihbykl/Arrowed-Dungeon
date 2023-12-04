@@ -25,6 +25,7 @@ public class CollisionScript : MonoBehaviour
             else
             {
                 player.TakeDamage();
+                arrow.ArrowReflect(contactPoint);
             }
         }
         else if (collision.collider.tag == "Shield")
@@ -41,6 +42,7 @@ public class CollisionScript : MonoBehaviour
             else
             {
                 arrow.TakeDamage(contactPoint);
+                arrow.ArrowReflect(contactPoint);
             }
         }
         else if (collision.collider.tag == "Wall")

@@ -17,7 +17,7 @@
             <ui:VisualElement name="shieldIcon" class="statIcon" style="background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=198872190&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Bow_BrightBG&apos;); -unity-background-image-tint-color: rgb(72, 175, 214);" />
             <ui:Label text="0" name="brokenArrowText" class="statText" />
         </ui:VisualElement>
-        <ui:VisualElement name="pause" class="statRow" style="flex-grow: 1; flex-basis: 50%; background-color: rgba(0, 0, 0, 0);" />
+        <ui:VisualElement class="statRow" style="flex-grow: 1; flex-basis: 50%; background-color: rgba(0, 0, 0, 0);" />
         <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="pauseButton" class="statRow" style="border-left-color: rgb(255, 136, 136); border-right-color: rgb(255, 136, 136); border-top-color: rgb(255, 136, 136); border-bottom-color: rgb(255, 136, 136); width: 7%;">
             <ui:VisualElement name="pauseIcon" class="statIcon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=1095640251&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Pause_BrightBG&apos;); -unity-background-image-tint-color: rgb(255, 136, 136);" />
         </ui:Button>
