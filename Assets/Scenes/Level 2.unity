@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5dbd9bdbde3641948a1bab9463d059fa, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.30488053, g: 0.3515256, b: 0.62289095, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2757,6 +2757,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1403757298}
   - component: {fileID: 1403757299}
+  - component: {fileID: 1403757300}
   m_Layer: 0
   m_Name: Skills
   m_TagString: Untagged
@@ -2796,6 +2797,19 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 59f137b718f4e154f849e8ea5bea91c8,
     type: 3}
   m_SortingOrder: 0
+--- !u!114 &1403757300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403757297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21afbb605474e664aad223c55d85dd25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2984028182142252701}
 --- !u!1001 &1406393369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4676,6 +4690,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6329540703796400730}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2984028182142252701 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7622993861592836452, guid: 6d72bbe208715524e998e15d95aa885f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6329540703796400730}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ded23c5991de2545b99f681f26c1b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3842471544784045128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5715,11 +5741,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.026677843
       objectReference: {fileID: 0}
-    - target: {fileID: 5637014092416461679, guid: 6d72bbe208715524e998e15d95aa885f,
-        type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: 2aaf750a8921177409a1a05fe7f83d2e, type: 3}
     - target: {fileID: 5666101745751323537, guid: 6d72bbe208715524e998e15d95aa885f,
         type: 3}
       propertyPath: m_LocalPosition.x

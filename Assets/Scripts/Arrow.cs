@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,12 @@ public class Arrow : MonoBehaviour
 
     private Rigidbody rb;
     private Vector3 lastVelocity;
+
+    private void OnEnable()
+    {
+        GameplayEvents.FreezeSkillActivated += onFreezeSkillActivated;
+        GameplayEvents.DestroyerSkillActivated += onDestroyerSkillActivated;
+    }
 
     private void Start()
     {
@@ -41,7 +48,6 @@ public class Arrow : MonoBehaviour
             ArrowDyingAnim(contactPoint);
             GameplayEvents.ArrowDead.Invoke(arrowType.name, arrowType.basecoinReward);
         }
-
     }
 
     public void ArrowReflect(Vector3 contactPoint)
@@ -60,5 +66,14 @@ public class Arrow : MonoBehaviour
 
         rb.constraints = RigidbodyConstraints.None;
         isAlive = false;
+    }
+
+    private void onFreezeSkillActivated(float amount)
+    {
+        rb.velocity *= amount;
+    }
+    private void onDestroyerSkillActivated(int damage)
+    {
+        TakeDamage(new Vector3(), damage);
     }
 }
