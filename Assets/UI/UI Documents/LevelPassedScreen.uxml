@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Stylesheets/stylesheet.uss?fileID=7433441132597879392&amp;guid=280268e16df0f6c4aa101e006b4bd0d2&amp;type=3#stylesheet" />
+    <ui:VisualElement name="transparent-background" style="flex-grow: 1; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.59); display: flex;">
+        <ui:VisualElement name="pause-container" class="background" style="flex-grow: 1; background-color: rgb(30, 30, 30); position: absolute; width: 35%; height: 45%; justify-content: space-between;">
+            <ui:Label tabindex="-1" text="Level Passed" parse-escape-sequences="true" display-tooltip-when-elided="true" class="menu-title" style="color: rgb(83, 176, 96); align-self: center;" />
+            <ui:VisualElement class="hr-box" style="flex-grow: 1; border-left-color: rgb(83, 176, 96); border-right-color: rgb(83, 176, 96); border-top-color: rgb(83, 176, 96); border-bottom-color: rgb(83, 176, 96); justify-content: flex-start; flex-direction: column; align-items: center;">
+                <ui:Button text="Next Level" parse-escape-sequences="true" display-tooltip-when-elided="true" name="nextLevel" style="margin-bottom: 20px; margin-top: 5px;" />
+                <ui:Button text="Main Menu" parse-escape-sequences="true" display-tooltip-when-elided="true" name="main-menu" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -9,7 +9,7 @@ public class TriggerScript : MonoBehaviour
         if (other.tag == "Player")
         {
             // Level passed
-            Debug.Log("Level geçildi.");
+            GameplayEvents.LevelPassed.Invoke();
         }
     }
 }

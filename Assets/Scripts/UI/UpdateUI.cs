@@ -9,16 +9,20 @@ using UnityEngine.UIElements;
 public class UpdateUI : MonoBehaviour
 {
     public GameObject pauseObj;
+    public GameObject levelPassedObj;
+    public GameObject levelFailedObj;
     public GameObject gameManager;
     private GameManager manager;
     private Label healthText, coinText, keyText, brokenArrowText;
     private Button pauseButton, continueButton, mainMenuButton;
-    private VisualElement transparentBg;
+    private VisualElement pauseBg, passedBg, failedBg;
 
     private void OnEnable()
     {
         UIDocument inGameScreenDocument = gameObject.GetComponent<UIDocument>();
         UIDocument pauseDocument = pauseObj.GetComponent<UIDocument>();
+        UIDocument passedDocument = levelPassedObj.GetComponent<UIDocument>();
+        UIDocument failedDocument = levelFailedObj.GetComponent<UIDocument>();
 
         healthText = inGameScreenDocument.rootVisualElement.Q("healthText") as Label;
         coinText = inGameScreenDocument.rootVisualElement.Q("coinText") as Label;
@@ -27,7 +31,9 @@ public class UpdateUI : MonoBehaviour
         pauseButton = inGameScreenDocument.rootVisualElement.Q("pauseButton") as Button;
         continueButton = pauseDocument.rootVisualElement.Q("continue") as Button;
         mainMenuButton = pauseDocument.rootVisualElement.Q("main-menu") as Button;
-        transparentBg = pauseDocument.rootVisualElement.Q("transparent-background");
+        pauseBg = pauseDocument.rootVisualElement.Q("transparent-background");
+        passedBg = passedDocument.rootVisualElement.Q("transparent-background");
+        failedBg = failedDocument.rootVisualElement.Q("transparent-background");
 
         pauseButton.RegisterCallback<ClickEvent>(onPauseClicked);
         continueButton.RegisterCallback<ClickEvent>(onContinueClicked);
@@ -36,8 +42,22 @@ public class UpdateUI : MonoBehaviour
         GameplayEvents.ArrowDead += onArrowDead;
         GameplayEvents.KeyCollected += onKeyCollected;
         GameplayEvents.PlayerGetDamaged += onPlayerGetDamaged;
+        GameplayEvents.LevelPassed += onLevelPassed;
+        GameplayEvents.LevelFailed += onLevelFailed;
 
-        transparentBg.style.display = DisplayStyle.None;
+        pauseBg.style.display = DisplayStyle.None;
+        passedBg.style.display = DisplayStyle.None;
+        failedBg.style.display = DisplayStyle.None;
+    }
+
+    private void onLevelFailed()
+    {
+        failedBg.style.display = DisplayStyle.Flex;
+    }
+
+    private void onLevelPassed()
+    {
+        passedBg.style.display = DisplayStyle.Flex;
     }
 
     private void onMenuClicked(ClickEvent evt)
@@ -47,13 +67,13 @@ public class UpdateUI : MonoBehaviour
 
     private void onContinueClicked(ClickEvent evt)
     {
-        transparentBg.style.display = DisplayStyle.None;
+        pauseBg.style.display = DisplayStyle.None;
         Time.timeScale = 1;
     }
 
     private void onPauseClicked(ClickEvent evt)
     {
-        transparentBg.style.display = DisplayStyle.Flex;
+        pauseBg.style.display = DisplayStyle.Flex;
         Time.timeScale = 0;
     }
 

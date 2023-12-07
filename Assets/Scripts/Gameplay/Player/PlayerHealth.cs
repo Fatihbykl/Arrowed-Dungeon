@@ -8,11 +8,14 @@ public class PlayerHealth : MonoBehaviour
 
     private Animator animator;
     private CharacterMovement characterMovement;
+    private Collider characterCollider;
+    private bool isDieAnimActive = false;
 
     private void Start()
     {
         characterMovement = GetComponent<CharacterMovement>();
         animator = GetComponent<Animator>();
+        characterCollider = GetComponent<Collider>();
     }
 
     public void TakeDamage(int damage = 1)
@@ -27,12 +30,17 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator Die()
     {
-        characterMovement.isActive = false;
-        // Play the animation for getting suck in
-        animator.SetTrigger("death");
+        if (!isDieAnimActive)
+        {
+            isDieAnimActive = true;
+            characterMovement.isActive = false;
+            // Play the animation for getting suck in
+            animator.SetTrigger("death");
 
-        yield return new WaitForSeconds(3); // oyun bitti
-        Time.timeScale = 0;
-
+            yield return new WaitForSeconds(2); // oyun bitti
+            characterCollider.enabled = false;
+            Time.timeScale = 0;
+            GameplayEvents.LevelFailed.Invoke();
+        }
     }
 }
