@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IDataPersistence
 {
     public GameObject keysObject;
     public GameObject gate;
@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int currentLevelBrokenArrows;
     public int collectedKeyCount = 0;
     public int totalKeyCount = 0;
+    public int currentLevel = 0;
 
     private void OnEnable()
     {
@@ -40,5 +41,16 @@ public class GameManager : MonoBehaviour
     {
         currentLevelCoin += coinReward;
         currentLevelBrokenArrows++;
+    }
+
+    public void LoadData(GameData data)
+    {
+        currentLevel = data.currentLevel;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.currentLevel = currentLevel;
+        data.coins += currentLevelCoin;
     }
 }

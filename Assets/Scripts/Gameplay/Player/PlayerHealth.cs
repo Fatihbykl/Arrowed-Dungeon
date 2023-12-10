@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private int health = 1;
+    // add scene loaded event and publish initial health
 
     private Animator animator;
     private CharacterMovement characterMovement;
@@ -34,13 +35,22 @@ public class PlayerHealth : MonoBehaviour
         {
             isDieAnimActive = true;
             characterMovement.isActive = false;
-            // Play the animation for getting suck in
             animator.SetTrigger("death");
 
-            yield return new WaitForSeconds(2); // oyun bitti
+            yield return new WaitForSeconds(2);
             characterCollider.enabled = false;
             Time.timeScale = 0;
             GameplayEvents.LevelFailed.Invoke();
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        health = data.health;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.health = health;
     }
 }

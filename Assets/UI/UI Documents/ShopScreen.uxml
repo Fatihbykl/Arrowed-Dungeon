@@ -1,0 +1,108 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Stylesheets/stylesheet.uss?fileID=7433441132597879392&amp;guid=280268e16df0f6c4aa101e006b4bd0d2&amp;type=3#stylesheet" />
+    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
+        <ui:VisualElement name="shopBg" class="background" style="flex-grow: 1; position: absolute; width: 75%; height: 75%; justify-content: flex-start;">
+            <ui:Label tabindex="-1" text="Shop" parse-escape-sequences="true" display-tooltip-when-elided="true" class="menu-title" style="width: 100%; -unity-text-align: upper-center;" />
+            <ui:VisualElement class="hr-box" style="flex-grow: 1;">
+                <ui:ScrollView style="width: 100%; height: 100%;">
+                    <ui:VisualElement name="col1" style="flex-grow: 1; width: 50%; height: 100%; border-right-width: 1px; border-left-color: rgb(192, 192, 192); border-right-color: rgb(192, 192, 192); border-top-color: rgb(192, 192, 192); border-bottom-color: rgb(192, 192, 192);">
+                        <ui:Label tabindex="-1" text="Upgrades" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" />
+                        <ui:VisualElement name="row-shop-item" style="flex-grow: 1; height: 100px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; flex-direction: row;">
+                            <ui:VisualElement name="icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=-2043333513&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Heart01_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; width: 15%; height: auto; margin-right: 10px;" />
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 85%;">
+                                <ui:VisualElement name="desc" style="flex-grow: 1; align-items: stretch; justify-content: center;">
+                                    <ui:Label tabindex="-1" text="HEALTH" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="-unity-text-align: upper-left; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0;" />
+                                    <ui:Label tabindex="-1" text="Current Health: 1&#10;Next Level: 2" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="font-size: 14px; -unity-text-align: upper-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: -1px; padding-right: -1px; padding-bottom: -1px; padding-left: -1px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="button-col">
+                                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-button">
+                                        <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=749509126&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Coin_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(229, 188, 87); width: auto; height: 100%;" />
+                                        <ui:Label tabindex="-1" text="157" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; color: rgb(248, 248, 248); -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&amp;guid=669297b410f647842bf0cb32fb779550&amp;type=3#KdamThmorPro-Regular&apos;); font-size: 15px;" />
+                                    </ui:Button>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="row-shop-item" style="flex-grow: 1; height: 100px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; flex-direction: row;">
+                            <ui:VisualElement name="icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=-241933981&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Shield_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; width: 15%; height: auto; margin-right: 10px;" />
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 85%;">
+                                <ui:VisualElement name="desc" style="flex-grow: 1; align-items: stretch; justify-content: center;">
+                                    <ui:Label tabindex="-1" text="SHIELD" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="-unity-text-align: upper-left; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0;" />
+                                    <ui:Label tabindex="-1" text="Current Damage: 1&#10;Next Level: 2" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="font-size: 14px; -unity-text-align: upper-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: -1px; padding-right: -1px; padding-bottom: -1px; padding-left: -1px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="button-col">
+                                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-button">
+                                        <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=749509126&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Coin_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(229, 188, 87); width: auto; height: 100%;" />
+                                        <ui:Label tabindex="-1" text="157" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; color: rgb(248, 248, 248); -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&amp;guid=669297b410f647842bf0cb32fb779550&amp;type=3#KdamThmorPro-Regular&apos;); font-size: 15px;" />
+                                    </ui:Button>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="row-shop-item" style="flex-grow: 1; height: 100px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; flex-direction: row;">
+                            <ui:VisualElement name="icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/bx-run%20(1).png?fileID=2800000&amp;guid=eacd4740dba62a84fb03a62a7dcd48e7&amp;type=3#bx-run (1)&apos;); -unity-background-scale-mode: scale-to-fit; width: 15%; height: auto; margin-right: 10px; -unity-background-image-tint-color: rgb(255, 255, 255);" />
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 85%;">
+                                <ui:VisualElement name="desc" style="flex-grow: 1; align-items: stretch; justify-content: center;">
+                                    <ui:Label tabindex="-1" text="SPEED" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="-unity-text-align: upper-left; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0;" />
+                                    <ui:Label tabindex="-1" text="Current Speed: 1&#10;Next Level: 2" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="font-size: 14px; -unity-text-align: upper-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: -1px; padding-right: -1px; padding-bottom: -1px; padding-left: -1px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="button-col">
+                                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-button">
+                                        <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=749509126&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Coin_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(229, 188, 87); width: auto; height: 100%;" />
+                                        <ui:Label tabindex="-1" text="157" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; color: rgb(248, 248, 248); -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&amp;guid=669297b410f647842bf0cb32fb779550&amp;type=3#KdamThmorPro-Regular&apos;); font-size: 15px;" />
+                                    </ui:Button>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="col2" style="flex-grow: 1; width: 50%;">
+                        <ui:Label tabindex="-1" text="Skills" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" />
+                        <ui:VisualElement name="row-shop-item" style="flex-grow: 1; height: 100px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; flex-direction: row;">
+                            <ui:VisualElement name="icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=112508314&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Watch_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; width: 15%; height: auto; margin-right: 10px;" />
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 85%;">
+                                <ui:VisualElement name="desc" style="flex-grow: 1; align-items: stretch; justify-content: center;">
+                                    <ui:Label tabindex="-1" text="FREEZE" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="-unity-text-align: upper-left; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0;" />
+                                    <ui:Label tabindex="-1" text="Current Damage: 1&#10;Next Level: 2" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="font-size: 14px; -unity-text-align: upper-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: -1px; padding-right: -1px; padding-bottom: -1px; padding-left: -1px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="button-col">
+                                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-button">
+                                        <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=749509126&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Coin_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(229, 188, 87); width: auto; height: 100%;" />
+                                        <ui:Label tabindex="-1" text="157" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; color: rgb(248, 248, 248); -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&amp;guid=669297b410f647842bf0cb32fb779550&amp;type=3#KdamThmorPro-Regular&apos;); font-size: 15px;" />
+                                    </ui:Button>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="row-shop-item" style="flex-grow: 1; height: 100px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; flex-direction: row;">
+                            <ui:VisualElement name="icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=-241933981&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Shield_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; width: 15%; height: auto; margin-right: 10px;" />
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 85%;">
+                                <ui:VisualElement name="desc" style="flex-grow: 1; align-items: stretch; justify-content: center;">
+                                    <ui:Label tabindex="-1" text="FORCE FIELD" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="-unity-text-align: upper-left; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0;" />
+                                    <ui:Label tabindex="-1" text="Current Damage: 1&#10;Next Level: 2" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="font-size: 14px; -unity-text-align: upper-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: -1px; padding-right: -1px; padding-bottom: -1px; padding-left: -1px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="button-col">
+                                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-button">
+                                        <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=749509126&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Coin_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(229, 188, 87); width: auto; height: 100%;" />
+                                        <ui:Label tabindex="-1" text="157" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; color: rgb(248, 248, 248); -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&amp;guid=669297b410f647842bf0cb32fb779550&amp;type=3#KdamThmorPro-Regular&apos;); font-size: 15px;" />
+                                    </ui:Button>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="row-shop-item" style="flex-grow: 1; height: 100px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; flex-direction: row;">
+                            <ui:VisualElement name="icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=-804667674&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Thunder_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; width: 15%; height: auto; margin-right: 10px;" />
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 85%;">
+                                <ui:VisualElement name="desc" style="flex-grow: 1; align-items: stretch; justify-content: center;">
+                                    <ui:Label tabindex="-1" text="DESTROYER" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="-unity-text-align: upper-left; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0;" />
+                                    <ui:Label tabindex="-1" text="Current Damage: 1&#10;Next Level: 2" parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-title" style="font-size: 14px; -unity-text-align: upper-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: -1px; padding-right: -1px; padding-bottom: -1px; padding-left: -1px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="button-col">
+                                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" class="shop-button">
+                                        <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=749509126&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Coin_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(229, 188, 87); width: auto; height: 100%;" />
+                                        <ui:Label tabindex="-1" text="157" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; color: rgb(248, 248, 248); -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&amp;guid=669297b410f647842bf0cb32fb779550&amp;type=3#KdamThmorPro-Regular&apos;); font-size: 15px;" />
+                                    </ui:Button>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

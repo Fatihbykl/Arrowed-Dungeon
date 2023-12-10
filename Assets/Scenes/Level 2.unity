@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.48262388, g: 0.48262388, b: 0.48262388, a: 1}
+  m_IndirectSpecularColor: {r: 0.2218417, g: 0.2218417, b: 0.2218417, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -125,6 +125,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &15292713 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6215766623523369944, guid: 6374be728b492804dbf40123e97c9b7b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3937176644844354526}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &20276421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1872,6 +1878,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4911566680202291561, guid: 906aa3c44ce6ca741905a6e4d51cb278,
     type: 3}
   m_PrefabInstance: {fileID: 797080203}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &940322202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3552657851883743371, guid: 6374be728b492804dbf40123e97c9b7b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3937176644844354526}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &954275020
 GameObject:
@@ -4601,6 +4613,16 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1344492096}
+    - target: {fileID: 64933841105120932, guid: 6374be728b492804dbf40123e97c9b7b,
+        type: 3}
+      propertyPath: levelFailedObj
+      value: 
+      objectReference: {fileID: 15292713}
+    - target: {fileID: 64933841105120932, guid: 6374be728b492804dbf40123e97c9b7b,
+        type: 3}
+      propertyPath: levelPassedObj
+      value: 
+      objectReference: {fileID: 940322202}
     - target: {fileID: 871009348224825356, guid: 6374be728b492804dbf40123e97c9b7b,
         type: 3}
       propertyPath: player
@@ -6193,7 +6215,7 @@ PrefabInstance:
     - target: {fileID: 6274077184250259345, guid: 9dc4644be55332448a893707d6197cbb,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6266,7 +6288,7 @@ PrefabInstance:
     - target: {fileID: 4523673720610962105, guid: 12372f5477127b64fbf836e959403822,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6299,7 +6321,7 @@ PrefabInstance:
     - target: {fileID: 3896777991469550893, guid: d2100beb781ded344ac6ada2032135fe,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.12
+      value: 6.15
       objectReference: {fileID: 0}
     - target: {fileID: 3896777991469550893, guid: d2100beb781ded344ac6ada2032135fe,
         type: 3}

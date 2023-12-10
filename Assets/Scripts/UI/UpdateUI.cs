@@ -82,10 +82,12 @@ public class UpdateUI : MonoBehaviour
         healthText.text = health.ToString();
     }
 
+    // make these when on scene loaded
     private void Start()
     {
         manager = gameManager.GetComponent<GameManager>();
         keyText.text = $"{0}/{manager.totalKeyCount}";
+        //healthText.text = ;
     }
 
     private void onKeyCollected(int collectedKeyCount, int totalKeyCount)

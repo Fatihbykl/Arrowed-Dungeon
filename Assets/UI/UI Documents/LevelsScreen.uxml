@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Stylesheets/stylesheet.uss?fileID=7433441132597879392&amp;guid=280268e16df0f6c4aa101e006b4bd0d2&amp;type=3#stylesheet" />
+    <ui:VisualElement style="flex-grow: 1; align-items: center; justify-content: center;">
+        <ui:VisualElement name="levelsBg" class="background" style="flex-grow: 1; width: 75%; height: 75%; position: absolute; justify-content: flex-start;">
+            <ui:Label tabindex="-1" text="Select Level" parse-escape-sequences="true" display-tooltip-when-elided="true" class="menu-title" style="width: 100%; -unity-text-align: upper-center;" />
+            <ui:VisualElement name="Levels" class="hr-box" style="flex-grow: 1;">
+                <ui:ScrollView style="width: 100%; height: 100%; justify-content: flex-start; align-items: stretch;">
+                    <ui:VisualElement name="row">
+                        <ui:Button text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" focusable="true" enable-rich-text="true" class="level-button" />
+                        <ui:Button text="2" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="level-button" />
+                        <ui:Button text="3" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                        <ui:Button text="4" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                        <ui:Button text="5" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                        <ui:Button text="6" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="row" style="flex-grow: 1; flex-direction: row;">
+                        <ui:Button text="7" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                        <ui:Button text="8" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                        <ui:Button text="9" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                        <ui:Button text="10" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                        <ui:Button text="11" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                        <ui:Button text="12" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="Level" class="level-button" />
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

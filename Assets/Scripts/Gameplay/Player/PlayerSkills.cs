@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkills : MonoBehaviour
+public class PlayerSkills : MonoBehaviour, IDataPersistence
 {
     private GameObject forceField;
-    private bool isAnySkillActive = false;
+    private int freezeSkillAmount = 0;
+    private int immortalSkillAmount = 0;
+    private int destroyerSkillAmount = 0;
 
     void Start()
     {
@@ -14,30 +16,50 @@ public class PlayerSkills : MonoBehaviour
 
     public void ActivateImmortalSkill()
     {
-        if (isAnySkillActive) { return; }
-        // check if user has this skill
-        StartCoroutine(Immortal());
+        if (immortalSkillAmount > 0 && forceField.activeSelf == false)
+        {
+            StartCoroutine(Immortal());
+            immortalSkillAmount--;
+        }
     }
 
     IEnumerator Immortal()
     {
         forceField.SetActive(true);
-        yield return new WaitForSeconds(3); 
+        yield return new WaitForSeconds(3);
+        // add cooldown maybe???
         forceField.SetActive(false);
-        // add cooldown
     }
 
     public void ActivateFreezeSkill()
     {
-        // check if user has this skill
-        GameplayEvents.FreezeSkillActivated.Invoke(0.5f);
-        // add cooldown
+        if (freezeSkillAmount > 0)
+        {
+            GameplayEvents.FreezeSkillActivated.Invoke(0.5f);
+            freezeSkillAmount--;
+        }
     }
 
     public void ActivateDestroyerSkill()
     {
-        // check if user has this skill
-        GameplayEvents.DestroyerSkillActivated.Invoke(3);
-        // add cooldown
+        if(destroyerSkillAmount > 0)
+        {
+            GameplayEvents.DestroyerSkillActivated.Invoke(3);
+            destroyerSkillAmount--;
+        }
+    }
+
+    public void LoadData(GameData data)
+    {
+        freezeSkillAmount = data.freeze;
+        immortalSkillAmount = data.immortal;
+        destroyerSkillAmount = data.destroyer;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.freeze = freezeSkillAmount;
+        data.immortal = immortalSkillAmount;
+        data.destroyer = destroyerSkillAmount;
     }
 }

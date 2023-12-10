@@ -305,3 +305,100 @@
     -unity-font-definition: initial;
     background-color: rgba(0, 0, 0, 0);
 }
+
+#shopBg #unity-content-container {
+    flex-direction: row;
+    padding-top: 20px;
+}
+
+.shop-title {
+    font-size: 17px;
+    -unity-font-definition: initial;
+    -unity-font: url('project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&guid=669297b410f647842bf0cb32fb779550&type=3#KdamThmorPro-Regular');
+    color: rgb(192, 192, 192);
+    -unity-text-align: upper-center;
+}
+
+.shop-button {
+    background-image: none;
+    background-color: rgb(67, 67, 67);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(248, 248, 248);
+    border-right-color: rgb(248, 248, 248);
+    border-top-color: rgb(248, 248, 248);
+    border-bottom-color: rgb(248, 248, 248);
+    -unity-background-scale-mode: scale-to-fit;
+    height: 79%;
+    -unity-text-align: middle-right;
+    width: 50%;
+    align-self: flex-end;
+    flex-direction: row;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#shopBg #button-col {
+    width: 50%;
+    justify-content: center;
+}
+
+.level-button {
+    width: 75px;
+    height: 75px;
+    -unity-font-definition: initial;
+    -unity-font: url('project://database/Assets/Fonts/KdamThmorPro-Regular.ttf?fileID=12800000&guid=669297b410f647842bf0cb32fb779550&type=3#KdamThmorPro-Regular');
+    font-size: 20px;
+    -unity-font-style: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    background-color: rgb(36, 46, 56);
+    border-left-color: rgb(248, 248, 248);
+    border-right-color: rgb(248, 248, 248);
+    border-top-color: rgb(248, 248, 248);
+    border-bottom-color: rgb(248, 248, 248);
+    color: rgb(248, 248, 248);
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+#levelsBg #unity-content-container {
+    margin-top: 10px;
+}
+
+#levelsBg #row {
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.level-button:disabled {
+    background-image: url('project://database/Assets/UI/Icons/BrightBackground.png?fileID=2025532901&guid=05e0567213a58c840a3ea79a4409bdfd&type=3#Padlock01_BrightBG');
+    -unity-background-scale-mode: scale-to-fit;
+    font-size: 0;
+    -unity-background-image-tint-color: rgb(255, 100, 88);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
