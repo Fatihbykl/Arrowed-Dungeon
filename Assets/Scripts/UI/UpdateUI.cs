@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class UpdateUI : MonoBehaviour
@@ -11,8 +12,7 @@ public class UpdateUI : MonoBehaviour
     public GameObject pauseObj;
     public GameObject levelPassedObj;
     public GameObject levelFailedObj;
-    public GameObject gameManager;
-    private GameManager manager;
+
     private Label healthText, coinText, keyText, brokenArrowText;
     private Button pauseButton, continueButton, mainMenuButton;
     private VisualElement pauseBg, passedBg, failedBg;
@@ -44,10 +44,28 @@ public class UpdateUI : MonoBehaviour
         GameplayEvents.PlayerGetDamaged += onPlayerGetDamaged;
         GameplayEvents.LevelPassed += onLevelPassed;
         GameplayEvents.LevelFailed += onLevelFailed;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         pauseBg.style.display = DisplayStyle.None;
         passedBg.style.display = DisplayStyle.None;
         failedBg.style.display = DisplayStyle.None;
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        keyText.text = $"{0}/{GameManager.instance.totalKeyCount}";
+        coinText.text = GameManager.instance.collectedKeyCount.ToString();
+        healthText.text = GameManager.instance.playerBaseHealth.ToString();
+    }
+
+    private void OnDisable()
+    {
+        GameplayEvents.ArrowDead -= onArrowDead;
+        GameplayEvents.KeyCollected -= onKeyCollected;
+        GameplayEvents.PlayerGetDamaged -= onPlayerGetDamaged;
+        GameplayEvents.LevelPassed -= onLevelPassed;
+        GameplayEvents.LevelFailed -= onLevelFailed;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void onLevelFailed()
@@ -82,14 +100,6 @@ public class UpdateUI : MonoBehaviour
         healthText.text = health.ToString();
     }
 
-    // make these when on scene loaded
-    private void Start()
-    {
-        manager = gameManager.GetComponent<GameManager>();
-        keyText.text = $"{0}/{manager.totalKeyCount}";
-        //healthText.text = ;
-    }
-
     private void onKeyCollected(int collectedKeyCount, int totalKeyCount)
     {
         keyText.text = $"{collectedKeyCount.ToString()}/{totalKeyCount.ToString()}";
@@ -97,8 +107,8 @@ public class UpdateUI : MonoBehaviour
 
     public void onArrowDead(string arrowType, int arrowReward)
     {
-        var coins = manager.currentLevelCoin.ToString();
-        var brokenArrows = manager.currentLevelBrokenArrows.ToString();
+        var coins = GameManager.instance.currentLevelCoin.ToString();
+        var brokenArrows = GameManager.instance.currentLevelBrokenArrows.ToString();
         
         coinText.text = coins;
         brokenArrowText.text = brokenArrows;

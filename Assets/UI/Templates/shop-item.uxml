@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="row-shop-item">
+        <ui:VisualElement name="row-shop-item" style="flex-grow: 1; height: 100px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; flex-direction: row;">
+            <ui:VisualElement name="icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI/Icons/BrightBackground.png?fileID=-2043333513&amp;guid=05e0567213a58c840a3ea79a4409bdfd&amp;type=3#Heart01_BrightBG&apos;); -unity-background-scale-mode: scale-to-fit; width: 15%; height: auto; margin-right: 10px;" />
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 85%;">
+                <ui:VisualElement style="flex-grow: 1; align-items: stretch; justify-content: center; width: 60%;">
+                    <ui:VisualElement class="shop-item-title-row">
+                        <ui:Label tabindex="-1" text="HEALTH" parse-escape-sequences="true" display-tooltip-when-elided="true" name="title" class="shop-title shop-item-title" />
+                        <ui:Label tabindex="-1" text="1 → 2" parse-escape-sequences="true" display-tooltip-when-elided="true" name="level-info" class="shop-item-level-info" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Current Health: 1&#10;Next Level: 2" parse-escape-sequences="true" display-tooltip-when-elided="true" name="desc" class="shop-title" style="font-size: 12%; -unity-text-align: upper-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: -1px; padding-right: -1px; padding-bottom: -1px; padding-left: -1px; white-space: normal;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="button-col" style="width: 40%;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="upgradeButton" class="shop-button" style="padding-top: 2px; padding-bottom: 5px;">
+                        <ui:VisualElement class="shop-button-icon" />
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="cost" class="shop-button-text" />
+                    </ui:Button>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

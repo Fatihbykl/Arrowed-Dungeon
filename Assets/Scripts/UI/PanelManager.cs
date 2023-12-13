@@ -7,6 +7,9 @@ using UnityEngine.UIElements;
 public class PanelManager : MonoBehaviour
 {
     [SerializeField]
+    private ManageScenes manageScenes;
+
+    [SerializeField]
     private GameObject mainMenu, settings, charCustomization;
     
     [SerializeField]
@@ -48,6 +51,8 @@ public class PanelManager : MonoBehaviour
         // Menu screen callbacks
         _customizationButton.RegisterCallback<ClickEvent>(OpenCustomizationScreen);
         _settingsButton.RegisterCallback<ClickEvent>(OpenSettingsScreen);
+        _playButton.RegisterCallback<ClickEvent>(OpenLevelsScene);
+        _shopButton.RegisterCallback<ClickEvent>(OpenShopScene);
 
         // Settings screen callbacks
         _settingsBackButton.RegisterCallback<ClickEvent>(GoMainMenu);
@@ -82,6 +87,16 @@ public class PanelManager : MonoBehaviour
         characterDocument.rootVisualElement.style.display = DisplayStyle.None;
         characterDocument.rootVisualElement.style.display = DisplayStyle.None;
         settingsDocument.rootVisualElement.style.display = DisplayStyle.None;
+    }
+
+    private void OpenShopScene(ClickEvent evt)
+    {
+        manageScenes.LoadScene("Shop");
+    }
+
+    private void OpenLevelsScene(ClickEvent evt)
+    {
+        manageScenes.LoadScene("Levels");
     }
 
     private void OpenCustomizationScreen(ClickEvent evt)

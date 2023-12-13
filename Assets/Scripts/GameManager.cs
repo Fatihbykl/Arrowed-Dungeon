@@ -7,24 +7,39 @@ public class GameManager : MonoBehaviour, IDataPersistence
 {
     public GameObject keysObject;
     public GameObject gate;
-    public int currentLevelCoin;
-    public int currentLevelBrokenArrows;
+    public int currentLevelCoin = 0;
+    public int currentLevelBrokenArrows = 0;
     public int collectedKeyCount = 0;
     public int totalKeyCount = 0;
     public int currentLevel = 0;
 
+    public int playerBaseHealth { get; private set; } = 1;
+    public float playerSpeed { get; private set; } = 6;
+    public int playerShield { get; private set; } = 1;
+
+    public static GameManager instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogError("Found more than one Game Manager in the scene.");
+        }
+        instance = this;
+    }
+
     private void OnEnable()
     {
+        totalKeyCount = keysObject.transform.childCount;
+
         GameplayEvents.ArrowDead += onArrowDead;
+        ShopEvents.ItemUpgraded += OnItemUpgraded;
     }
 
     private void OnDisable()
     {
-        GameplayEvents.ArrowDead += onArrowDead;
-    }
-    private void Start()
-    {
-        totalKeyCount = keysObject.transform.childCount;
+        GameplayEvents.ArrowDead -= onArrowDead;
+        ShopEvents.ItemUpgraded -= OnItemUpgraded;
     }
 
     public void CollectedKey()
@@ -43,14 +58,27 @@ public class GameManager : MonoBehaviour, IDataPersistence
         currentLevelBrokenArrows++;
     }
 
+    private void OnItemUpgraded(ShopSystem.ItemData.ItemTitle title, float value)
+    {
+        if (title == ShopSystem.ItemData.ItemTitle.Health) { playerBaseHealth = (int)value; }
+        else if (title == ShopSystem.ItemData.ItemTitle.Shield) { playerShield = (int)value; }
+        else if (title == ShopSystem.ItemData.ItemTitle.Speed) { playerSpeed = value; }
+    }
+
     public void LoadData(GameData data)
     {
         currentLevel = data.currentLevel;
+        playerBaseHealth = data.health;
+        playerSpeed = data.speed;
+        playerShield = data.shield;
     }
 
     public void SaveData(GameData data)
     {
         data.currentLevel = currentLevel;
         data.coins += currentLevelCoin;
+        data.health = playerBaseHealth;
+        data.speed = playerSpeed;
+        data.shield = playerShield;
     }
 }

@@ -49,8 +49,5 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         health = data.health;
     }
 
-    public void SaveData(GameData data)
-    {
-        data.health = health;
-    }
+    public void SaveData(GameData data) { return; }
 }

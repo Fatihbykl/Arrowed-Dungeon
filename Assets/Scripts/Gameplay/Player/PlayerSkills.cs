@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,16 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
     private int freezeSkillAmount = 0;
     private int immortalSkillAmount = 0;
     private int destroyerSkillAmount = 0;
+
+    private void OnEnable()
+    {
+        ShopEvents.SkillBought += OnSkillBought;
+    }
+
+    private void OnDisable()
+    {
+        ShopEvents.SkillBought -= OnSkillBought;
+    }
 
     void Start()
     {
@@ -47,6 +58,13 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
             GameplayEvents.DestroyerSkillActivated.Invoke(3);
             destroyerSkillAmount--;
         }
+    }
+
+    private void OnSkillBought(ShopSystem.ItemData.ItemTitle title)
+    {
+        if (title == ShopSystem.ItemData.ItemTitle.Freeze) { freezeSkillAmount++; }
+        else if (title == ShopSystem.ItemData.ItemTitle.Immortal) { immortalSkillAmount++; }
+        else if (title == ShopSystem.ItemData.ItemTitle.Destroyer) { destroyerSkillAmount++; }
     }
 
     public void LoadData(GameData data)

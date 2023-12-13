@@ -11,7 +11,12 @@ public class GameData
     // Stats
     public int health;
     public int shield;
-    public int speed;
+    public float speed;
+
+    // Upgrade levels
+    public int healthLevel;
+    public int shieldLevel;
+    public int speedLevel;
 
     // Skills
     public int immortal;

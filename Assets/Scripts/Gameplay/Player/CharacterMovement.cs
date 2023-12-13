@@ -14,7 +14,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector2 m_JoystickDelta; // Between -1 and 1
 
     public CharacterController controller;
-    public float speed = 6;
+    public float speed = 3;
     public float gravity = -9.81f;
     public Vector3 direction;
     public float turnSmoothTime = 0.1f;
@@ -27,11 +27,16 @@ public class CharacterMovement : MonoBehaviour
 
     private void Start()
     {
+        if (joystickObject == null) { return; }
+
+        speed = GameManager.instance.playerSpeed;
         animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
+        if (joystickObject == null) { return; }
+
         var root = joystickObject.GetComponent<UIDocument>().rootVisualElement;
         m_JoystickBack = root.Q("JoystickBack");
         m_JoystickHandle = root.Q("JoystickHandle");
@@ -42,7 +47,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        if (!isActive) { return; }
+        if (!isActive || joystickObject == null) { return; }
         if (controller.isGrounded && velocity.y < 0){ velocity.y = -2f; }
 
         //gravity
