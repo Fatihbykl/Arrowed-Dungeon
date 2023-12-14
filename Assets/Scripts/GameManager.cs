@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void OnEnable()
     {
-        totalKeyCount = keysObject.transform.childCount;
+        if (keysObject != null) { totalKeyCount = keysObject.transform.childCount; }
 
         GameplayEvents.ArrowDead += onArrowDead;
         ShopEvents.ItemUpgraded += OnItemUpgraded;
@@ -58,11 +58,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
         currentLevelBrokenArrows++;
     }
 
-    private void OnItemUpgraded(ShopSystem.ItemData.ItemTitle title, float value)
+    private void OnItemUpgraded(ShopBaseSO item)
     {
-        if (title == ShopSystem.ItemData.ItemTitle.Health) { playerBaseHealth = (int)value; }
-        else if (title == ShopSystem.ItemData.ItemTitle.Shield) { playerShield = (int)value; }
-        else if (title == ShopSystem.ItemData.ItemTitle.Speed) { playerSpeed = value; }
+        if (item.title == ItemTitle.Health) { playerBaseHealth = (int)item.GetCurrentStat(); }
+        else if (item.title == ItemTitle.Shield) { playerShield = (int)item.GetCurrentStat(); }
+        else if (item.title == ItemTitle.Speed) { playerSpeed = item.GetCurrentStat(); }
     }
 
     public void LoadData(GameData data)

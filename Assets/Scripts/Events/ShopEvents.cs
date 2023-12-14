@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class ShopEvents
 {
-    public static Action<ShopSystem.ItemData.ItemTitle, float> ItemUpgraded;
-    public static Action<ShopSystem.ItemData.ItemTitle> SkillBought;
+    public static Action<ShopBaseSO> ItemUpgraded;
+    public static Action<ShopBaseSO> SkillBought;
     public static Action PurchaseFailed;
 }

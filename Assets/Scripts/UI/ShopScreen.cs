@@ -1,4 +1,3 @@
-using ShopSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,16 +6,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using static ShopSystem.ItemData;
 
 public class ShopScreen : MonoBehaviour, IDataPersistence
 {
     [SerializeField]
-    private ShopSystem.ShopItemSO upgrades, skills;
+    private UpgradesSO[] upgrades;
+
+    [SerializeField]
+    private SkillsSO[] skills;
 
     [SerializeField]
     private VisualTreeAsset shopItemTree;
 
+    private UIDocument document;
     private Label coinText;
     private int totalCoin;
     private VisualElement upgradesCol, skillsCol;
@@ -24,7 +26,7 @@ public class ShopScreen : MonoBehaviour, IDataPersistence
     private void OnEnable()
     {
 
-        UIDocument document = GetComponent<UIDocument>();
+        document = GetComponent<UIDocument>();
 
         coinText = document.rootVisualElement.Q<Label>("coinText");
         upgradesCol = document.rootVisualElement.Q<VisualElement>("upgrades");
@@ -35,10 +37,10 @@ public class ShopScreen : MonoBehaviour, IDataPersistence
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
-    private void AddShopItems(ShopSystem.ShopItemSO items, VisualElement root)
+    
+    private void AddShopItems(ShopBaseSO[] items, VisualElement root)
     {
-        for (int index = 0; index < items.itemData.Length; index++)
+        foreach (var item in items)
         {
             TemplateContainer itemRow = shopItemTree.Instantiate();
             VisualElement icon = itemRow.Q<VisualElement>("icon");
@@ -48,49 +50,75 @@ public class ShopScreen : MonoBehaviour, IDataPersistence
             Label cost = itemRow.Q<Label>("cost");
             Button button = itemRow.Q<Button>("upgradeButton");
 
-            var data = items.itemData[index];
+            levelInfo.name = $"levelInfo_{item.title}";
+            cost.name = $"cost_{item.title}";
 
             button.RegisterCallback<ClickEvent>(OnBuyButtonClicked);
-            button.userData = data;
-            
-            icon.style.backgroundImage = new StyleBackground(data.icon);
-            title.text = data.title.ToString();
-            desc.text = data.description;
-            cost.text = data.getCurrentUpgradeData().cost.ToString();
+            button.userData = item;
 
-            if (data.category == ShopSystem.ItemData.ShopItemCategory.Upgrades) 
-            {
-                levelInfo.text = $"{data.currentLevel + 1} -> {data.currentLevel + 2}";
-            }
-            else { levelInfo.text = "1"; }
+            icon.style.backgroundImage = new StyleBackground(item.icon);
+            title.text = item.title.ToString();
+            desc.text = item.description;
+            cost.text = item.GetCost();
+            levelInfo.text = item.GetTitleInfoText();
 
+            if (item.GetCost() == "MAX") { button.SetEnabled(false); }
             root.Add(itemRow);
         }
     }
+    
 
     private void OnBuyButtonClicked(ClickEvent evt)
     {
         var button = evt.target as Button;
-        ShopSystem.ItemData item = button.userData as ShopSystem.ItemData;
-        var cost = item.getCurrentUpgradeData().cost;
+        ShopBaseSO item = button.userData as ShopBaseSO;
+        if (item.GetCost() != "MAX") 
+        {
+            var cost = Int32.Parse(item.GetCost());
 
-        TryToBuyItem(item, cost);
+            var isCompleted = TryToBuyItem(item, cost);
+
+            if (isCompleted)
+            {
+                UpdateUI(item, button);
+            }
+            else { }
+        }
+        else
+        {
+            button.SetEnabled(false);
+        }
+        
     }
-
-    private void TryToBuyItem(ItemData item, int cost)
+    
+    private bool TryToBuyItem(ShopBaseSO item, int cost)
     {
         if (totalCoin >= cost)
         {
             Debug.Log("Aldin");
             totalCoin -= cost;
             item.BuyItem();
+
+            return true;
         }
         else
         {
             Debug.Log("alamadin");
+            return false;
         }
     }
 
+    private void UpdateUI(ShopBaseSO item, Button button)
+    {
+
+        Label levelInfo = document.rootVisualElement.Q<Label>($"levelInfo_{item.title}");
+        Label cost = document.rootVisualElement.Q<Label>($"cost_{item.title}");
+
+        levelInfo.text = item.GetTitleInfoText();
+        cost.text = item.GetCost();
+        coinText.text = totalCoin.ToString();
+    }
+    
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;

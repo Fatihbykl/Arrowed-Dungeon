@@ -60,11 +60,11 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         }
     }
 
-    private void OnSkillBought(ShopSystem.ItemData.ItemTitle title)
+    private void OnSkillBought(ShopBaseSO item)
     {
-        if (title == ShopSystem.ItemData.ItemTitle.Freeze) { freezeSkillAmount++; }
-        else if (title == ShopSystem.ItemData.ItemTitle.Immortal) { immortalSkillAmount++; }
-        else if (title == ShopSystem.ItemData.ItemTitle.Destroyer) { destroyerSkillAmount++; }
+        if (item.title == ItemTitle.Freeze) { freezeSkillAmount++; }
+        else if (item.title == ItemTitle.Immortal) { immortalSkillAmount++; }
+        else if (item.title == ItemTitle.Destroyer) { destroyerSkillAmount++; }
     }
 
     public void LoadData(GameData data)

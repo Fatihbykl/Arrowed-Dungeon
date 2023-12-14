@@ -37,6 +37,8 @@ public class PanelManager : MonoBehaviour
 
         // Settings screen buttons
         Button _settingsBackButton = settingsDocument.rootVisualElement.Q("backButton") as Button;
+        SliderInt _musicVolume = settingsDocument.rootVisualElement.Q("musicSlider") as SliderInt;
+        SliderInt _sfxVolume = settingsDocument.rootVisualElement.Q("sfxSlider") as SliderInt;
 
         // Customization screen buttons
         Button _customizationBackButton = characterDocument.rootVisualElement.Q("backButton") as Button;
@@ -56,6 +58,8 @@ public class PanelManager : MonoBehaviour
 
         // Settings screen callbacks
         _settingsBackButton.RegisterCallback<ClickEvent>(GoMainMenu);
+        _musicVolume.RegisterValueChangedCallback(OnMusicSliderChanged);
+        _sfxVolume.RegisterValueChangedCallback(OnSfxSliderChanged);
 
         // Customization screen callbacks
         _customizationBackButton.RegisterCallback<ClickEvent>(GoMainMenu);
@@ -87,6 +91,18 @@ public class PanelManager : MonoBehaviour
         characterDocument.rootVisualElement.style.display = DisplayStyle.None;
         characterDocument.rootVisualElement.style.display = DisplayStyle.None;
         settingsDocument.rootVisualElement.style.display = DisplayStyle.None;
+    }
+
+    private void OnSfxSliderChanged(ChangeEvent<int> value)
+    {
+        Debug.Log(value.previousValue);
+        Debug.Log(value.newValue);
+    }
+
+    private void OnMusicSliderChanged(ChangeEvent<int> value)
+    {
+        Debug.Log(value.previousValue);
+        Debug.Log(value.newValue);
     }
 
     private void OpenShopScene(ClickEvent evt)
