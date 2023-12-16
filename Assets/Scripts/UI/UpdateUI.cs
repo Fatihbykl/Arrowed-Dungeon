@@ -5,7 +5,14 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UIElements.Button;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Core.Enums;
+using DG.Tweening.Plugins;
+using DG.Tweening.Plugins.Options;
 
 public class UpdateUI : MonoBehaviour
 {
@@ -15,7 +22,7 @@ public class UpdateUI : MonoBehaviour
 
     private Label healthText, coinText, keyText, brokenArrowText;
     private Button pauseButton, continueButton, mainMenuButton;
-    private VisualElement pauseBg, passedBg, failedBg;
+    private VisualElement pauseBg, passedBg, failedBg, keyIcon, key;
 
     private void OnEnable()
     {
@@ -28,6 +35,8 @@ public class UpdateUI : MonoBehaviour
         coinText = inGameScreenDocument.rootVisualElement.Q("coinText") as Label;
         keyText = inGameScreenDocument.rootVisualElement.Q("keyText") as Label;
         brokenArrowText = inGameScreenDocument.rootVisualElement.Q("brokenArrowText") as Label;
+        keyIcon = inGameScreenDocument.rootVisualElement.Q("keyIcon");
+        keyIcon = inGameScreenDocument.rootVisualElement.Q("key");
         pauseButton = inGameScreenDocument.rootVisualElement.Q("pauseButton") as Button;
         continueButton = pauseDocument.rootVisualElement.Q("continue") as Button;
         mainMenuButton = pauseDocument.rootVisualElement.Q("main-menu") as Button;
@@ -40,7 +49,7 @@ public class UpdateUI : MonoBehaviour
         mainMenuButton.RegisterCallback<ClickEvent>(onMenuClicked);
 
         GameplayEvents.ArrowDead += onArrowDead;
-        GameplayEvents.KeyCollected += onKeyCollected;
+        GameplayEvents.KeyAnimationFinished += OnKeyAnimationFinished;
         GameplayEvents.PlayerGetDamaged += onPlayerGetDamaged;
         GameplayEvents.LevelPassed += onLevelPassed;
         GameplayEvents.LevelFailed += onLevelFailed;
@@ -61,7 +70,7 @@ public class UpdateUI : MonoBehaviour
     private void OnDisable()
     {
         GameplayEvents.ArrowDead -= onArrowDead;
-        GameplayEvents.KeyCollected -= onKeyCollected;
+        GameplayEvents.KeyAnimationFinished -= OnKeyAnimationFinished;
         GameplayEvents.PlayerGetDamaged -= onPlayerGetDamaged;
         GameplayEvents.LevelPassed -= onLevelPassed;
         GameplayEvents.LevelFailed -= onLevelFailed;
@@ -100,16 +109,34 @@ public class UpdateUI : MonoBehaviour
         healthText.text = health.ToString();
     }
 
-    private void onKeyCollected(int collectedKeyCount, int totalKeyCount)
+    private void OnKeyAnimationFinished()
     {
-        keyText.text = $"{collectedKeyCount.ToString()}/{totalKeyCount.ToString()}";
+        keyText.text = $"{GameManager.instance.collectedKeyCount.ToString()}/{GameManager.instance.totalKeyCount.ToString()}";
+        DOTween.Punch(
+            () => keyText.transform.scale,
+            x => keyText.transform.scale = x,
+            new Vector3(0.3f, 0.3f, 0.3f),
+            0.2f
+            ).SetEase(Ease.InOutElastic);
+        DOTween.Punch(
+            () => keyIcon.transform.scale,
+            x => keyIcon.transform.scale = x,
+            new Vector3(0.3f, 0.3f, 0.3f),
+            0.2f
+        ).SetEase(Ease.InOutElastic);
+        DOTween.Punch(
+            () => key.transform.scale,
+            x => key.transform.scale = x,
+            new Vector3(0.3f, 0.3f, 0.3f),
+            0.2f
+        ).SetEase(Ease.InOutElastic);
     }
 
     public void onArrowDead(string arrowType, int arrowReward)
     {
         var coins = GameManager.instance.currentLevelCoin.ToString();
         var brokenArrows = GameManager.instance.currentLevelBrokenArrows.ToString();
-        
+
         coinText.text = coins;
         brokenArrowText.text = brokenArrows;
     }

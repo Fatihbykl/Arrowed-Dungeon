@@ -1,12 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class CharacterMovement : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject joystickObject;
+    [SerializeField] private GameObject joystickObject;
 
     private VisualElement m_JoystickBack;
     private VisualElement m_JoystickHandle;
@@ -23,11 +23,14 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 velocity;
     private Animator animator;
     private float turnSmoothVelocity;
-    
+
 
     private void Start()
     {
-        if (joystickObject == null) { return; }
+        if (joystickObject == null)
+        {
+            return;
+        }
 
         speed = GameManager.instance.playerSpeed;
         animator = GetComponent<Animator>();
@@ -35,7 +38,10 @@ public class CharacterMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        if (joystickObject == null) { return; }
+        if (joystickObject == null)
+        {
+            return;
+        }
 
         var root = joystickObject.GetComponent<UIDocument>().rootVisualElement;
         m_JoystickBack = root.Q("JoystickBack");
@@ -47,8 +53,15 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        if (!isActive || joystickObject == null) { return; }
-        if (controller.isGrounded && velocity.y < 0){ velocity.y = -2f; }
+        if (!isActive || joystickObject == null)
+        {
+            return;
+        }
+
+        if (controller.isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
 
         //gravity
         velocity.y += gravity * Time.deltaTime;
@@ -64,12 +77,25 @@ public class CharacterMovement : MonoBehaviour
         if (direction.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity,
+                turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             controller.Move(direction.normalized * speed * Time.deltaTime);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Collectable_Key"))
+        {
+            GameManager.instance.CollectedKey();
+            other.GetComponent<BoxCollider>().enabled = false;
+            GameplayEvents.KeyCollected.Invoke(GameManager.instance.collectedKeyCount,
+                GameManager.instance.totalKeyCount, other.gameObject, this.gameObject);
+        }
+    }
+
     void OnPointerDown(PointerDownEvent e)
     {
         m_JoystickHandle.CapturePointer(e.pointerId);
@@ -98,4 +124,3 @@ public class CharacterMovement : MonoBehaviour
     static Vector2 Clamp(Vector2 v, Vector2 min, Vector2 max) =>
         new Vector2(Mathf.Clamp(v.x, min.x, max.x), Mathf.Clamp(v.y, min.y, max.y));
 }
-

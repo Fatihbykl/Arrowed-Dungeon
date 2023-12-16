@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             gate.GetComponent<Animator>().Play("Open");
         }
-        GameplayEvents.KeyCollected.Invoke(collectedKeyCount, totalKeyCount);
     }
 
     public void onArrowDead(string arrowType, int coinReward)
