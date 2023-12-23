@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,18 +24,25 @@ public class PanelManager : MonoBehaviour
     private UIDocument settingsDocument;
     private UIDocument characterDocument;
 
+    private Button _playButton, _shopButton, _customizationButton, _settingsButton, _quitButton;
+    private VisualElement backgroundMenu, backgroundSettings, backgroundCustomization;
+    
     private void OnEnable()
     {
         menuDocument = mainMenu.GetComponent<UIDocument>();
         settingsDocument = settings.GetComponent<UIDocument>();
         characterDocument = charCustomization.GetComponent<UIDocument>();
 
+        backgroundMenu = menuDocument.rootVisualElement.Q("Background");
+        backgroundSettings = settingsDocument.rootVisualElement.Q("Background");
+        backgroundCustomization = characterDocument.rootVisualElement.Q("BackgroundChar");
+
         // Menu screen buttons
-        Button _playButton = menuDocument.rootVisualElement.Q("playButton") as Button;
-        Button _shopButton = menuDocument.rootVisualElement.Q("shopButton") as Button;
-        Button _customizationButton = menuDocument.rootVisualElement.Q("customizationButton") as Button;
-        Button _settingsButton = menuDocument.rootVisualElement.Q("settingsButton") as Button;
-        Button _quitButton = menuDocument.rootVisualElement.Q("quitButton") as Button;
+        _playButton = menuDocument.rootVisualElement.Q("playButton") as Button;
+        _shopButton = menuDocument.rootVisualElement.Q("shopButton") as Button;
+        _customizationButton = menuDocument.rootVisualElement.Q("customizationButton") as Button;
+        _settingsButton = menuDocument.rootVisualElement.Q("settingsButton") as Button;
+        _quitButton = menuDocument.rootVisualElement.Q("quitButton") as Button;
 
         // Settings screen buttons
         Button _settingsBackButton = settingsDocument.rootVisualElement.Q("backButton") as Button;
@@ -87,10 +96,28 @@ public class PanelManager : MonoBehaviour
             var radio = evt.target as RadioButton;
             if (radio.value) { shoesMaterial.color = colors[radio.tabIndex]; }
         });
+        
+        menuDocument.rootVisualElement.transform.scale = Vector3.zero;
+        settingsDocument.rootVisualElement.transform.scale = Vector3.zero;
+        characterDocument.rootVisualElement.transform.scale = Vector3.zero;
+        
+        MainMenuAnimation();
+    }
 
-        characterDocument.rootVisualElement.style.display = DisplayStyle.None;
-        characterDocument.rootVisualElement.style.display = DisplayStyle.None;
-        settingsDocument.rootVisualElement.style.display = DisplayStyle.None;
+    private async void MainMenuAnimation()
+    {
+        float wait = 0.3f;
+        DotweenAnimations.DoScaleFromZeroAnimation(menuDocument.rootVisualElement);
+        await UniTask.WaitForSeconds(wait);
+        DotweenAnimations.DoScaleFromZeroAnimation(_playButton);
+        await UniTask.WaitForSeconds(wait);
+        DotweenAnimations.DoScaleFromZeroAnimation(_shopButton);
+        await UniTask.WaitForSeconds(wait);
+        DotweenAnimations.DoScaleFromZeroAnimation(_customizationButton);
+        await UniTask.WaitForSeconds(wait);
+        DotweenAnimations.DoScaleFromZeroAnimation(_settingsButton);
+        await UniTask.WaitForSeconds(wait);
+        DotweenAnimations.DoScaleFromZeroAnimation(_quitButton);
     }
 
     private void OnSfxSliderChanged(ChangeEvent<int> value)
@@ -117,22 +144,23 @@ public class PanelManager : MonoBehaviour
 
     private void OpenCustomizationScreen(ClickEvent evt)
     {
-        menuDocument.rootVisualElement.style.display = DisplayStyle.None;
-        settingsDocument.rootVisualElement.style.display = DisplayStyle.None;
-        characterDocument.rootVisualElement.style.display = DisplayStyle.Flex;
+        menuDocument.rootVisualElement.transform.scale = Vector3.zero;
+        settingsDocument.rootVisualElement.transform.scale = Vector3.zero;
+        DotweenAnimations.DoScaleFromZeroAnimation(characterDocument.rootVisualElement);
     }
 
     private void OpenSettingsScreen(ClickEvent evt)
     {
-        menuDocument.rootVisualElement.style.display = DisplayStyle.None;
-        settingsDocument.rootVisualElement.style.display = DisplayStyle.Flex;
-        characterDocument.rootVisualElement.style.display = DisplayStyle.None;
+        menuDocument.rootVisualElement.transform.scale = Vector3.zero;
+        characterDocument.rootVisualElement.transform.scale = Vector3.zero;
+        DotweenAnimations.DoScaleFromZeroAnimation(settingsDocument.rootVisualElement);
     }
 
     private void GoMainMenu(ClickEvent evt)
     {
-        menuDocument.rootVisualElement.style.display = DisplayStyle.Flex;
-        settingsDocument.rootVisualElement.style.display = DisplayStyle.None;
-        characterDocument.rootVisualElement.style.display = DisplayStyle.None;
+        Debug.Log("back");
+        characterDocument.rootVisualElement.transform.scale = Vector3.zero;
+        settingsDocument.rootVisualElement.transform.scale = Vector3.zero;
+        DotweenAnimations.DoScaleFromZeroAnimation(menuDocument.rootVisualElement);
     }
 }

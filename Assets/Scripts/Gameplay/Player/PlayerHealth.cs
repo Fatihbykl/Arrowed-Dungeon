@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         {
             isDieAnimActive = true;
             characterMovement.isActive = false;
-            animator.SetTrigger("death");
+            animator.SetTrigger("isDead");
 
             yield return new WaitForSeconds(2);
             characterCollider.enabled = false;

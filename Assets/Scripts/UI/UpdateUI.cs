@@ -9,10 +9,6 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UIElements.Button;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Core.Enums;
-using DG.Tweening.Plugins;
-using DG.Tweening.Plugins.Options;
 
 public class UpdateUI : MonoBehaviour
 {
@@ -112,24 +108,10 @@ public class UpdateUI : MonoBehaviour
     private void OnKeyAnimationFinished()
     {
         keyText.text = $"{GameManager.instance.collectedKeyCount.ToString()}/{GameManager.instance.totalKeyCount.ToString()}";
-        DOTween.Punch(
-            () => keyText.transform.scale,
-            x => keyText.transform.scale = x,
-            new Vector3(0.3f, 0.3f, 0.3f),
-            0.2f
-            ).SetEase(Ease.InOutElastic);
-        DOTween.Punch(
-            () => keyIcon.transform.scale,
-            x => keyIcon.transform.scale = x,
-            new Vector3(0.3f, 0.3f, 0.3f),
-            0.2f
-        ).SetEase(Ease.InOutElastic);
-        DOTween.Punch(
-            () => key.transform.scale,
-            x => key.transform.scale = x,
-            new Vector3(0.3f, 0.3f, 0.3f),
-            0.2f
-        ).SetEase(Ease.InOutElastic);
+        
+        DotweenAnimations.DoPunchAnimation(keyText, new Vector3(0.3f, 0.3f, 0.3f), 0.2f, Ease.InOutElastic);
+        DotweenAnimations.DoPunchAnimation(keyIcon, new Vector3(0.3f, 0.3f, 0.3f), 0.2f, Ease.InOutElastic);
+        DotweenAnimations.DoPunchAnimation(key, new Vector3(0.3f, 0.3f, 0.3f), 0.2f, Ease.InOutElastic);
     }
 
     public void onArrowDead(string arrowType, int arrowReward)

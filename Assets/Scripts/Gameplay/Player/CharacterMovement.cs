@@ -33,7 +33,8 @@ public class CharacterMovement : MonoBehaviour
         }
 
         speed = GameManager.instance.playerSpeed;
-        animator = GetComponent<Animator>();
+        animator = gameObject.GetComponent<Animator>();
+        Debug.Log(animator);
     }
 
     private void OnEnable()
@@ -72,10 +73,11 @@ public class CharacterMovement : MonoBehaviour
         float vertical = m_JoystickDelta.y;
 
         direction = new Vector3(horizontal, 0f, -vertical).normalized;
-        animator.SetFloat("directionMagnitude", direction.magnitude);
-
-        if (direction.magnitude >= 0.1f)
+        var currentState = animator.GetCurrentAnimatorStateInfo(0).IsName("PunchRight");
+        var currentStateL = animator.GetCurrentAnimatorStateInfo(0).IsName("PunchLeft");
+        if (direction.magnitude >= 0.1f && !currentState && !currentStateL)
         {
+            animator.SetBool("Moving", true);
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity,
                 turnSmoothTime);
@@ -83,16 +85,9 @@ public class CharacterMovement : MonoBehaviour
 
             controller.Move(direction.normalized * speed * Time.deltaTime);
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Collectable_Key"))
+        else
         {
-            GameManager.instance.CollectedKey();
-            other.GetComponent<BoxCollider>().enabled = false;
-            GameplayEvents.KeyCollected.Invoke(GameManager.instance.collectedKeyCount,
-                GameManager.instance.totalKeyCount, other.gameObject, this.gameObject);
+            animator.SetBool("Moving", false);
         }
     }
 

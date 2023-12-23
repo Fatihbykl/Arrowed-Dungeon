@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.inspiaaa.unityhfsm": {
+      "version": "https://github.com/Inspiaaa/UnityHFSM.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "eb590da7fb7680684ffc1b6801cc50c46417c38d"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -68,6 +75,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.7.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.postprocessing": {
