@@ -36,8 +36,8 @@ namespace Gameplay.Player
             PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
             PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Attack, t => attackAction.triggered);
             PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Attack, t => attackAction.triggered);
-            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Idle, t => !attackAction.triggered && moveAction.ReadValue<Vector2>().magnitude < 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Move, t => !attackAction.triggered && moveAction.ReadValue<Vector2>().magnitude > 0.1f);
+            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
+            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
             
             PlayerFSM.SetStartState(PlayerState.Idle);
             PlayerFSM.Init();

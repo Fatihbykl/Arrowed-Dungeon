@@ -10,7 +10,8 @@ namespace FSM
         public static readonly int[] AttackCombos = new []
         {
             Animator.StringToHash("ComboAttack1"),
-            Animator.StringToHash("ComboAttack2")
+            Animator.StringToHash("ComboAttack2"),
+            Animator.StringToHash("ComboAttack3")
         };
     }
 }

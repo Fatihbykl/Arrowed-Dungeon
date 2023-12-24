@@ -30,21 +30,27 @@ namespace FSM.Player.States
         public override void OnLogic()
         {
             base.OnLogic();
-
+            
             if (Time.time - lastClickTime > _player.comboDelay)
             {
                 numClicks = 0;
                 _playerFSM.StateCanExit();
+                //Debug.Log("Exit State");
             }
-
+            
             if (_player.attackAction.triggered)
             {
                 lastClickTime = Time.time;
                 numClicks++;
-
+            
                 if (numClicks <= AnimationParameters.AttackCombos.Length)
                 {
                     _player.animator.SetTrigger(AnimationParameters.AttackCombos[numClicks - 1]);
+                    Debug.Log($"Attacked - {numClicks}");
+                }
+                else
+                {
+                    _playerFSM.StateCanExit();
                 }
             }
         }
