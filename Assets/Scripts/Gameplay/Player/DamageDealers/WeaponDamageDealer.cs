@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Gameplay.Player;
+using Gameplay.Player.DamageDealers;
 using UnityEngine;
 
 public class WeaponDamageDealer : MonoBehaviour
@@ -8,14 +10,23 @@ public class WeaponDamageDealer : MonoBehaviour
     private bool canDealDamage;
     private List<GameObject> hasDealtDamage;
 
+    [SerializeField] private DamageDealerTypes weaponType;
     [SerializeField] private float weaponLength;
     [SerializeField] private float weaponDamage;
-    [SerializeField] private Vector3 raycastRotationVector;
 
     private void Start()
     {
         canDealDamage = false;
         hasDealtDamage = new List<GameObject>();
+
+        GameplayEvents.StartDealDamage += OnStartDealDamage;
+        GameplayEvents.EndDealDamage += OnEndDealDamage;
+    }
+
+    private void OnDisable()
+    {
+        GameplayEvents.StartDealDamage -= OnStartDealDamage;
+        GameplayEvents.EndDealDamage -= OnEndDealDamage;
     }
 
     private void Update()
@@ -23,26 +34,27 @@ public class WeaponDamageDealer : MonoBehaviour
         if (canDealDamage)
         {
             RaycastHit hit;
-
-            int layerMask = 1 << 9;
-            if (Physics.Raycast(transform.position, raycastRotationVector, out hit, weaponLength, layerMask))
+            int layerMask = 1 << 6; // select layer 6
+            if (Physics.Raycast(transform.position, transform.right , out hit, weaponLength, layerMask))
             {
                 if (!hasDealtDamage.Contains(hit.transform.gameObject))
                 {
-                    Debug.Log("Damage");
+                    Debug.Log($"Hit -> {weaponType}");
                     hasDealtDamage.Add(hit.transform.gameObject);
                 }
             }
         }
     }
 
-    public void StartDealDamage()
+    private void OnStartDealDamage(DamageDealerTypes type)
     {
+        if (weaponType != type) { return; }
+
         canDealDamage = true;
         hasDealtDamage.Clear();
     }
     
-    public void EndDealDamage()
+    private void OnEndDealDamage()
     {
         canDealDamage = false;
     }
@@ -50,6 +62,6 @@ public class WeaponDamageDealer : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, transform.position + raycastRotationVector * weaponLength);
+        Gizmos.DrawLine(transform.position, transform.position + transform.right * weaponLength);
     }
 }

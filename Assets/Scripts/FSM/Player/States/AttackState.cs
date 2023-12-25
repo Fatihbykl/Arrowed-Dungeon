@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityHFSM;
 
@@ -8,13 +9,17 @@ namespace FSM.Player.States
     {
         private float lastClickTime;
         private int numClicks;
+        private bool isComboEnded;
         private float clipLength;
         private float clipSpeed;
 
         public AttackState(Gameplay.Player.Player player, StateMachine<PlayerState> playerFSM, bool needsExitTime)
             : base(player, playerFSM, needsExitTime: needsExitTime)
         {
+            GameplayEvents.AttackTransition += OnComboAttackTransition;
         }
+        
+        
 
         public override void OnEnter()
         {
@@ -22,8 +27,9 @@ namespace FSM.Player.States
 
             numClicks = 0;
             lastClickTime = 0;
+            isComboEnded = false;
 
-            _player.animator.applyRootMotion = true;
+            //_player.animator.applyRootMotion = true;
             _player.animator.SetBool(AnimationParameters.AttackStart, true);
         }
 
@@ -31,33 +37,46 @@ namespace FSM.Player.States
         {
             base.OnLogic();
             
-            if (Time.time - lastClickTime > _player.comboDelay)
+            if (Time.time - lastClickTime > _player.animator.GetCurrentAnimatorStateInfo(0).length)
             {
                 numClicks = 0;
                 _playerFSM.StateCanExit();
-                //Debug.Log("Exit State");
             }
             
-            if (_player.attackAction.triggered)
+            if (_player.attackAction.triggered && !isComboEnded)
             {
                 lastClickTime = Time.time;
                 numClicks++;
             
-                if (numClicks <= AnimationParameters.AttackCombos.Length)
+                if (numClicks == 1)
                 {
-                    _player.animator.SetTrigger(AnimationParameters.AttackCombos[numClicks - 1]);
-                    Debug.Log($"Attacked - {numClicks}");
+                    _player.animator.SetTrigger(AnimationParameters.AttackCombos[0]);
                 }
-                else
-                {
-                    _playerFSM.StateCanExit();
-                }
+
+                numClicks = Mathf.Clamp(numClicks, 0, 3);
+            }
+        }
+
+        private void OnComboAttackTransition(int transitionNumber)
+        {
+            if (numClicks >= 2 && transitionNumber == 1)
+            {
+                _player.animator.SetTrigger(AnimationParameters.AttackCombos[1]);
+                lastClickTime = Time.time;
+            }
+            if (numClicks >= 3 && transitionNumber == 2)
+            {
+                if (isComboEnded) { return; }
+                _player.animator.SetTrigger(AnimationParameters.AttackCombos[2]);
+                lastClickTime = Time.time;
+                isComboEnded = true;
             }
         }
 
         public override void OnExit()
         {
             base.OnExit();
+
             _player.animator.applyRootMotion = false;
             _player.animator.SetBool(AnimationParameters.AttackStart, false);
         }

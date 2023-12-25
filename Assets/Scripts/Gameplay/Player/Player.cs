@@ -1,8 +1,12 @@
 using System;
+using Cysharp.Threading.Tasks;
+using FSM;
 using FSM.Player;
 using FSM.Player.States;
+using Gameplay.Player.DamageDealers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 using UnityHFSM;
 
@@ -13,6 +17,7 @@ namespace Gameplay.Player
         public TMP_Text stateText;
         public float comboDelay;
         private StateMachine<PlayerState> PlayerFSM;
+        private string currentStateName;
         [HideInInspector] public Animator animator;
         [HideInInspector] public InputAction moveAction;
         [HideInInspector] public InputAction attackAction;
@@ -46,9 +51,25 @@ namespace Gameplay.Player
         private void Update()
         {
             PlayerFSM.OnLogic();
-            stateText.SetText(PlayerFSM.GetActiveHierarchyPath().Split('/')[1]);
+            currentStateName = PlayerFSM.GetActiveHierarchyPath().Split('/')[1];
+            stateText.SetText(currentStateName);
         }
 
+        public void AttackTransition(int transitionNumber)
+        {
+            GameplayEvents.AttackTransition.Invoke(transitionNumber);
+        }
+
+        public void StartDealDamage(DamageDealerTypes type)
+        {
+            GameplayEvents.StartDealDamage.Invoke(type);
+        }
+        
+        public void EndDealDamage()
+        {
+            GameplayEvents.EndDealDamage.Invoke();
+        }
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Collectable_Key"))

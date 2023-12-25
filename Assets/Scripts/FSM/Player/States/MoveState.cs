@@ -30,6 +30,11 @@ namespace FSM.Player.States
         {
             base.OnLogic();
 
+            if (_player.animator.GetBool(AnimationParameters.AttackStart))
+            {
+                return;
+            }
+
             var input = _player.moveAction.ReadValue<Vector2>();
             float horizontal = input.x;
             float vertical = input.y;
