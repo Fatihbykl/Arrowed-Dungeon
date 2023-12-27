@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gameplay.Player;
 using Gameplay.Player.DamageDealers;
+using UnityEditor;
 using UnityEngine;
 
 public class WeaponDamageDealer : MonoBehaviour
@@ -35,7 +36,7 @@ public class WeaponDamageDealer : MonoBehaviour
         {
             RaycastHit hit;
             int layerMask = 1 << 6; // select layer 6
-            if (Physics.Raycast(transform.position, transform.right , out hit, weaponLength, layerMask))
+            if (Physics.Raycast(transform.position, GetTransformVector(), out hit, weaponLength, layerMask))
             {
                 if (!hasDealtDamage.Contains(hit.transform.gameObject))
                 {
@@ -44,6 +45,21 @@ public class WeaponDamageDealer : MonoBehaviour
                 }
             }
         }
+    }
+
+    private Vector3 GetTransformVector()
+    {
+        Vector3 returnValue;
+        switch (weaponType)
+        {
+            case DamageDealerTypes.OneHandSword:
+                returnValue = transform.up;
+                break;
+            default:
+                returnValue = transform.right;
+                break;
+        }
+        return returnValue;
     }
 
     private void OnStartDealDamage(DamageDealerTypes type)
@@ -62,6 +78,6 @@ public class WeaponDamageDealer : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, transform.position + transform.right * weaponLength);
+        Gizmos.DrawLine(transform.position, transform.position + GetTransformVector() * weaponLength);
     }
 }

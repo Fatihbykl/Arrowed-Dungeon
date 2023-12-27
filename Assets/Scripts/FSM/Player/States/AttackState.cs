@@ -37,7 +37,7 @@ namespace FSM.Player.States
         {
             base.OnLogic();
             
-            if (Time.time - lastClickTime > _player.animator.GetCurrentAnimatorStateInfo(0).length)
+            if (Time.time - lastClickTime > _player.animator.GetCurrentAnimatorStateInfo(0).length && _player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .9f)
             {
                 numClicks = 0;
                 _playerFSM.StateCanExit();
@@ -77,7 +77,7 @@ namespace FSM.Player.States
         {
             base.OnExit();
 
-            _player.animator.applyRootMotion = false;
+            //_player.animator.applyRootMotion = false;
             _player.animator.SetBool(AnimationParameters.AttackStart, false);
         }
     }

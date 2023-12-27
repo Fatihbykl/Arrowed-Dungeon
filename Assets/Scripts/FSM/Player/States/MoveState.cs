@@ -8,7 +8,7 @@ namespace FSM.Player.States
     public class MoveState : PlayerStateBase
     {
         public CharacterController controller;
-        public float speed = 3;
+        public float speed = 2;
         public float gravity = -9.81f;
         public Vector3 direction;
         public float turnSmoothTime = 0.1f;
