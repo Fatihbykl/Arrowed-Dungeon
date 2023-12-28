@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityHFSM;
 
@@ -64,7 +65,7 @@ namespace FSM.Player.States
                 _player.animator.SetTrigger(AnimationParameters.AttackCombos[1]);
                 lastClickTime = Time.time;
             }
-            if (numClicks >= 3 && transitionNumber == 2)
+            else if (numClicks >= 3 && transitionNumber == 2)
             {
                 if (isComboEnded) { return; }
                 _player.animator.SetTrigger(AnimationParameters.AttackCombos[2]);
