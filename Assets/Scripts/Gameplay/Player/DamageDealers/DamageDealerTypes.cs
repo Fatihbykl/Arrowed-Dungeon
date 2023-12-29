@@ -6,6 +6,7 @@ namespace Gameplay.Player.DamageDealers
     {
         FistR,
         FistL,
-        OneHandSword
+        OneHandSword,
+        EnemyMetalonGreen
     }
 }

@@ -10,8 +10,8 @@ public static class GameplayEvents
     public static Action<string, int> ArrowDead;
     public static Action<int> PlayerGetDamaged;
     public static Action<int> AttackTransition;
-    public static Action<DamageDealerTypes> StartDealDamage;
-    public static Action EndDealDamage;
+    public static Action<GameObject> StartDealDamage;
+    public static Action<GameObject> EndDealDamage;
 
     public static Action<int, int, GameObject, GameObject> KeyCollected;
     public static Action KeyAnimationFinished;

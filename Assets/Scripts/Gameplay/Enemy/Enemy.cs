@@ -1,6 +1,10 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using FSM;
 using FSM.Enemy;
 using FSM.Enemy.States;
+using Gameplay.Player.DamageDealers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,7 +12,7 @@ using UnityHFSM;
 
 namespace Gameplay.Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IDamageable
     {
         public Player.Player player;
         public float sphereRadius;
@@ -26,6 +30,7 @@ namespace Gameplay.Enemy
         private StateMachine<EnemyState> EnemyFSM;
         private LayerMask playerMask;
         private bool playerDetected;
+        private SkinnedMeshRenderer meshRenderer;
         
         
         public TMP_Text stateText;
@@ -39,6 +44,7 @@ namespace Gameplay.Enemy
             canMoveNextWaypoint = true;
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
+            meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             playerMask = LayerMask.GetMask("Player");
             
             EnemyFSM = new StateMachine<EnemyState>();
@@ -69,6 +75,26 @@ namespace Gameplay.Enemy
             stateText.SetText(EnemyFSM.GetActiveHierarchyPath().Split('/')[1]);
             playerDetected = Physics.CheckSphere(transform.position, sphereRadius, playerMask,
                 QueryTriggerInteraction.Collide);
+        }
+
+        public void TakeDamage()
+        {
+            animator.SetTrigger(AnimationParameters.TakeDamage);
+        }
+        
+        public void StartDealDamage()
+        {
+            GameplayEvents.StartDealDamage.Invoke(this.gameObject);
+        }
+        
+        public void EndDealDamage()
+        {
+            GameplayEvents.EndDealDamage.Invoke(this.gameObject);
+        }
+        
+        public void StartTakeDamageAnim()
+        {
+            meshRenderer.material.DOColor(Color.red, .5f).From().SetEase(Ease.InFlash);
         }
 
         private void OnDrawGizmos()

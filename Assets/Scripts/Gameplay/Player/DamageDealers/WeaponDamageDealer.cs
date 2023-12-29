@@ -1,83 +1,91 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Gameplay.Player;
-using Gameplay.Player.DamageDealers;
-using UnityEditor;
 using UnityEngine;
 
-public class WeaponDamageDealer : MonoBehaviour
+namespace Gameplay.Player.DamageDealers
 {
-    private bool canDealDamage;
-    private List<GameObject> hasDealtDamage;
-
-    [SerializeField] private DamageDealerTypes weaponType;
-    [SerializeField] private float weaponLength;
-    [SerializeField] private float weaponDamage;
-
-    private void Start()
+    public class WeaponDamageDealer : MonoBehaviour
     {
-        canDealDamage = false;
-        hasDealtDamage = new List<GameObject>();
+        private bool canDealDamage;
+        private List<IDamageable> hasDealtDamage;
 
-        GameplayEvents.StartDealDamage += OnStartDealDamage;
-        GameplayEvents.EndDealDamage += OnEndDealDamage;
-    }
+        [SerializeField] private DamageDealerTypes weaponType;
+        [SerializeField] private float weaponLength;
+        [SerializeField] private float weaponDamage;
+        [SerializeField] private LayerMask damageTo;
+        [SerializeField] private GameObject rootObject;
 
-    private void OnDisable()
-    {
-        GameplayEvents.StartDealDamage -= OnStartDealDamage;
-        GameplayEvents.EndDealDamage -= OnEndDealDamage;
-    }
-
-    private void Update()
-    {
-        if (canDealDamage)
+        private void Start()
         {
-            RaycastHit hit;
-            int layerMask = 1 << 6; // select layer 6
-            if (Physics.Raycast(transform.position, GetTransformVector(), out hit, weaponLength, layerMask))
+            canDealDamage = false;
+            hasDealtDamage = new List<IDamageable>();
+
+            GameplayEvents.StartDealDamage += OnStartDealDamage;
+            GameplayEvents.EndDealDamage += OnEndDealDamage;
+        }
+
+        private void OnDisable()
+        {
+            GameplayEvents.StartDealDamage -= OnStartDealDamage;
+            GameplayEvents.EndDealDamage -= OnEndDealDamage;
+        }
+
+        private void Update()
+        {
+            if (canDealDamage)
             {
-                if (!hasDealtDamage.Contains(hit.transform.gameObject))
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, GetTransformVector(), out hit, weaponLength, damageTo))
                 {
-                    Debug.Log($"Hit -> {weaponType}");
-                    hasDealtDamage.Add(hit.transform.gameObject);
+                    IDamageable hitObject = hit.transform.gameObject.GetComponent<IDamageable>();
+                    if (!hasDealtDamage.Contains(hitObject))
+                    {
+                        hasDealtDamage.Add(hitObject);
+                        hitObject.StartTakeDamageAnim();
+                        hitObject.TakeDamage();
+                    }
                 }
             }
         }
-    }
 
-    private Vector3 GetTransformVector()
-    {
-        Vector3 returnValue;
-        switch (weaponType)
+        private Vector3 GetTransformVector()
         {
-            case DamageDealerTypes.OneHandSword:
-                returnValue = transform.up;
-                break;
-            default:
-                returnValue = transform.right;
-                break;
+            Vector3 returnValue;
+            switch (weaponType)
+            {
+                case DamageDealerTypes.FistL:
+                case DamageDealerTypes.FistR:
+                    returnValue = transform.right;
+                    break;
+                case DamageDealerTypes.OneHandSword:
+                    returnValue = transform.up;
+                    break;
+                case DamageDealerTypes.EnemyMetalonGreen:
+                    returnValue = -transform.up;
+                    break;
+                default:
+                    returnValue = transform.right;
+                    break;
+            }
+            return returnValue;
         }
-        return returnValue;
-    }
 
-    private void OnStartDealDamage(DamageDealerTypes type)
-    {
-        if (weaponType != type) { return; }
-
-        canDealDamage = true;
-        hasDealtDamage.Clear();
-    }
+        private void OnStartDealDamage(GameObject sender)
+        {
+            if (rootObject != sender) { return; }
+            canDealDamage = true;
+            hasDealtDamage.Clear();
+        }
     
-    private void OnEndDealDamage()
-    {
-        canDealDamage = false;
-    }
+        private void OnEndDealDamage(GameObject sender)
+        {
+            if (rootObject != sender) { return; }
+            canDealDamage = false;
+        }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, transform.position + GetTransformVector() * weaponLength);
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, transform.position + GetTransformVector() * weaponLength);
+        }
     }
 }

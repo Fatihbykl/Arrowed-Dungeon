@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using FSM;
 using FSM.Player;
 using FSM.Player.States;
@@ -12,7 +13,7 @@ using UnityHFSM;
 
 namespace Gameplay.Player
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IDamageable
     {
         public TMP_Text stateText;
         public float comboDelay;
@@ -23,6 +24,8 @@ namespace Gameplay.Player
         [HideInInspector] public InputAction attackAction;
         private Rigidbody rb;
         private float velocity;
+        private SkinnedMeshRenderer[] renderers;
+        [SerializeField] private Material animMaterial;
         
         private void Awake()
         {
@@ -30,6 +33,7 @@ namespace Gameplay.Player
             attackAction = GetComponent<PlayerInput>().actions["Attack"];
             animator = gameObject.GetComponent<Animator>();
             rb = GetComponent<Rigidbody>();
+            renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
             
             PlayerFSM = new StateMachine<PlayerState>();
             
@@ -53,6 +57,7 @@ namespace Gameplay.Player
             PlayerFSM.OnLogic();
             currentStateName = PlayerFSM.GetActiveHierarchyPath().Split('/')[1];
             stateText.SetText(currentStateName);
+            Debug.DrawRay(transform.position, transform.forward, Color.green);
         }
 
         public void AttackTransition(int transitionNumber)
@@ -60,16 +65,28 @@ namespace Gameplay.Player
             GameplayEvents.AttackTransition.Invoke(transitionNumber);
         }
 
-        public void StartDealDamage(DamageDealerTypes type)
+        public void StartDealDamage()
         {
-            GameplayEvents.StartDealDamage.Invoke(type);
+            GameplayEvents.StartDealDamage.Invoke(this.gameObject);
         }
         
         public void EndDealDamage()
         {
-            GameplayEvents.EndDealDamage.Invoke();
+            GameplayEvents.EndDealDamage.Invoke(this.gameObject);
         }
-        
+
+        public void TakeDamage()
+        {
+            animator.SetTrigger(AnimationParameters.TakeDamage);
+        }
+
+        public void StartTakeDamageAnim()
+        {
+            foreach (var renderer in renderers)
+            {
+                renderer.material.DOColor(animMaterial.color, .5f).From().SetEase(Ease.InFlash);
+            }
+        }
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Collectable_Key"))

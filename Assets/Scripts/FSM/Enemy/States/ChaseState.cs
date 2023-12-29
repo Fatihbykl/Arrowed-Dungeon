@@ -26,6 +26,7 @@ namespace FSM.Enemy.States
             base.OnLogic();
             
             _enemy.agent.SetDestination(_enemy.player.transform.position);
+            if(_enemy.agent.pathPending) { return; }
             if (_enemy.agent.remainingDistance <= _enemy.agent.stoppingDistance)
             {
                 lastAttackTime = Time.time;
