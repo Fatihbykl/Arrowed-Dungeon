@@ -18,7 +18,7 @@ namespace FSM.Enemy.States
             _enemy.animator.SetBool(AnimationParameters.Patrol, true);
             _enemy.waypointReached = false;
             _enemy.agent.isStopped = false;
-            _enemy.agent.speed = _enemy.patrolSpeed;
+            _enemy.agent.speed = _enemy.enemySettings.patrolSpeed;
             _enemy.agent.SetDestination(_enemy.waypoints[_enemy.currentWaypoint].position);
         }
 

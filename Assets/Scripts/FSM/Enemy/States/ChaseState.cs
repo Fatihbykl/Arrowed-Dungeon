@@ -6,8 +6,6 @@ namespace FSM.Enemy.States
 {
     public class ChaseState : EnemyStateBase
     {
-        private float lastAttackTime;
-        
         public ChaseState(Gameplay.Enemy.Enemy enemy, StateMachine<EnemyState> enemyFsm, Action<State<EnemyState, string>> onEnter = null, Action<State<EnemyState, string>> onLogic = null, Action<State<EnemyState, string>> onExit = null, Func<State<EnemyState, string>, bool> canExit = null, bool needsExitTime = false, bool isGhostState = false) : base(enemy, enemyFsm, onEnter, onLogic, onExit, canExit, needsExitTime, isGhostState)
         {
         }
@@ -18,7 +16,7 @@ namespace FSM.Enemy.States
             
             _enemy.animator.SetBool(AnimationParameters.Chase, true);
             _enemy.agent.isStopped = false;
-            _enemy.agent.speed = _enemy.chaseSpeed;
+            _enemy.agent.speed = _enemy.enemySettings.chaseSpeed;
         }
 
         public override void OnLogic()
@@ -29,8 +27,20 @@ namespace FSM.Enemy.States
             if(_enemy.agent.pathPending) { return; }
             if (_enemy.agent.remainingDistance <= _enemy.agent.stoppingDistance)
             {
-                lastAttackTime = Time.time;
-                _enemyFSM.Trigger("OnAttack");
+                if (Time.time - _enemy.lastAttackTime >= _enemy.enemySettings.attackDelay)
+                {
+                    _enemy.animator.SetBool(AnimationParameters.Defend, false);
+                    _enemy.lastAttackTime = Time.time;
+                    _enemyFSM.Trigger("OnAttack");   
+                }
+                else
+                {
+                    _enemy.animator.SetBool(AnimationParameters.Defend, true);
+                }
+            }
+            else
+            {
+                _enemy.animator.SetBool(AnimationParameters.Defend, false);
             }
         }
     }

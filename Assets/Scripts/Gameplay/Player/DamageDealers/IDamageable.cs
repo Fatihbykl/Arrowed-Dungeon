@@ -6,7 +6,7 @@ namespace Gameplay.Player.DamageDealers
     {
         public void StartDealDamage();
         public void EndDealDamage();
-        public void TakeDamage();
+        public void TakeDamage(int damage);
         public void StartTakeDamageAnim();
     }
 }

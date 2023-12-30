@@ -24,7 +24,7 @@ namespace FSM.Enemy.States
         private async void WaitBeforeMoveNextWaypoint()
         {
             _enemy.canMoveNextWaypoint = false;
-            await UniTask.WaitForSeconds(_enemy.waypointWaitTime);
+            await UniTask.WaitForSeconds(_enemy.enemySettings.waypointWaitTime);
             _enemy.canMoveNextWaypoint = true;
         }
     }

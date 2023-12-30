@@ -15,7 +15,10 @@ namespace FSM
             Animator.StringToHash("ComboAttack3")
         };
         
+        // enemy parameters
         public static readonly int Patrol = Animator.StringToHash("Patrol");
         public static readonly int Chase = Animator.StringToHash("Chase");
+        public static readonly int Defend = Animator.StringToHash("Defend");
+        public static readonly int Die = Animator.StringToHash("Die");
     }
 }

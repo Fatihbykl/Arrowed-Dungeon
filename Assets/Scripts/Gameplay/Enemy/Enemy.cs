@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using DataPersistance.Data.ScriptableObjects;
 using DG.Tweening;
 using FSM;
 using FSM.Enemy;
@@ -9,51 +10,57 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityHFSM;
+using Microlight.MicroBar;
 
 namespace Gameplay.Enemy
 {
     public class Enemy : MonoBehaviour, IDamageable
     {
+        [SerializeField] private MicroBar hpBar;
+
+        public EnemySO enemySettings;
         public Player.Player player;
-        public float sphereRadius;
         public Transform[] waypoints;
+
+        [HideInInspector] public NavMeshAgent agent;
+        [HideInInspector] public Animator animator;
         [HideInInspector] public int currentWaypoint;
         [HideInInspector] public bool waypointReached;
         [HideInInspector] public bool canMoveNextWaypoint;
-        [HideInInspector] public NavMeshAgent agent;
-        [HideInInspector] public Animator animator;
-        public float patrolSpeed;
-        public float chaseSpeed;
-        public float waypointWaitTime;
-        public float attackDelay;
+        [HideInInspector] public float lastAttackTime;
 
+        private int currentHealth;
         private StateMachine<EnemyState> EnemyFSM;
+        private SkinnedMeshRenderer meshRenderer;
         private LayerMask playerMask;
         private bool playerDetected;
-        private SkinnedMeshRenderer meshRenderer;
-        
-        
+        private BoxCollider collider;
+
+
         public TMP_Text stateText;
-        
 
         private void Awake()
         {
             currentWaypoint = 0;
+            lastAttackTime = 0;
+            currentHealth = enemySettings.enemyBaseHealth;
             waypointReached = false;
             playerDetected = false;
             canMoveNextWaypoint = true;
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
+            collider = GetComponent<BoxCollider>();
             meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             playerMask = LayerMask.GetMask("Player");
-            
+            hpBar.Initialize(currentHealth);
+
             EnemyFSM = new StateMachine<EnemyState>();
-            
+
             EnemyFSM.AddState(EnemyState.Idle, new IdleState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Patrol, new PatrolState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Chase, new ChaseState(this, EnemyFSM));
-            EnemyFSM.AddState(EnemyState.Attack, new AttackState(this, EnemyFSM, needsExitTime:true));
-            
+            EnemyFSM.AddState(EnemyState.Attack, new AttackState(this, EnemyFSM, needsExitTime: true));
+
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Patrol, t => canMoveNextWaypoint);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Chase, t => playerDetected);
@@ -63,7 +70,7 @@ namespace Gameplay.Enemy
             EnemyFSM.AddTransition(EnemyState.Attack, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Attack, EnemyState.Patrol, t => !playerDetected);
 
-            
+
             EnemyFSM.SetStartState(EnemyState.Patrol);
             EnemyFSM.Init();
         }
@@ -71,35 +78,64 @@ namespace Gameplay.Enemy
         private void Update()
         {
             EnemyFSM.OnLogic();
-            
+
             stateText.SetText(EnemyFSM.GetActiveHierarchyPath().Split('/')[1]);
-            playerDetected = Physics.CheckSphere(transform.position, sphereRadius, playerMask,
+            playerDetected = Physics.CheckSphere(transform.position, enemySettings.sphereRadius, playerMask,
                 QueryTriggerInteraction.Collide);
+            //hpBar.transform.LookAt(Camera.main.transform);
         }
 
-        public void TakeDamage()
+        public void TakeDamage(int damage)
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
+            CheckHealth(damage);
+            hpBar.UpdateHealthBar(currentHealth);
         }
-        
+
         public void StartDealDamage()
         {
             GameplayEvents.StartDealDamage.Invoke(this.gameObject);
         }
-        
+
         public void EndDealDamage()
         {
             GameplayEvents.EndDealDamage.Invoke(this.gameObject);
         }
-        
+
         public void StartTakeDamageAnim()
         {
             meshRenderer.material.DOColor(Color.red, .5f).From().SetEase(Ease.InFlash);
         }
 
+        private void CheckHealth(int damage)
+        {
+            currentHealth -= damage;
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+        }
+
+        private async void Die()
+        {
+            // deactivate hp bar and collider for prevent further attacks
+            collider.enabled = false;
+            hpBar.gameObject.SetActive(false);
+            
+            // play animation
+            animator.SetTrigger(AnimationParameters.Die);
+            var dieAnimation = animator.GetCurrentAnimatorStateInfo(0);
+            await UniTask.WaitForSeconds(dieAnimation.length / dieAnimation.speed);
+            
+            // fade out animation
+            await meshRenderer.material.DOFade(0f, 1f).ToUniTask();
+
+            Destroy(this.gameObject, 1f);
+        }
+
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireSphere(transform.position, sphereRadius);
+            Gizmos.DrawWireSphere(transform.position, enemySettings.sphereRadius);
         }
     }
 }

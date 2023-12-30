@@ -10,7 +10,7 @@ namespace Gameplay.Player.DamageDealers
 
         [SerializeField] private DamageDealerTypes weaponType;
         [SerializeField] private float weaponLength;
-        [SerializeField] private float weaponDamage;
+        [SerializeField] private int weaponDamage;
         [SerializeField] private LayerMask damageTo;
         [SerializeField] private GameObject rootObject;
 
@@ -41,7 +41,7 @@ namespace Gameplay.Player.DamageDealers
                     {
                         hasDealtDamage.Add(hitObject);
                         hitObject.StartTakeDamageAnim();
-                        hitObject.TakeDamage();
+                        hitObject.TakeDamage(weaponDamage);
                     }
                 }
             }

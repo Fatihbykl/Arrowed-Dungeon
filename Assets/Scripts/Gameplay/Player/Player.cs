@@ -15,24 +15,22 @@ namespace Gameplay.Player
 {
     public class Player : MonoBehaviour, IDamageable
     {
+        [SerializeField] private Material animMaterial;
         public TMP_Text stateText;
-        public float comboDelay;
+        
         private StateMachine<PlayerState> PlayerFSM;
         private string currentStateName;
+        private SkinnedMeshRenderer[] renderers;
+        
         [HideInInspector] public Animator animator;
         [HideInInspector] public InputAction moveAction;
         [HideInInspector] public InputAction attackAction;
-        private Rigidbody rb;
-        private float velocity;
-        private SkinnedMeshRenderer[] renderers;
-        [SerializeField] private Material animMaterial;
         
         private void Awake()
         {
             moveAction = GetComponent<PlayerInput>().actions["Move"];
             attackAction = GetComponent<PlayerInput>().actions["Attack"];
             animator = gameObject.GetComponent<Animator>();
-            rb = GetComponent<Rigidbody>();
             renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
             
             PlayerFSM = new StateMachine<PlayerState>();
@@ -75,7 +73,7 @@ namespace Gameplay.Player
             GameplayEvents.EndDealDamage.Invoke(this.gameObject);
         }
 
-        public void TakeDamage()
+        public void TakeDamage(int damage)
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
         }
@@ -84,7 +82,9 @@ namespace Gameplay.Player
         {
             foreach (var renderer in renderers)
             {
+                var currentColor = renderer.material.color;
                 renderer.material.DOColor(animMaterial.color, .5f).From().SetEase(Ease.InFlash);
+                renderer.material.DOColor(currentColor, .5f);
             }
         }
         private void OnTriggerEnter(Collider other)
