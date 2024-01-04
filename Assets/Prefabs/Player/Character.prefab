@@ -453,6 +453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8767369690399341432}
+  - component: {fileID: 2142530112663306078}
   m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
@@ -479,6 +480,59 @@ Transform:
   - {fileID: 8573631524517259793}
   m_Father: {fileID: 1118276128426460207}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &2142530112663306078
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737632740148536585}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6b08b2fd5e9023543b88c083219c1f64, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 0}
+  m_Bones: []
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 0}
+  m_AABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_DirtyAABB: 0
 --- !u!1 &823261922557071476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +1641,6 @@ GameObject:
   - component: {fileID: 50331339168316456}
   - component: {fileID: 5774954066072902944}
   - component: {fileID: 5826892216878346902}
-  - component: {fileID: 3298409558931195521}
   - component: {fileID: 1802492001692990552}
   m_Layer: 7
   m_Name: Character
@@ -1751,8 +1804,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52737c8f0e89a9479f115b81354450e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: 100
+  hpBar: {fileID: 0}
+  animMaterial: {fileID: 2100000, guid: 6b08b2fd5e9023543b88c083219c1f64, type: 2}
   stateText: {fileID: 0}
-  comboDelay: 0.5
+  characterController: {fileID: 0}
   animator: {fileID: 0}
   moveAction:
     m_Name: 
@@ -1772,19 +1828,6 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
---- !u!114 &3298409558931195521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2639897453124787210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40cf6925fe3aad146866f4dbed37f8fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 1
 --- !u!114 &1802492001692990552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3768,6 +3811,7 @@ MonoBehaviour:
   damageTo:
     serializedVersion: 2
     m_Bits: 64
+  rootObject: {fileID: 2639897453124787210}
 --- !u!1 &5950434725323766431
 GameObject:
   m_ObjectHideFlags: 0
@@ -4453,10 +4497,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 2
   weaponLength: 0.85
-  weaponDamage: 0
+  weaponDamage: 20
   damageTo:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
+  rootObject: {fileID: 2639897453124787210}
 --- !u!1 &7523190247873571635
 GameObject:
   m_ObjectHideFlags: 0
@@ -4874,6 +4919,7 @@ MonoBehaviour:
   damageTo:
     serializedVersion: 2
     m_Bits: 64
+  rootObject: {fileID: 2639897453124787210}
 --- !u!1 &7821891711457344670
 GameObject:
   m_ObjectHideFlags: 0

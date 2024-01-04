@@ -40,7 +40,6 @@ namespace Gameplay.Player.DamageDealers
                     if (!hasDealtDamage.Contains(hitObject))
                     {
                         hasDealtDamage.Add(hitObject);
-                        hitObject.StartTakeDamageAnim();
                         hitObject.TakeDamage(weaponDamage);
                     }
                 }

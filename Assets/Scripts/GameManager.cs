@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public int currentLevel = 0;
 
     public int playerBaseHealth { get; private set; } = 1;
-    public float playerSpeed { get; private set; } = 6;
+    public float playerSpeed { get; private set; } = 4;
     public int playerShield { get; private set; } = 1;
 
     public static GameManager instance { get; private set; }

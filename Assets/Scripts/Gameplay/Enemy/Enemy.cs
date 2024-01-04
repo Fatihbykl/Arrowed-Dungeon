@@ -34,7 +34,7 @@ namespace Gameplay.Enemy
         private SkinnedMeshRenderer meshRenderer;
         private LayerMask playerMask;
         private bool playerDetected;
-        private BoxCollider collider;
+        private BoxCollider boxCollider;
 
 
         public TMP_Text stateText;
@@ -49,7 +49,7 @@ namespace Gameplay.Enemy
             canMoveNextWaypoint = true;
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
-            collider = GetComponent<BoxCollider>();
+            boxCollider = GetComponent<BoxCollider>();
             meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             playerMask = LayerMask.GetMask("Player");
             hpBar.Initialize(currentHealth);
@@ -82,12 +82,11 @@ namespace Gameplay.Enemy
             stateText.SetText(EnemyFSM.GetActiveHierarchyPath().Split('/')[1]);
             playerDetected = Physics.CheckSphere(transform.position, enemySettings.sphereRadius, playerMask,
                 QueryTriggerInteraction.Collide);
-            //hpBar.transform.LookAt(Camera.main.transform);
         }
 
         public void TakeDamage(int damage)
         {
-            animator.SetTrigger(AnimationParameters.TakeDamage);
+            StartTakeDamageAnim();
             CheckHealth(damage);
             hpBar.UpdateHealthBar(currentHealth);
         }
@@ -104,6 +103,7 @@ namespace Gameplay.Enemy
 
         public void StartTakeDamageAnim()
         {
+            animator.SetTrigger(AnimationParameters.TakeDamage);
             meshRenderer.material.DOColor(Color.red, .5f).From().SetEase(Ease.InFlash);
         }
 
@@ -119,7 +119,8 @@ namespace Gameplay.Enemy
         private async void Die()
         {
             // deactivate hp bar and collider for prevent further attacks
-            collider.enabled = false;
+            boxCollider.enabled = false;
+            //hpBar.FadeBar(true, 1f);
             hpBar.gameObject.SetActive(false);
             
             // play animation

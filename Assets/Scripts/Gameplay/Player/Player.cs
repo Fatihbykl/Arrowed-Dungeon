@@ -5,6 +5,7 @@ using FSM;
 using FSM.Player;
 using FSM.Player.States;
 using Gameplay.Player.DamageDealers;
+using Microlight.MicroBar;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -15,13 +16,17 @@ namespace Gameplay.Player
 {
     public class Player : MonoBehaviour, IDamageable
     {
+        [SerializeField] private int playerHealth;
+        [SerializeField] private MicroBar hpBar;
         [SerializeField] private Material animMaterial;
         public TMP_Text stateText;
         
         private StateMachine<PlayerState> PlayerFSM;
-        private string currentStateName;
         private SkinnedMeshRenderer[] renderers;
+        private BoxCollider playerCollider;
+        private string currentStateName;
         
+        [HideInInspector] public CharacterController characterController;
         [HideInInspector] public Animator animator;
         [HideInInspector] public InputAction moveAction;
         [HideInInspector] public InputAction attackAction;
@@ -30,8 +35,11 @@ namespace Gameplay.Player
         {
             moveAction = GetComponent<PlayerInput>().actions["Move"];
             attackAction = GetComponent<PlayerInput>().actions["Attack"];
-            animator = gameObject.GetComponent<Animator>();
+            animator = GetComponent<Animator>();
+            playerCollider = GetComponent<BoxCollider>();
+            characterController = GetComponent<CharacterController>();
             renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+            hpBar.Initialize(playerHealth);
             
             PlayerFSM = new StateMachine<PlayerState>();
             
@@ -75,16 +83,38 @@ namespace Gameplay.Player
 
         public void TakeDamage(int damage)
         {
-            animator.SetTrigger(AnimationParameters.TakeDamage);
+            StartTakeDamageAnim();
+            CheckHealth(damage);
+            hpBar.UpdateHealthBar(playerHealth);
+        }
+        
+        private void CheckHealth(int damage)
+        {
+            playerHealth -= damage;
+            if (playerHealth <= 0)
+            {
+                Die();
+            }
+        }
+
+        private void Die()
+        {
+            playerCollider.enabled = false;
+            characterController.enabled = false;
+            moveAction.Disable();
+            
+            animator.SetTrigger(AnimationParameters.Die);
         }
 
         public void StartTakeDamageAnim()
         {
-            foreach (var renderer in renderers)
+            animator.SetTrigger(AnimationParameters.TakeDamage);
+            // change player color for red transition
+            foreach (var r in renderers)
             {
-                var currentColor = renderer.material.color;
-                renderer.material.DOColor(animMaterial.color, .5f).From().SetEase(Ease.InFlash);
-                renderer.material.DOColor(currentColor, .5f);
+                var currentColor = r.material.color;
+                r.material.DOColor(animMaterial.color, .5f).From().SetEase(Ease.InFlash);
+                r.material.DOColor(currentColor, .5f);
             }
         }
         private void OnTriggerEnter(Collider other)

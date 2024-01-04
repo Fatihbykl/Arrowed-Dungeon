@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Gameplay.Player;
 using UnityEngine;
 
 public class CollisionScript : MonoBehaviour
@@ -17,14 +18,14 @@ public class CollisionScript : MonoBehaviour
         var contactPoint = collision.GetContact(0).normal;
         if(collision.collider.tag == "Player")
         {
-            PlayerHealth player = collision.collider.gameObject.GetComponentInParent<PlayerHealth>();
+            Player player = collision.collider.gameObject.GetComponentInParent<Player>();
             if (arrow.arrowType.type == ArrowTypeName.Killer)
             {
                 player.TakeDamage(50);
             }
             else
             {
-                player.TakeDamage();
+                player.TakeDamage(20);
                 arrow.ArrowReflect(contactPoint);
             }
         }
@@ -32,7 +33,7 @@ public class CollisionScript : MonoBehaviour
         {
             if (arrow.arrowType.type == ArrowTypeName.Killer)
             {
-                PlayerHealth player = collision.collider.gameObject.GetComponentInParent<PlayerHealth>();
+                Player player = collision.collider.gameObject.GetComponentInParent<Player>();
                 player.TakeDamage(50);
             }
             else if (arrow.arrowType.type == ArrowTypeName.ShieldBreaker) 
