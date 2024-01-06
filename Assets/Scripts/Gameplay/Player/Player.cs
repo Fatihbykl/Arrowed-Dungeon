@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using FSM;
@@ -8,7 +9,6 @@ using Gameplay.Player.DamageDealers;
 using Microlight.MicroBar;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 using UnityHFSM;
 
@@ -19,18 +19,25 @@ namespace Gameplay.Player
         [SerializeField] private int playerHealth;
         [SerializeField] private MicroBar hpBar;
         [SerializeField] private Material animMaterial;
+        [SerializeField] private float attackRangeRadius;
+        [SerializeField] private LayerMask detectableLayersForAttack;
+        [HideInInspector] public Collider currentTarget;
         public TMP_Text stateText;
-        
+
         private StateMachine<PlayerState> PlayerFSM;
         private SkinnedMeshRenderer[] renderers;
         private BoxCollider playerCollider;
         private string currentStateName;
-        
+
         [HideInInspector] public CharacterController characterController;
         [HideInInspector] public Animator animator;
         [HideInInspector] public InputAction moveAction;
         [HideInInspector] public InputAction attackAction;
-        
+
+        [SerializeField] private GameObject arrowPrefab;
+        [SerializeField] private GameObject bow;
+        private GameObject arrow;
+
         private void Awake()
         {
             moveAction = GetComponent<PlayerInput>().actions["Move"];
@@ -40,20 +47,24 @@ namespace Gameplay.Player
             characterController = GetComponent<CharacterController>();
             renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
             hpBar.Initialize(playerHealth);
-            
+
             PlayerFSM = new StateMachine<PlayerState>();
-            
+
             PlayerFSM.AddState(PlayerState.Idle, new IdleState(this, PlayerFSM));
             PlayerFSM.AddState(PlayerState.Move, new MoveState(this, PlayerFSM));
             PlayerFSM.AddState(PlayerState.Attack, new AttackState(this, PlayerFSM, needsExitTime: true));
-            
-            PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
+
+            PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Move,
+                t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
+            PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Idle,
+                t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
             PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Attack, t => attackAction.triggered);
             PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Attack, t => attackAction.triggered);
-            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
-            
+            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Idle,
+                t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
+            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Move,
+                t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
+
             PlayerFSM.SetStartState(PlayerState.Idle);
             PlayerFSM.Init();
         }
@@ -64,6 +75,7 @@ namespace Gameplay.Player
             currentStateName = PlayerFSM.GetActiveHierarchyPath().Split('/')[1];
             stateText.SetText(currentStateName);
             Debug.DrawRay(transform.position, transform.forward, Color.green);
+            FindNearestEnemy();
         }
 
         public void AttackTransition(int transitionNumber)
@@ -75,7 +87,7 @@ namespace Gameplay.Player
         {
             GameplayEvents.StartDealDamage.Invoke(this.gameObject);
         }
-        
+
         public void EndDealDamage()
         {
             GameplayEvents.EndDealDamage.Invoke(this.gameObject);
@@ -87,7 +99,7 @@ namespace Gameplay.Player
             CheckHealth(damage);
             hpBar.UpdateHealthBar(playerHealth);
         }
-        
+
         private void CheckHealth(int damage)
         {
             playerHealth -= damage;
@@ -102,11 +114,11 @@ namespace Gameplay.Player
             playerCollider.enabled = false;
             characterController.enabled = false;
             moveAction.Disable();
-            
+
             animator.SetTrigger(AnimationParameters.Die);
         }
 
-        public void StartTakeDamageAnim()
+        private void StartTakeDamageAnim()
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
             // change player color for red transition
@@ -117,6 +129,37 @@ namespace Gameplay.Player
                 r.material.DOColor(currentColor, .5f);
             }
         }
+
+        public void SendArrow()
+        {
+            if (currentTarget == null) { return; }
+            var direction = (currentTarget.transform.position - transform.position).normalized;
+            var force = direction * 20f;
+            arrow = Instantiate(arrowPrefab, bow.transform.position, Quaternion.LookRotation(direction));
+            arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        }
+
+        private void FindNearestEnemy()
+        {
+            Collider[] hits = FindAllEnemiesInRange();
+            if (hits.Length > 0)
+            {
+                currentTarget = hits.OrderBy(n => (n.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
+                Debug.DrawRay(transform.position, currentTarget.transform.position - transform.position, Color.green);
+            }
+            else
+            {
+                currentTarget = null;
+            }
+        }
+
+        private Collider[] FindAllEnemiesInRange()
+        {
+            Collider[] hits =  Physics.OverlapSphere(transform.position, attackRangeRadius, detectableLayersForAttack, QueryTriggerInteraction.Collide);
+            
+            return hits;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Collectable_Key"))
@@ -126,6 +169,11 @@ namespace Gameplay.Player
                 GameplayEvents.KeyCollected.Invoke(GameManager.instance.collectedKeyCount,
                     GameManager.instance.totalKeyCount, other.gameObject, this.gameObject);
             }
+        }
+        
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position, attackRangeRadius);
         }
     }
 }

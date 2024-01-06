@@ -122,6 +122,7 @@ namespace Gameplay.Enemy
             boxCollider.enabled = false;
             //hpBar.FadeBar(true, 1f);
             hpBar.gameObject.SetActive(false);
+            GetComponentInChildren<ParticleSystem>().Play();
             
             // play animation
             animator.SetTrigger(AnimationParameters.Die);

@@ -1393,13 +1393,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f503e1cf1329244968eb4636f7ae60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 3
+  transformTypes: 2
   weaponLength: 0.55
   weaponDamage: 10
   damageTo:
     serializedVersion: 2
     m_Bits: 128
   rootObject: {fileID: 1893027662056962322}
+  takeDamageWhenCollision: 0
 --- !u!1 &6093045671910100605
 GameObject:
   m_ObjectHideFlags: 0

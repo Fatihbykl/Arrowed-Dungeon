@@ -30,7 +30,7 @@ namespace FSM.Player.States
             lastClickTime = 0;
             isComboEnded = false;
 
-            //_player.animator.applyRootMotion = true;
+            _player.transform.DOLookAt(_player.currentTarget.transform.position, .5f);
             _player.animator.SetBool(AnimationParameters.AttackStart, true);
         }
 
@@ -78,7 +78,6 @@ namespace FSM.Player.States
         {
             base.OnExit();
 
-            //_player.animator.applyRootMotion = false;
             _player.animator.SetBool(AnimationParameters.AttackStart, false);
         }
     }

@@ -26,7 +26,6 @@ namespace Gameplay.Dungeon
                 var rbs = replacementObject.GetComponentsInChildren<Rigidbody>();
                 foreach (var rb in rbs)
                 {
-                    //rb.AddExplosionForce(collision.relativeVelocity.magnitude * collisionMultiplier, collision.contacts[0].point, 2);
                     AnimateDestroy(rb.gameObject);
                 }
                 Destroy(gameObject);

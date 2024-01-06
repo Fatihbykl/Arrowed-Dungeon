@@ -8,11 +8,12 @@ namespace Gameplay.Player.DamageDealers
         private bool canDealDamage;
         private List<IDamageable> hasDealtDamage;
 
-        [SerializeField] private DamageDealerTypes weaponType;
+        [SerializeField] private TransformTypes transformTypes;
         [SerializeField] private float weaponLength;
         [SerializeField] private int weaponDamage;
         [SerializeField] private LayerMask damageTo;
         [SerializeField] private GameObject rootObject;
+        [SerializeField] private bool takeDamageWhenCollision = false;
 
         private void Start()
         {
@@ -36,8 +37,9 @@ namespace Gameplay.Player.DamageDealers
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, GetTransformVector(), out hit, weaponLength, damageTo))
                 {
+                    Debug.Log("hit");
                     IDamageable hitObject = hit.transform.gameObject.GetComponent<IDamageable>();
-                    if (!hasDealtDamage.Contains(hitObject))
+                    if (hitObject != null && !hasDealtDamage.Contains(hitObject))
                     {
                         hasDealtDamage.Add(hitObject);
                         hitObject.TakeDamage(weaponDamage);
@@ -49,20 +51,22 @@ namespace Gameplay.Player.DamageDealers
         private Vector3 GetTransformVector()
         {
             Vector3 returnValue;
-            switch (weaponType)
+            switch (transformTypes)
             {
-                case DamageDealerTypes.FistL:
-                case DamageDealerTypes.FistR:
+                case TransformTypes.Right:
                     returnValue = transform.right;
                     break;
-                case DamageDealerTypes.OneHandSword:
+                case TransformTypes.Up:
                     returnValue = transform.up;
                     break;
-                case DamageDealerTypes.EnemyMetalonGreen:
+                case TransformTypes.NegativeUp:
                     returnValue = -transform.up;
                     break;
+                case TransformTypes.Forward:
+                    returnValue = transform.forward;
+                    break;
                 default:
-                    returnValue = transform.right;
+                    returnValue = Vector3.zero;
                     break;
             }
             return returnValue;
