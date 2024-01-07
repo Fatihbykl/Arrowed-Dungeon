@@ -7,6 +7,7 @@ namespace FSM.Player
         Idle,
         Move,
         Attack,
-        TakeDamage
+        TakeDamage,
+        Die
     }
 }

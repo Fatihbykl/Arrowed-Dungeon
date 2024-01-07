@@ -43,7 +43,6 @@ namespace Animations
                         particles[i].position = Vector3.MoveTowards(currentParticlePos, player.position, moveSpeed * Time.deltaTime);
                     }
                 }
-                Debug.Log(length);
                 if (length == 0) { canMoveStart = false; }
                 particlesSystem.SetParticles(particles, length);
             }

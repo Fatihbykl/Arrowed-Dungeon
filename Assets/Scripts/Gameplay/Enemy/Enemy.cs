@@ -16,26 +16,24 @@ namespace Gameplay.Enemy
 {
     public class Enemy : MonoBehaviour, IDamageable
     {
-        [SerializeField] private MicroBar hpBar;
-
+        public MicroBar hpBar;
         public EnemySO enemySettings;
         public Player.Player player;
         public Transform[] waypoints;
 
+        [HideInInspector] public SkinnedMeshRenderer meshRenderer;
         [HideInInspector] public NavMeshAgent agent;
+        [HideInInspector] public BoxCollider boxCollider;
         [HideInInspector] public Animator animator;
-        [HideInInspector] public int currentWaypoint;
+        [HideInInspector] public float lastAttackTime;
         [HideInInspector] public bool waypointReached;
         [HideInInspector] public bool canMoveNextWaypoint;
-        [HideInInspector] public float lastAttackTime;
+        [HideInInspector] public int currentWaypoint;
+        [HideInInspector] public int currentHealth;
 
-        private int currentHealth;
         private StateMachine<EnemyState> EnemyFSM;
-        private SkinnedMeshRenderer meshRenderer;
         private LayerMask playerMask;
         private bool playerDetected;
-        private BoxCollider boxCollider;
-
 
         public TMP_Text stateText;
 
@@ -56,11 +54,18 @@ namespace Gameplay.Enemy
 
             EnemyFSM = new StateMachine<EnemyState>();
 
+            var takeDamage = new TakeDamageState(this, EnemyFSM);
+            
             EnemyFSM.AddState(EnemyState.Idle, new IdleState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Patrol, new PatrolState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Chase, new ChaseState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Attack, new AttackState(this, EnemyFSM, needsExitTime: true));
-
+            EnemyFSM.AddState(EnemyState.Die, new DieState(this, EnemyFSM));
+            EnemyFSM.AddState(EnemyState.TakeDamage, takeDamage
+                .AddAction<int>("OnHit", (int damage) => takeDamage.OnHit(damage)));
+            
+            EnemyFSM.AddTriggerTransitionFromAny("TakeDamage", EnemyState.TakeDamage, forceInstantly: true);
+            EnemyFSM.AddTransitionFromAny(EnemyState.Die, t => currentHealth <= 0);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Patrol, t => canMoveNextWaypoint);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Chase, t => playerDetected);
@@ -69,6 +74,8 @@ namespace Gameplay.Enemy
             EnemyFSM.AddTriggerTransition("OnAttack", new Transition<EnemyState>(EnemyState.Chase, EnemyState.Attack));
             EnemyFSM.AddTransition(EnemyState.Attack, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Attack, EnemyState.Patrol, t => !playerDetected);
+            EnemyFSM.AddTransition(EnemyState.TakeDamage, EnemyState.Chase, t => playerDetected);
+            EnemyFSM.AddTransition(EnemyState.TakeDamage, EnemyState.Patrol, t => !playerDetected);
 
 
             EnemyFSM.SetStartState(EnemyState.Patrol);
@@ -84,11 +91,12 @@ namespace Gameplay.Enemy
                 QueryTriggerInteraction.Collide);
         }
 
+        #region IDamageable Functions
+
         public void TakeDamage(int damage)
         {
-            StartTakeDamageAnim();
-            CheckHealth(damage);
-            hpBar.UpdateHealthBar(currentHealth);
+            EnemyFSM.Trigger("TakeDamage");
+            EnemyFSM.OnAction<int>("OnHit", damage);
         }
 
         public void StartDealDamage()
@@ -101,39 +109,8 @@ namespace Gameplay.Enemy
             GameplayEvents.EndDealDamage.Invoke(this.gameObject);
         }
 
-        public void StartTakeDamageAnim()
-        {
-            animator.SetTrigger(AnimationParameters.TakeDamage);
-            meshRenderer.material.DOColor(Color.red, .5f).From().SetEase(Ease.InFlash);
-        }
-
-        private void CheckHealth(int damage)
-        {
-            currentHealth -= damage;
-            if (currentHealth <= 0)
-            {
-                Die();
-            }
-        }
-
-        private async void Die()
-        {
-            // deactivate hp bar and collider for prevent further attacks
-            boxCollider.enabled = false;
-            //hpBar.FadeBar(true, 1f);
-            hpBar.gameObject.SetActive(false);
-            GetComponentInChildren<ParticleSystem>().Play();
-            
-            // play animation
-            animator.SetTrigger(AnimationParameters.Die);
-            var dieAnimation = animator.GetCurrentAnimatorStateInfo(0);
-            await UniTask.WaitForSeconds(dieAnimation.length / dieAnimation.speed);
-            
-            // fade out animation
-            await meshRenderer.material.DOFade(0f, 1f).ToUniTask();
-
-            Destroy(this.gameObject, 1f);
-        }
+        #endregion
+        
 
         private void OnDrawGizmos()
         {

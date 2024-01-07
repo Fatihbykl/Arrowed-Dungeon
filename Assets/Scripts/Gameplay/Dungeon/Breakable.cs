@@ -11,7 +11,6 @@ namespace Gameplay.Dungeon
         [SerializeField] private int health;
         [SerializeField] private GameObject replacement;
         [SerializeField] private float shakeMultiplier = 6;
-        [SerializeField] private float collisionMultiplier = 100;
         [SerializeField] private bool broken = false;
 
         public void TakeDamage(int damage)

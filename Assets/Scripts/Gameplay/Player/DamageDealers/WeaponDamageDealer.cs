@@ -13,7 +13,6 @@ namespace Gameplay.Player.DamageDealers
         [SerializeField] private int weaponDamage;
         [SerializeField] private LayerMask damageTo;
         [SerializeField] private GameObject rootObject;
-        [SerializeField] private bool takeDamageWhenCollision = false;
 
         private void Start()
         {
@@ -37,7 +36,6 @@ namespace Gameplay.Player.DamageDealers
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, GetTransformVector(), out hit, weaponLength, damageTo))
                 {
-                    Debug.Log("hit");
                     IDamageable hitObject = hit.transform.gameObject.GetComponent<IDamageable>();
                     if (hitObject != null && !hasDealtDamage.Contains(hitObject))
                     {

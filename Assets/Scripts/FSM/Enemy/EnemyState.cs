@@ -8,6 +8,7 @@ namespace FSM.Enemy
         Patrol,
         Chase,
         Attack,
-        TakeDamage
+        TakeDamage,
+        Die
     }
 }

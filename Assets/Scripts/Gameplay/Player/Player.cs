@@ -16,8 +16,8 @@ namespace Gameplay.Player
 {
     public class Player : MonoBehaviour, IDamageable
     {
-        [SerializeField] private int playerHealth;
-        [SerializeField] private MicroBar hpBar;
+        public int playerHealth;
+        public MicroBar hpBar;
         [SerializeField] private Material animMaterial;
         [SerializeField] private float attackRangeRadius;
         [SerializeField] private LayerMask detectableLayersForAttack;
@@ -26,7 +26,7 @@ namespace Gameplay.Player
 
         private StateMachine<PlayerState> PlayerFSM;
         private SkinnedMeshRenderer[] renderers;
-        private BoxCollider playerCollider;
+        [HideInInspector] public BoxCollider playerCollider;
         private string currentStateName;
 
         [HideInInspector] public CharacterController characterController;
@@ -34,9 +34,9 @@ namespace Gameplay.Player
         [HideInInspector] public InputAction moveAction;
         [HideInInspector] public InputAction attackAction;
 
-        [SerializeField] private GameObject arrowPrefab;
-        [SerializeField] private GameObject bow;
-        private GameObject arrow;
+        public GameObject arrowPrefab;
+        public GameObject bow;
+        [HideInInspector] public GameObject arrow;
 
         private void Awake()
         {
@@ -49,21 +49,29 @@ namespace Gameplay.Player
             hpBar.Initialize(playerHealth);
 
             PlayerFSM = new StateMachine<PlayerState>();
-
+            
+            var attackState = new AttackState(this, PlayerFSM, needsExitTime: true);
+            var takeDamageState = new TakeDamageState(this, PlayerFSM);
+            
             PlayerFSM.AddState(PlayerState.Idle, new IdleState(this, PlayerFSM));
             PlayerFSM.AddState(PlayerState.Move, new MoveState(this, PlayerFSM));
-            PlayerFSM.AddState(PlayerState.Attack, new AttackState(this, PlayerFSM, needsExitTime: true));
-
-            PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Move,
-                t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Idle,
-                t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Attack, t => attackAction.triggered);
-            PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Attack, t => attackAction.triggered);
-            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Idle,
-                t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Move,
-                t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
+            PlayerFSM.AddState(PlayerState.Die, new DieState(this, PlayerFSM));
+            PlayerFSM.AddState(PlayerState.Attack, attackState
+                .AddAction("OnSendArrow", () => { attackState.OnSendArrow(); })
+                .AddAction("OnCheckAttackClicks", () => { attackState.OnCheckAttackClicks(); }));
+            PlayerFSM.AddState(PlayerState.TakeDamage, takeDamageState
+                .AddAction<int>("OnHit", (int damage) => { takeDamageState.OnHit(damage); }));
+            
+            PlayerFSM.AddTransitionFromAny(PlayerState.Die, t => playerHealth <= 0);
+            PlayerFSM.AddTriggerTransitionFromAny("TakeDamage", PlayerState.TakeDamage);
+            PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
+            PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
+            PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Attack, t => attackAction.triggered && currentTarget != null);
+            PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Attack, t => attackAction.triggered && currentTarget != null);
+            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
+            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
+            PlayerFSM.AddTransition(PlayerState.TakeDamage, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
+            PlayerFSM.AddTransition(PlayerState.TakeDamage, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
 
             PlayerFSM.SetStartState(PlayerState.Idle);
             PlayerFSM.Init();
@@ -72,76 +80,46 @@ namespace Gameplay.Player
         private void Update()
         {
             PlayerFSM.OnLogic();
+            
             currentStateName = PlayerFSM.GetActiveHierarchyPath().Split('/')[1];
             stateText.SetText(currentStateName);
+            
             Debug.DrawRay(transform.position, transform.forward, Color.green);
             FindNearestEnemy();
         }
 
-        public void AttackTransition(int transitionNumber)
-        {
-            GameplayEvents.AttackTransition.Invoke(transitionNumber);
-        }
+        #region IDamageable Functions
 
-        public void StartDealDamage()
-        {
-            GameplayEvents.StartDealDamage.Invoke(this.gameObject);
-        }
+        public void StartDealDamage() {}
 
-        public void EndDealDamage()
-        {
-            GameplayEvents.EndDealDamage.Invoke(this.gameObject);
-        }
+        public void EndDealDamage() {}
 
         public void TakeDamage(int damage)
         {
-            StartTakeDamageAnim();
-            CheckHealth(damage);
-            hpBar.UpdateHealthBar(playerHealth);
+            PlayerFSM.Trigger("TakeDamage");
+            PlayerFSM.OnAction<int>("OnHit", damage);
         }
 
-        private void CheckHealth(int damage)
-        {
-            playerHealth -= damage;
-            if (playerHealth <= 0)
-            {
-                Die();
-            }
-        }
+        #endregion
 
-        private void Die()
-        {
-            playerCollider.enabled = false;
-            characterController.enabled = false;
-            moveAction.Disable();
-
-            animator.SetTrigger(AnimationParameters.Die);
-        }
-
-        private void StartTakeDamageAnim()
-        {
-            animator.SetTrigger(AnimationParameters.TakeDamage);
-            // change player color for red transition
-            foreach (var r in renderers)
-            {
-                var currentColor = r.material.color;
-                r.material.DOColor(animMaterial.color, .5f).From().SetEase(Ease.InFlash);
-                r.material.DOColor(currentColor, .5f);
-            }
-        }
+        #region State Actions
 
         public void SendArrow()
         {
-            if (currentTarget == null) { return; }
-            var direction = (currentTarget.transform.position - transform.position).normalized;
-            var force = direction * 20f;
-            arrow = Instantiate(arrowPrefab, bow.transform.position, Quaternion.LookRotation(direction));
-            arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            PlayerFSM.OnAction("OnSendArrow");
         }
+
+        public void CheckAttackClicks()
+        {
+            PlayerFSM.OnAction("OnCheckAttackClicks");
+        }
+
+        #endregion
 
         private void FindNearestEnemy()
         {
-            Collider[] hits = FindAllEnemiesInRange();
+            Collider[] hits =  Physics.OverlapSphere(transform.position, attackRangeRadius, detectableLayersForAttack, QueryTriggerInteraction.Collide);
+
             if (hits.Length > 0)
             {
                 currentTarget = hits.OrderBy(n => (n.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
@@ -151,13 +129,6 @@ namespace Gameplay.Player
             {
                 currentTarget = null;
             }
-        }
-
-        private Collider[] FindAllEnemiesInRange()
-        {
-            Collider[] hits =  Physics.OverlapSphere(transform.position, attackRangeRadius, detectableLayersForAttack, QueryTriggerInteraction.Collide);
-            
-            return hits;
         }
 
         private void OnTriggerEnter(Collider other)

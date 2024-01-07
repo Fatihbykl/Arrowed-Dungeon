@@ -6,79 +6,64 @@ using UnityHFSM;
 
 namespace FSM.Player.States
 {
-    public class AttackState : PlayerStateBase
+    public class AttackState : PlayerStateBase, IActionable<string>
     {
-        private float lastClickTime;
         private int numClicks;
-        private bool isComboEnded;
-        private float clipLength;
-        private float clipSpeed;
+        private Collider currentTarget;
 
         public AttackState(Gameplay.Player.Player player, StateMachine<PlayerState> playerFSM, bool needsExitTime)
             : base(player, playerFSM, needsExitTime: needsExitTime)
-        {
-            GameplayEvents.AttackTransition += OnComboAttackTransition;
-        }
-        
-        
+        {}
 
         public override void OnEnter()
         {
             base.OnEnter();
 
             numClicks = 0;
-            lastClickTime = 0;
-            isComboEnded = false;
+            currentTarget = _player.currentTarget;
 
-            _player.transform.DOLookAt(_player.currentTarget.transform.position, .5f);
-            _player.animator.SetBool(AnimationParameters.AttackStart, true);
+            _player.transform.DOLookAt(currentTarget.transform.position, .5f);
+            _player.animator.SetTrigger(AnimationParameters.Attack);
         }
 
         public override void OnLogic()
         {
             base.OnLogic();
             
-            if (Time.time - lastClickTime > _player.animator.GetCurrentAnimatorStateInfo(0).length && _player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .9f)
+            if (currentTarget == null) { _playerFSM.StateCanExit(); }
+
+            if (_player.attackAction.triggered)
+            {
+                numClicks++;
+            }
+        }
+        
+        public void OnSendArrow()
+        {
+            var direction = (currentTarget.transform.position - _player.transform.position).normalized;
+            var force = direction * 25f;
+            
+            _player.arrow = GameObject.Instantiate(_player.arrowPrefab, _player.bow.transform.position, Quaternion.LookRotation(direction));
+            _player.arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        }
+
+        public void OnCheckAttackClicks()
+        {
+            if (numClicks > 1)
+            {
+                _player.animator.CrossFade("Arrow Attack", 0.25f, 0);
+                numClicks = 0;
+            }
+            else
             {
                 numClicks = 0;
                 _playerFSM.StateCanExit();
-            }
-            
-            if (_player.attackAction.triggered && !isComboEnded)
-            {
-                lastClickTime = Time.time;
-                numClicks++;
-            
-                if (numClicks == 1)
-                {
-                    _player.animator.SetTrigger(AnimationParameters.AttackCombos[0]);
-                }
-
-                numClicks = Mathf.Clamp(numClicks, 0, 3);
-            }
-        }
-
-        private void OnComboAttackTransition(int transitionNumber)
-        {
-            if (numClicks >= 2 && transitionNumber == 1)
-            {
-                _player.animator.SetTrigger(AnimationParameters.AttackCombos[1]);
-                lastClickTime = Time.time;
-            }
-            else if (numClicks >= 3 && transitionNumber == 2)
-            {
-                if (isComboEnded) { return; }
-                _player.animator.SetTrigger(AnimationParameters.AttackCombos[2]);
-                lastClickTime = Time.time;
-                isComboEnded = true;
             }
         }
 
         public override void OnExit()
         {
             base.OnExit();
-
-            _player.animator.SetBool(AnimationParameters.AttackStart, false);
         }
     }
 }
