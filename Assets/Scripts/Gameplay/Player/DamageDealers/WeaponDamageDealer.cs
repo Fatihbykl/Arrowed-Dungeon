@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gameplay.Interfaces;
 using UnityEngine;
 
 namespace Gameplay.Player.DamageDealers

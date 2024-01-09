@@ -9,7 +9,7 @@ namespace FSM.Player.States
     public class AttackState : PlayerStateBase, IActionable<string>
     {
         private int numClicks;
-        private Collider currentTarget;
+        private GameObject currentTarget;
 
         public AttackState(Gameplay.Player.Player player, StateMachine<PlayerState> playerFSM, bool needsExitTime)
             : base(player, playerFSM, needsExitTime: needsExitTime)

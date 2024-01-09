@@ -5,6 +5,7 @@ using DG.Tweening;
 using FSM;
 using FSM.Enemy;
 using FSM.Enemy.States;
+using Gameplay.Interfaces;
 using Gameplay.Player.DamageDealers;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,7 @@ using Microlight.MicroBar;
 
 namespace Gameplay.Enemy
 {
-    public class Enemy : MonoBehaviour, IDamageable
+    public class Enemy : MonoBehaviour, IDamageable, IDealDamage
     {
         public MicroBar hpBar;
         public EnemySO enemySettings;
@@ -33,7 +34,7 @@ namespace Gameplay.Enemy
 
         private StateMachine<EnemyState> EnemyFSM;
         private LayerMask playerMask;
-        private bool playerDetected;
+        [HideInInspector] public bool playerDetected;
 
         public TMP_Text stateText;
 
@@ -70,13 +71,12 @@ namespace Gameplay.Enemy
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Idle, t => waypointReached);
-            EnemyFSM.AddTransition(EnemyState.Chase, EnemyState.Patrol, t => !playerDetected);
+            //EnemyFSM.AddTransition(EnemyState.Chase, EnemyState.Patrol, t => !playerDetected);
             EnemyFSM.AddTriggerTransition("OnAttack", new Transition<EnemyState>(EnemyState.Chase, EnemyState.Attack));
             EnemyFSM.AddTransition(EnemyState.Attack, EnemyState.Chase, t => playerDetected);
-            EnemyFSM.AddTransition(EnemyState.Attack, EnemyState.Patrol, t => !playerDetected);
+            //EnemyFSM.AddTransition(EnemyState.Attack, EnemyState.Patrol, t => !playerDetected);
             EnemyFSM.AddTransition(EnemyState.TakeDamage, EnemyState.Chase, t => playerDetected);
-            EnemyFSM.AddTransition(EnemyState.TakeDamage, EnemyState.Patrol, t => !playerDetected);
-
+            //EnemyFSM.AddTransition(EnemyState.TakeDamage, EnemyState.Patrol, t => !playerDetected);
 
             EnemyFSM.SetStartState(EnemyState.Patrol);
             EnemyFSM.Init();
@@ -89,6 +89,7 @@ namespace Gameplay.Enemy
             stateText.SetText(EnemyFSM.GetActiveHierarchyPath().Split('/')[1]);
             playerDetected = Physics.CheckSphere(transform.position, enemySettings.sphereRadius, playerMask,
                 QueryTriggerInteraction.Collide);
+            hpBar.transform.position = transform.position;
         }
 
         #region IDamageable Functions
@@ -98,6 +99,10 @@ namespace Gameplay.Enemy
             EnemyFSM.Trigger("TakeDamage");
             EnemyFSM.OnAction<int>("OnHit", damage);
         }
+        
+        #endregion
+
+        #region IDealDamage Functions
 
         public void StartDealDamage()
         {

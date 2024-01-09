@@ -15,6 +15,7 @@ namespace FSM.Enemy.States
             StartTakeDamageAnim();
             _enemy.currentHealth -= damage;
             _enemy.hpBar.UpdateHealthBar(_enemy.currentHealth);
+            _enemy.playerDetected = true;
         }
         
         private void StartTakeDamageAnim()

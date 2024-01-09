@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using FSM;
+using Gameplay.Interfaces;
 using Gameplay.Player.DamageDealers;
 using UnityEngine;
 

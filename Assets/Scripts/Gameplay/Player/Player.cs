@@ -5,6 +5,7 @@ using DG.Tweening;
 using FSM;
 using FSM.Player;
 using FSM.Player.States;
+using Gameplay.Interfaces;
 using Gameplay.Player.DamageDealers;
 using Microlight.MicroBar;
 using TMPro;
@@ -21,13 +22,14 @@ namespace Gameplay.Player
         [SerializeField] private Material animMaterial;
         [SerializeField] private float attackRangeRadius;
         [SerializeField] private LayerMask detectableLayersForAttack;
-        [HideInInspector] public Collider currentTarget;
+        [HideInInspector] public GameObject currentTarget;
         public TMP_Text stateText;
 
         private StateMachine<PlayerState> PlayerFSM;
         private SkinnedMeshRenderer[] renderers;
         [HideInInspector] public BoxCollider playerCollider;
         private string currentStateName;
+        private FieldOfView fov;
 
         [HideInInspector] public CharacterController characterController;
         [HideInInspector] public Animator animator;
@@ -46,6 +48,7 @@ namespace Gameplay.Player
             playerCollider = GetComponent<BoxCollider>();
             characterController = GetComponent<CharacterController>();
             renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+            fov = GetComponent<FieldOfView>();
             hpBar.Initialize(playerHealth);
 
             PlayerFSM = new StateMachine<PlayerState>();
@@ -83,16 +86,10 @@ namespace Gameplay.Player
             
             currentStateName = PlayerFSM.GetActiveHierarchyPath().Split('/')[1];
             stateText.SetText(currentStateName);
-            
-            Debug.DrawRay(transform.position, transform.forward, Color.green);
-            FindNearestEnemy();
+            currentTarget = fov.targetObject;
         }
 
         #region IDamageable Functions
-
-        public void StartDealDamage() {}
-
-        public void EndDealDamage() {}
 
         public void TakeDamage(int damage)
         {
@@ -116,21 +113,6 @@ namespace Gameplay.Player
 
         #endregion
 
-        private void FindNearestEnemy()
-        {
-            Collider[] hits =  Physics.OverlapSphere(transform.position, attackRangeRadius, detectableLayersForAttack, QueryTriggerInteraction.Collide);
-
-            if (hits.Length > 0)
-            {
-                currentTarget = hits.OrderBy(n => (n.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
-                Debug.DrawRay(transform.position, currentTarget.transform.position - transform.position, Color.green);
-            }
-            else
-            {
-                currentTarget = null;
-            }
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Collectable_Key"))
@@ -140,11 +122,6 @@ namespace Gameplay.Player
                 GameplayEvents.KeyCollected.Invoke(GameManager.instance.collectedKeyCount,
                     GameManager.instance.totalKeyCount, other.gameObject, this.gameObject);
             }
-        }
-        
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(transform.position, attackRangeRadius);
         }
     }
 }
