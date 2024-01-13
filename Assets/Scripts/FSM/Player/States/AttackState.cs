@@ -49,16 +49,11 @@ namespace FSM.Player.States
 
         public void OnCheckAttackClicks()
         {
-            if (numClicks > 1)
+            if (numClicks > 0)
             {
-                _player.animator.CrossFade("Arrow Attack", 0.25f, 0);
-                numClicks = 0;
-            }
-            else
-            {
-                numClicks = 0;
                 _playerFSM.StateCanExit();
             }
+            
         }
 
         public override void OnExit()
