@@ -24,7 +24,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -82,7 +82,37 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: character_skeleton_minion(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_skeleton_minion_armRight
+      parentName: character_skeleton_minion(Clone)
+      position: {x: 0.20404816, y: 0.63355637, z: -0.000000103219435}
+      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_skeleton_minion_armLeft
+      parentName: character_skeleton_minion(Clone)
+      position: {x: -0.20404816, y: 0.63355637, z: -0.000000103219435}
+      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_skeleton_minion_head
+      parentName: character_skeleton_minion(Clone)
+      position: {x: -0, y: 0.70453644, z: -0.00000011478356}
+      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_skeleton_minion_eyes
+      parentName: character_skeleton_minion_head
+      position: {x: -0.0000076293945, y: 0.42451474, z: 0.25871465}
+      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_skeleton_minion_jaw
+      parentName: character_skeleton_minion_head
+      position: {x: -0, y: 0.12670135, z: 0.039922696}
+      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5

@@ -89,7 +89,8 @@ namespace Gameplay.Enemy
             stateText.SetText(EnemyFSM.GetActiveHierarchyPath().Split('/')[1]);
             playerDetected = Physics.CheckSphere(transform.position, enemySettings.sphereRadius, playerMask,
                 QueryTriggerInteraction.Collide);
-            hpBar.transform.position = transform.position;
+            hpBar.transform.position =
+                new Vector3(transform.position.x, hpBar.transform.position.y, transform.position.z);
         }
 
         #region IDamageable Functions
