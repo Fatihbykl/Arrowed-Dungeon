@@ -9,10 +9,13 @@ namespace DataPersistance.Data.ScriptableObjects
         public int enemyBaseDamage;
         public int enemyBaseHealth;
         public float attackDelay;
-        [Header("Other Settings")]
+        [Header("Agent Settings")]
         [Tooltip("Awareness size of the enemy.")] public float sphereRadius;
         public float patrolSpeed;
         public float chaseSpeed;
         public float waypointWaitTime;
+        public float stoppingDistance;
+        public float radius;
+        public float height;
     }
 }

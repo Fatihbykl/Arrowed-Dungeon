@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using Gameplay.Interfaces;
+using Gameplay.Player.DamageDealers;
 using UnityEngine;
 
-namespace Gameplay.Player.DamageDealers
+namespace Gameplay.DamageDealers
 {
     public class WeaponDamageDealer : MonoBehaviour
     {
@@ -19,17 +20,8 @@ namespace Gameplay.Player.DamageDealers
         {
             canDealDamage = false;
             hasDealtDamage = new List<IDamageable>();
-
-            GameplayEvents.StartDealDamage += OnStartDealDamage;
-            GameplayEvents.EndDealDamage += OnEndDealDamage;
         }
-
-        private void OnDisable()
-        {
-            GameplayEvents.StartDealDamage -= OnStartDealDamage;
-            GameplayEvents.EndDealDamage -= OnEndDealDamage;
-        }
-
+        
         private void Update()
         {
             if (canDealDamage)
@@ -71,16 +63,14 @@ namespace Gameplay.Player.DamageDealers
             return returnValue;
         }
 
-        private void OnStartDealDamage(GameObject sender)
+        public void OnStartDealDamage(GameObject sender)
         {
-            if (rootObject != sender) { return; }
             canDealDamage = true;
             hasDealtDamage.Clear();
         }
     
-        private void OnEndDealDamage(GameObject sender)
+        public void OnEndDealDamage(GameObject sender)
         {
-            if (rootObject != sender) { return; }
             canDealDamage = false;
         }
 

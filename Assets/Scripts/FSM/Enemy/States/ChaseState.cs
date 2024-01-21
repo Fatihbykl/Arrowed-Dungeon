@@ -17,6 +17,7 @@ namespace FSM.Enemy.States
             _enemy.animator.SetBool(AnimationParameters.Chase, true);
             _enemy.agent.isStopped = false;
             _enemy.agent.speed = _enemy.enemySettings.chaseSpeed;
+            _enemy.agent.stoppingDistance = _enemy.enemySettings.stoppingDistance;
         }
 
         public override void OnLogic()

@@ -22,7 +22,6 @@ namespace FSM.Enemy.States
         {
             // deactivate hp bar and collider for prevent further attacks
             _enemy.boxCollider.enabled = false;
-            //hpBar.FadeBar(true, 1f);
             _enemy.hpBar.gameObject.SetActive(false);
             _enemy.GetComponentInChildren<ParticleSystem>().Play();
             
@@ -32,9 +31,9 @@ namespace FSM.Enemy.States
             await UniTask.WaitForSeconds(dieAnimation.length / dieAnimation.speed);
             
             // fade out animation
-            await _enemy.meshRenderer.material.DOFade(0f, 1f).ToUniTask();
+            // await _enemy.meshRenderer.material.DOFade(0f, 1f).ToUniTask();
 
-            GameObject.Destroy(_enemy.gameObject, 1f);
+            GameObject.Destroy(_enemy.gameObject, 2f);
         }
     }
 }

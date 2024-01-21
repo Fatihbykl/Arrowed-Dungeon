@@ -24,6 +24,7 @@ public class ArrowType : ScriptableObject
 
     [Header("Settings")]
     public int baseHealth = 1;
+    public int baseDamage = 1;
     public int basecoinReward = 1;
     public float baseSpeed = 250;
     public float spawnSeconds = 2;

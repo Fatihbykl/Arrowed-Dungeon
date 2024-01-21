@@ -2,7 +2,6 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityHFSM;
-using Vector3 = UnityEngine.Vector3;
 
 namespace FSM.Enemy.States
 {
@@ -34,7 +33,6 @@ namespace FSM.Enemy.States
                 _enemy.agent.isStopped = false;
                 _enemyFSM.StateCanExit();
             }
-
         }
     }
 }
