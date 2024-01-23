@@ -9,10 +9,7 @@ namespace Gameplay.Player
     {
         [SerializeField] private ArrowType arrowSO;
 
-        private void Start()
-        {
-            
-        }
+        private GameObject particle;
 
         private void OnCollisionEnter(Collision other)
         {
@@ -21,8 +18,13 @@ namespace Gameplay.Player
             if (collideObject != null)
             {
                 collideObject.TakeDamage(arrowSO.baseDamage);
+                if (arrowSO.hitParticlePrefab != null)
+                {
+                    particle = Instantiate(arrowSO.hitParticlePrefab, transform.position, transform.rotation);
+                }
             }
             Destroy(this.gameObject);
+            Destroy(particle, 1f);
         }
     }
 }

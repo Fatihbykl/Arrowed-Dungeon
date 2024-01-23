@@ -29,4 +29,5 @@ public class ArrowType : ScriptableObject
     public float baseSpeed = 250;
     public float spawnSeconds = 2;
 
+    public GameObject hitParticlePrefab;
 }

@@ -9,6 +9,7 @@ namespace FSM.Enemy
         Chase,
         Attack,
         TakeDamage,
-        Die
+        Die,
+        Spin
     }
 }

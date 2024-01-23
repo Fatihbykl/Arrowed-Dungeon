@@ -61,7 +61,7 @@ namespace Gameplay.Player
                 .AddAction<int>("OnHit", (int damage) => { takeDamageState.OnHit(damage); }));
             
             PlayerFSM.AddTransitionFromAny(PlayerState.Die, t => playerHealth <= 0);
-            PlayerFSM.AddTriggerTransitionFromAny("TakeDamage", PlayerState.TakeDamage);
+            PlayerFSM.AddTriggerTransitionFromAny("TakeDamage", PlayerState.TakeDamage, forceInstantly:true);
             PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
             PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
             PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Attack, t => attackAction.triggered && currentTarget != null);
