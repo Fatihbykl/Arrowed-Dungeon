@@ -7,16 +7,35 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityHFSM;
 using Microlight.MicroBar;
+using NaughtyAttributes;
 
 namespace Gameplay.Enemy
 {
     public class Enemy : MonoBehaviour, IDamageable
     {
-        public MicroBar hpBar;
-        public EnemySO enemySettings;
-        public Player.Player player;
-        public Transform[] waypoints;
-
+        [Header("Needed Objects")]
+        [HorizontalLine(color: EColor.White, height: 1f)]
+        [Space(10)]
+        
+        [Foldout("Base Enemy Settings")] public MicroBar hpBar;
+        [Foldout("Base Enemy Settings")] public EnemySO enemySettings;
+        [Foldout("Base Enemy Settings")] public Player.Player player;
+        [Foldout("Base Enemy Settings")] public Transform[] waypoints;
+        
+        [Header("Take Damage Emission Settings")]
+        [HorizontalLine(color: EColor.White, height: 1f)]
+        [Space(10)]
+        [Foldout("Base Enemy Settings")] public float blinkIntensity = 10f;
+        [Foldout("Base Enemy Settings")] public float blinkDuration = 2f;
+        
+        [Header("Test Variables")]
+        [HorizontalLine(color: EColor.White, height: 1f)]
+        [Space(10)]
+        [Foldout("Base Enemy Settings")] public TMP_Text stateText;
+        [Space(10)]
+        
+        protected StateMachine<EnemyState> EnemyFSM;
+        private LayerMask playerMask;
         [HideInInspector] public SkinnedMeshRenderer meshRenderer;
         [HideInInspector] public NavMeshAgent agent;
         [HideInInspector] public BoxCollider boxCollider;
@@ -28,11 +47,6 @@ namespace Gameplay.Enemy
         [HideInInspector] public bool playerDetected;
         [HideInInspector] public float lastAttackTime;
         
-        protected StateMachine<EnemyState> EnemyFSM;
-        private LayerMask playerMask;
-
-        public TMP_Text stateText;
-
         private void Awake()
         {
             // variables

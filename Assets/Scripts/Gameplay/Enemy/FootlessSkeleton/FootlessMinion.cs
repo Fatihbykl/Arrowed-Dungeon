@@ -6,6 +6,7 @@ using FSM.Enemy.States.FootlessSkeletonStates.Minion;
 using Gameplay.DamageDealers;
 using Gameplay.Interfaces;
 using Gameplay.Player.DamageDealers;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityHFSM;
 
@@ -13,11 +14,14 @@ namespace Gameplay.Enemy.FootlessSkeleton
 {
     public class FootlessMinion : Enemy, IDealDamage
     {
-        public float focusTimeBeforeSpin;
-        public float spinLength;
-        [Range(0, 1)] 
-        public float triggerHealthPercentage;
-        public float spinCooldown;
+        [Header("Spin Settings")]
+        [HorizontalLine(color: EColor.White, height: 1f)]
+        [Space(10)]
+
+        [Foldout("FL Minion Settings")] public float focusTimeBeforeSpin;
+        [Foldout("FL Minion Settings")]public float spinLength;
+        [Foldout("FL Minion Settings")] [Range(0, 1)] public float triggerHealthPercentage;
+        [Foldout("FL Minion Settings")] public float spinCooldown;
         
         private WeaponDamageDealer damageDealer;
         [HideInInspector] public float lastSpinTime = 0;
