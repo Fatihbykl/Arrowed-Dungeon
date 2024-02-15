@@ -11,6 +11,8 @@ namespace Gameplay.Player
     {
         public PlayerStats stats;
         public MicroBar hpBar;
+        public GameObject bowPlacement;
+        public GameObject handSlot;
         private int playerHealth;
 
         private GameObject currentTarget;
@@ -19,7 +21,7 @@ namespace Gameplay.Player
         private FieldOfView fov;
         
         public Animator animator;
-        private float lastAttackTime = 0;
+        private float lastAttackTime;
         private InputAction attackAction;
 
         private GameObject arrow;
@@ -43,7 +45,7 @@ namespace Gameplay.Player
         {
             currentTarget = fov.targetObject;
 
-            if (attackAction.triggered) { ToggleAttackMode(); }
+            if (currentTarget != null && attackAction.triggered) { ToggleAttackMode(); }
 
             if (currentTarget != null && attackModeActive)
             {
@@ -63,12 +65,21 @@ namespace Gameplay.Player
             hpBar.UpdateHealthBar(playerHealth);
         }
 
+        public void AttachBow()
+        {
+            bow.transform.SetParent(handSlot.transform, false);
+        }
+
+        public void DisarmBow()
+        {
+            bow.transform.SetParent(bowPlacement.transform, false);
+        }
+
         public void Attack()
         {
             if (Time.time - lastAttackTime >= stats.attackCooldown)
             {
                 animator.SetTrigger(AnimationParameters.Attack);
-                SendArrow();
                 lastAttackTime = Time.time;
             }
         }
@@ -96,7 +107,9 @@ namespace Gameplay.Player
 
         private void ToggleAttackMode()
         {
+            lastAttackTime = Time.time;
             attackModeActive = !attackModeActive;
+            animator.SetTrigger(attackModeActive ? AnimationParameters.EquipBow : AnimationParameters.DisarmBow);
             animator.SetBool(AnimationParameters.AttackMode, attackModeActive);
         }
     }

@@ -74,23 +74,16 @@ namespace Gameplay.Enemy
             
             // FSM
             EnemyFSM = new StateMachine<EnemyState>();
-
-            var takeDamage = new TakeDamageState(this, EnemyFSM);
             
             EnemyFSM.AddState(EnemyState.Idle, new IdleState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Patrol, new PatrolState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Die, new DieState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Chase, new ChaseState(this, EnemyFSM));
-            EnemyFSM.AddState(EnemyState.TakeDamage, takeDamage
-                .AddAction<int>("OnHit", (int damage) => takeDamage.OnHit(damage)));
-            
-            EnemyFSM.AddTriggerTransitionFromAny("TakeDamage", EnemyState.TakeDamage, forceInstantly: true);
             EnemyFSM.AddTransitionFromAny(EnemyState.Die, t => currentHealth <= 0);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Patrol, t => canMoveNextWaypoint);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Idle, t => waypointReached);
-            EnemyFSM.AddTransition(EnemyState.TakeDamage, EnemyState.Chase, t => playerDetected);
         }
 
         private void Start()
@@ -112,8 +105,9 @@ namespace Gameplay.Enemy
 
         public void TakeDamage(int damage)
         {
-            EnemyFSM.Trigger("TakeDamage");
-            EnemyFSM.OnAction<int>("OnHit", damage);
+            currentHealth -= damage;
+            hpBar.UpdateHealthBar(currentHealth);
+            playerDetected = true;
         }
     }
 }
