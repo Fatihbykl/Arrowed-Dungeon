@@ -7,6 +7,8 @@ namespace FSM
         // player parameters
         public static readonly int Moving = Animator.StringToHash("Moving");
         public static readonly int Attack = Animator.StringToHash("Attack");
+        public static readonly int AttackMode = Animator.StringToHash("AttackMode");
+        public static readonly int Strafe = Animator.StringToHash("Strafe");
         
         // enemy parameters
         public static readonly int Patrol = Animator.StringToHash("Patrol");

@@ -1,109 +1,112 @@
 using System;
-using System.Linq;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using FSM;
-using FSM.Player;
-using FSM.Player.States;
 using Gameplay.Interfaces;
-using Gameplay.Player.DamageDealers;
 using Microlight.MicroBar;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityHFSM;
 
 namespace Gameplay.Player
 {
     public class Player : MonoBehaviour, IDamageable
     {
-        public int playerHealth;
+        public PlayerStats stats;
         public MicroBar hpBar;
+        private int playerHealth;
 
-        [HideInInspector] public GameObject currentTarget;
-        public TMP_Text stateText;
+        private GameObject currentTarget;
 
-        private StateMachine<PlayerState> PlayerFSM;
-        [HideInInspector] public BoxCollider playerCollider;
-        private string currentStateName;
+        private BoxCollider playerCollider;
         private FieldOfView fov;
+        
+        public Animator animator;
+        private float lastAttackTime = 0;
+        private InputAction attackAction;
 
-        [HideInInspector] public CharacterController characterController;
-        [HideInInspector] public Animator animator;
-        [HideInInspector] public InputAction moveAction;
-        [HideInInspector] public InputAction attackAction;
-
+        private GameObject arrow;
         public GameObject arrowPrefab;
         public GameObject bow;
-        [HideInInspector] public GameObject arrow;
+        public bool canMove = true;
+        public bool attackModeActive = false;
 
         private void Awake()
         {
-            moveAction = GetComponent<PlayerInput>().actions["Move"];
             attackAction = GetComponent<PlayerInput>().actions["Attack"];
             animator = GetComponent<Animator>();
             playerCollider = GetComponent<BoxCollider>();
-            characterController = GetComponent<CharacterController>();
             fov = GetComponent<FieldOfView>();
+            playerHealth = stats.baseHealth;
+            
             hpBar.Initialize(playerHealth);
-
-            PlayerFSM = new StateMachine<PlayerState>();
-            
-            var attackState = new AttackState(this, PlayerFSM, needsExitTime: true);
-            var takeDamageState = new TakeDamageState(this, PlayerFSM);
-            
-            PlayerFSM.AddState(PlayerState.Idle, new IdleState(this, PlayerFSM));
-            PlayerFSM.AddState(PlayerState.Move, new MoveState(this, PlayerFSM));
-            PlayerFSM.AddState(PlayerState.Die, new DieState(this, PlayerFSM));
-            PlayerFSM.AddState(PlayerState.Attack, attackState
-                .AddAction("OnSendArrow", () => { attackState.OnSendArrow(); }));
-            PlayerFSM.AddState(PlayerState.TakeDamage, takeDamageState
-                .AddAction<int>("OnHit", (int damage) => { takeDamageState.OnHit(damage); }));
-            
-            PlayerFSM.AddTransitionFromAny(PlayerState.Die, t => playerHealth <= 0);
-            PlayerFSM.AddTriggerTransitionFromAny("TakeDamage", PlayerState.TakeDamage, forceInstantly:true);
-            PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Idle, PlayerState.Attack, t => attackAction.triggered && currentTarget != null);
-            PlayerFSM.AddTransition(PlayerState.Move, PlayerState.Attack, t => attackAction.triggered && currentTarget != null);
-            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
-            PlayerFSM.AddTransition(PlayerState.Attack, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
-            PlayerFSM.AddTransition(PlayerState.TakeDamage, PlayerState.Idle, t => moveAction.ReadValue<Vector2>().magnitude < 0.1f);
-            PlayerFSM.AddTransition(PlayerState.TakeDamage, PlayerState.Move, t => moveAction.ReadValue<Vector2>().magnitude > 0.1f);
-
-            PlayerFSM.SetStartState(PlayerState.Idle);
-            PlayerFSM.Init();
         }
 
         private void Update()
         {
-            PlayerFSM.OnLogic();
-            
-            currentStateName = PlayerFSM.GetActiveHierarchyPath().Split('/')[1];
-            stateText.SetText(currentStateName);
             currentTarget = fov.targetObject;
+
+            if (attackAction.triggered) { ToggleAttackMode(); }
+
+            if (currentTarget != null && attackModeActive)
+            {
+                transform.LookAt(currentTarget.transform);
+                Attack();
+            }
         }
 
         public void TakeDamage(int damage)
         {
-            PlayerFSM.Trigger("TakeDamage");
-            PlayerFSM.OnAction<int>("OnHit", damage);
+            animator.SetTrigger(AnimationParameters.TakeDamage);
+            playerHealth -= damage;
+            if (playerHealth <= 0)
+            {
+                Die();
+            }
+            hpBar.UpdateHealthBar(playerHealth);
+        }
+
+        public void Attack()
+        {
+            if (Time.time - lastAttackTime >= stats.attackCooldown)
+            {
+                animator.SetTrigger(AnimationParameters.Attack);
+                SendArrow();
+                lastAttackTime = Time.time;
+            }
         }
         
         public void SendArrow()
         {
-            PlayerFSM.OnAction("OnSendArrow");
+            var direction = (currentTarget.transform.position - transform.position).normalized;
+            var force = direction * 25f;
+
+            arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position,
+                Quaternion.LookRotation(direction));
+            arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        }
+        
+        private void Die()
+        {
+            // TODO: prevent enemy attack when dead
+            
+            playerCollider.enabled = false;
+            canMove = false;
+    
+            animator.SetTrigger(AnimationParameters.Die);
+            this.enabled = false;
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void ToggleAttackMode()
         {
-            if (other.CompareTag("Collectable_Key"))
-            {
-                GameManager.instance.CollectedKey();
-                other.GetComponent<BoxCollider>().enabled = false;
-                GameplayEvents.KeyCollected.Invoke(GameManager.instance.collectedKeyCount,
-                    GameManager.instance.totalKeyCount, other.gameObject, this.gameObject);
-            }
+            attackModeActive = !attackModeActive;
+            animator.SetBool(AnimationParameters.AttackMode, attackModeActive);
         }
+    }
+    
+    [Serializable]
+    public class PlayerStats
+    {
+        public float runningSpeed;
+        public float walkingSpeed;
+        public int baseHealth;
+        public float attackCooldown;
     }
 }

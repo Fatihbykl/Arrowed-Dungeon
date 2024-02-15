@@ -26,10 +26,13 @@ namespace Gameplay.Enemy.FootlessSkeleton
         private WeaponDamageDealer damageDealer;
         [HideInInspector] public float lastSpinTime = 0;
         [HideInInspector] public bool canSpin = false;
+        [HideInInspector] public TrailRenderer trail;
         
         private void OnEnable()
         {
             damageDealer = GetComponentInChildren<WeaponDamageDealer>();
+            trail = GetComponentInChildren<TrailRenderer>();
+            trail.gameObject.SetActive(false);
             
             EnemyFSM.AddState(EnemyState.Attack, new AttackState(this, EnemyFSM, needsExitTime:true));
             EnemyFSM.AddState(EnemyState.Spin, new SpinState(this, EnemyFSM));

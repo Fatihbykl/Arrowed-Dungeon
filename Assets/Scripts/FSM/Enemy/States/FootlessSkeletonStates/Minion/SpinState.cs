@@ -46,6 +46,7 @@ namespace FSM.Enemy.States.FootlessSkeletonStates.Minion
             await UniTask.WaitForSeconds(enemy.focusTimeBeforeSpin);
             
             Debug.Log("Spinning");
+            enemy.trail.gameObject.SetActive(true);
             canMove = true;
             enemy.animator.SetTrigger(AnimationParameters.StartSpin);
             await UniTask.WaitForSeconds(enemy.spinLength);
@@ -58,6 +59,7 @@ namespace FSM.Enemy.States.FootlessSkeletonStates.Minion
             base.OnExit();
             
             enemy.animator.SetBool(AnimationParameters.CanSpin, false);
+            enemy.trail.gameObject.SetActive(false);
             enemy.lastSpinTime = Time.time;
         }
     }
