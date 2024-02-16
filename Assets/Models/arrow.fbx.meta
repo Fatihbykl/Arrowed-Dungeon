@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: a61a249fd4daa9940bfa5df44c419849
+guid: 39d3caad5c119be4fb4ca1423d445d79
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -24,7 +24,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -78,51 +78,11 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton:
-    - name: character_skeleton_mage_broken(Clone)
-      parentName: 
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: character_skeleton_mage_cloak_broken
-      parentName: character_skeleton_mage_broken(Clone)
-      position: {x: -0, y: 0.70453644, z: -0.00000011478356}
-      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: character_skeleton_mage_armLeft_broken
-      parentName: character_skeleton_mage_broken(Clone)
-      position: {x: -0.20404053, y: 0.63355637, z: -0.000000103219435}
-      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: character_skeleton_mage_armRight_broken
-      parentName: character_skeleton_mage_broken(Clone)
-      position: {x: 0.20404816, y: 0.63355637, z: -0.000000103219435}
-      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: character_skeleton_mage_head_broken
-      parentName: character_skeleton_mage_broken(Clone)
-      position: {x: -0, y: 0.70453644, z: -0.00000011478356}
-      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: character_skeleton_mage_cowl_broken
-      parentName: character_skeleton_mage_head_broken
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: character_skeleton_mage_eyes_broken
-      parentName: character_skeleton_mage_head_broken
-      position: {x: -0.0000076293945, y: 0.42451486, z: 0.25871652}
-      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: character_skeleton_mage_jaw_broken
-      parentName: character_skeleton_mage_head_broken
-      position: {x: -0, y: 0.12670135, z: 0.039922696}
-      rotation: {x: -0.00000011920929, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
+    skeleton: []
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
