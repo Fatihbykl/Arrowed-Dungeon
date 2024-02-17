@@ -1,4 +1,5 @@
-﻿using DataPersistance.Data.ScriptableObjects;
+﻿using Cysharp.Threading.Tasks;
+using DataPersistance.Data.ScriptableObjects;
 using FSM.Enemy;
 using FSM.Enemy.States;
 using Gameplay.Interfaces;
@@ -8,6 +9,7 @@ using UnityEngine.AI;
 using UnityHFSM;
 using Microlight.MicroBar;
 using NaughtyAttributes;
+using DG.Tweening;
 
 namespace Gameplay.Enemy
 {
@@ -108,6 +110,14 @@ namespace Gameplay.Enemy
             currentHealth -= damage;
             hpBar.UpdateHealthBar(currentHealth);
             playerDetected = true;
+            if (currentHealth > 0) { StartTakeDamageAnim(); }
+        }
+        
+        private async void StartTakeDamageAnim()
+        {
+            gameObject.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.1f);
+            await meshRenderer.material.DOColor(Color.white * blinkIntensity, blinkDuration / 2).ToUniTask();
+            await meshRenderer.material.DOColor(Color.white, blinkDuration / 2).ToUniTask();
         }
     }
 }

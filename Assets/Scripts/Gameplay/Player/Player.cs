@@ -91,6 +91,7 @@ namespace Gameplay.Player
 
             arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position,
                 Quaternion.LookRotation(direction));
+            arrow.GetComponentInChildren<ParticleSystem>().Play();
             arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
         }
         
