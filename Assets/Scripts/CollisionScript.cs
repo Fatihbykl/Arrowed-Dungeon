@@ -21,11 +21,11 @@ public class CollisionScript : MonoBehaviour
             Player player = collision.collider.gameObject.GetComponentInParent<Player>();
             if (arrow.arrowType.type == ArrowTypeName.Killer)
             {
-                player.TakeDamage(50);
+                player.TakeDamage(50, Vector3.zero);
             }
             else
             {
-                player.TakeDamage(20);
+                player.TakeDamage(20, Vector3.zero);
                 arrow.ArrowReflect(contactPoint);
             }
         }
@@ -34,7 +34,7 @@ public class CollisionScript : MonoBehaviour
             if (arrow.arrowType.type == ArrowTypeName.Killer)
             {
                 Player player = collision.collider.gameObject.GetComponentInParent<Player>();
-                player.TakeDamage(50);
+                player.TakeDamage(50, Vector3.zero);
             }
             else if (arrow.arrowType.type == ArrowTypeName.ShieldBreaker) 
             {

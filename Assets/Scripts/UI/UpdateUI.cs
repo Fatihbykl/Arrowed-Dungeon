@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UIElements.Button;
 using DG.Tweening;
+using Events;
 
 public class UpdateUI : MonoBehaviour
 {

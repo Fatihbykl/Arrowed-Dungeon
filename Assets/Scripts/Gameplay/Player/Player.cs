@@ -1,4 +1,6 @@
 using System;
+using DG.Tweening;
+using Events;
 using FSM;
 using Gameplay.Interfaces;
 using Microlight.MicroBar;
@@ -45,7 +47,7 @@ namespace Gameplay.Player
         {
             currentTarget = fov.targetObject;
 
-            if (currentTarget != null && attackAction.triggered) { ToggleAttackMode(); }
+            if (attackAction.triggered) { ToggleAttackMode(); }
 
             if (currentTarget != null && attackModeActive)
             {
@@ -54,7 +56,7 @@ namespace Gameplay.Player
             }
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, Vector3 direction)
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
             playerHealth -= damage;
@@ -68,14 +70,16 @@ namespace Gameplay.Player
         public void AttachBow()
         {
             bow.transform.SetParent(handSlot.transform, false);
+            HoldBowString();
         }
 
         public void DisarmBow()
         {
             bow.transform.SetParent(bowPlacement.transform, false);
+            ReleaseBowString();
         }
 
-        public void Attack()
+        private void Attack()
         {
             if (Time.time - lastAttackTime >= stats.attackCooldown)
             {
@@ -93,6 +97,18 @@ namespace Gameplay.Player
                 Quaternion.LookRotation(direction));
             arrow.GetComponentInChildren<ParticleSystem>().Play();
             arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            
+            ReleaseBowString();
+        }
+        
+        public void ReleaseBowString()
+        {
+            GameplayEvents.ReleaseBowString?.Invoke();
+        }
+
+        public void HoldBowString()
+        {
+            GameplayEvents.HoldBowString?.Invoke();
         }
         
         private void Die()

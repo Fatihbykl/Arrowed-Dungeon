@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Events;
 using UnityEngine;
 using UnityEngine.UIElements;
 

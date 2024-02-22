@@ -23,6 +23,7 @@ namespace Gameplay.Enemy
         [Foldout("Base Enemy Settings")] public EnemySO enemySettings;
         [Foldout("Base Enemy Settings")] public Player.Player player;
         [Foldout("Base Enemy Settings")] public Transform[] waypoints;
+        [Foldout("Base Enemy Settings")] public bool canKnockbackable;
         
         [Header("Take Damage Emission Settings")]
         [HorizontalLine(color: EColor.White, height: 1f)]
@@ -38,6 +39,7 @@ namespace Gameplay.Enemy
         
         protected StateMachine<EnemyState> EnemyFSM;
         private LayerMask playerMask;
+        private Rigidbody rb;
         [HideInInspector] public SkinnedMeshRenderer meshRenderer;
         [HideInInspector] public NavMeshAgent agent;
         [HideInInspector] public BoxCollider boxCollider;
@@ -53,6 +55,7 @@ namespace Gameplay.Enemy
         {
             // variables
             playerMask = LayerMask.GetMask("Player");
+            rb = GetComponent<Rigidbody>();
             lastAttackTime = 0;
             playerDetected = false;
             waypointReached = false;
@@ -81,7 +84,7 @@ namespace Gameplay.Enemy
             EnemyFSM.AddState(EnemyState.Patrol, new PatrolState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Die, new DieState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Chase, new ChaseState(this, EnemyFSM));
-            EnemyFSM.AddTransitionFromAny(EnemyState.Die, t => currentHealth <= 0);
+            EnemyFSM.AddTransitionFromAny(EnemyState.Die, t => currentHealth <= 0, forceInstantly: true);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Patrol, t => canMoveNextWaypoint);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Chase, t => playerDetected);
@@ -105,11 +108,12 @@ namespace Gameplay.Enemy
                 new Vector3(transform.position.x - 0.5f, hpBar.transform.position.y, transform.position.z);
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, Vector3 direction)
         {
             currentHealth -= damage;
             hpBar.UpdateHealthBar(currentHealth);
             playerDetected = true;
+            if (canKnockbackable) { transform.position += direction; }
             if (currentHealth > 0) { StartTakeDamageAnim(); }
         }
         

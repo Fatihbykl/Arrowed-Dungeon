@@ -17,7 +17,10 @@ namespace Gameplay.Player
 
             if (collideObject != null)
             {
-                collideObject.TakeDamage(arrowSO.baseDamage);
+                Vector3 direction = (other.transform.position - transform.position).normalized * arrowSO.knockbackForce;
+                direction.y = 0;
+                collideObject.TakeDamage(arrowSO.baseDamage, transform.forward * arrowSO.knockbackForce);
+             
                 if (arrowSO.hitParticlePrefab != null)
                 {
                     particle = Instantiate(arrowSO.hitParticlePrefab, transform.position, transform.rotation);

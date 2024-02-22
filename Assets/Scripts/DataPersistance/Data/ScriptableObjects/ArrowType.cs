@@ -28,6 +28,7 @@ public class ArrowType : ScriptableObject
     public int basecoinReward = 1;
     public float baseSpeed = 250;
     public float spawnSeconds = 2;
+    public float knockbackForce = 1;
 
     public GameObject hitParticlePrefab;
 }
