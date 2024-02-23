@@ -26,8 +26,8 @@ namespace Gameplay.Player
                     particle = Instantiate(arrowSO.hitParticlePrefab, transform.position, transform.rotation);
                 }
             }
-            Destroy(this.gameObject);
-            Destroy(particle, 1f);
+
+            Destroy(gameObject);
         }
     }
 }

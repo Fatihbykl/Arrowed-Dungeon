@@ -21,7 +21,7 @@ namespace Gameplay.Player
 
         private BoxCollider playerCollider;
         private FieldOfView fov;
-        
+
         public Animator animator;
         private float lastAttackTime;
         private InputAction attackAction;
@@ -39,7 +39,7 @@ namespace Gameplay.Player
             playerCollider = GetComponent<BoxCollider>();
             fov = GetComponent<FieldOfView>();
             playerHealth = stats.baseHealth;
-            
+
             hpBar.Initialize(playerHealth);
         }
 
@@ -47,7 +47,10 @@ namespace Gameplay.Player
         {
             currentTarget = fov.targetObject;
 
-            if (attackAction.triggered) { ToggleAttackMode(); }
+            if (attackAction.triggered)
+            {
+                ToggleAttackMode();
+            }
 
             if (currentTarget != null && attackModeActive)
             {
@@ -64,6 +67,7 @@ namespace Gameplay.Player
             {
                 Die();
             }
+
             hpBar.UpdateHealthBar(playerHealth);
         }
 
@@ -87,20 +91,23 @@ namespace Gameplay.Player
                 lastAttackTime = Time.time;
             }
         }
-        
+
         public void SendArrow()
         {
             var direction = (currentTarget.transform.position - transform.position).normalized;
             var force = direction * 25f;
 
-            arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position,
-                Quaternion.LookRotation(direction));
-            arrow.GetComponentInChildren<ParticleSystem>().Play();
-            arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            var lookRotation = Quaternion.LookRotation(direction);
+            lookRotation *= Quaternion.Euler(0, 0, 90f);
+            arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position, lookRotation);
             
+            //arrow.GetComponentInChildren<ParticleSystem>().Play();
+            
+            arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+
             ReleaseBowString();
         }
-        
+
         public void ReleaseBowString()
         {
             GameplayEvents.ReleaseBowString?.Invoke();
@@ -110,14 +117,14 @@ namespace Gameplay.Player
         {
             GameplayEvents.HoldBowString?.Invoke();
         }
-        
+
         private void Die()
         {
             // TODO: prevent enemy attack when dead
-            
+
             playerCollider.enabled = false;
             canMove = false;
-    
+
             animator.SetTrigger(AnimationParameters.Die);
             this.enabled = false;
         }
@@ -130,7 +137,7 @@ namespace Gameplay.Player
             animator.SetBool(AnimationParameters.AttackMode, attackModeActive);
         }
     }
-    
+
     [Serializable]
     public class PlayerStats
     {
