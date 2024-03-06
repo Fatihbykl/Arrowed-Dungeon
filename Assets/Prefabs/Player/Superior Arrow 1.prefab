@@ -4854,8 +4854,8 @@ GameObject:
   - component: {fileID: 3019162081445918582}
   - component: {fileID: 4970451593143856423}
   - component: {fileID: 3917012896104863171}
-  - component: {fileID: 3996797016565233671}
   - component: {fileID: 2026040250635225927}
+  - component: {fileID: 3636369292933430599}
   m_Layer: 12
   m_Name: Superior Arrow 1
   m_TagString: Arrow
@@ -4941,7 +4941,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4958,8 +4958,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!136 &3996797016565233671
-CapsuleCollider:
+--- !u!114 &2026040250635225927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7630012633763062820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de5ab3503662184b9f24aebdcdfaded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowSO: {fileID: 11400000, guid: c2b8c2f16d2de51488fd96fdb8913c95, type: 2}
+--- !u!65 &3636369292933430599
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4976,21 +4989,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.03
-  m_Height: 0.6
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2026040250635225927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7630012633763062820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6de5ab3503662184b9f24aebdcdfaded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrowSO: {fileID: 11400000, guid: c2b8c2f16d2de51488fd96fdb8913c95, type: 2}
+  serializedVersion: 3
+  m_Size: {x: 0.11141729, y: 0.06580472, z: 0.54297155}
+  m_Center: {x: -0.0031034946, y: 0.00031483173, z: 0.017793149}

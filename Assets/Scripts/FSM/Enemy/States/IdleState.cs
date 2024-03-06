@@ -15,8 +15,8 @@ namespace FSM.Enemy.States
         {
             base.OnEnter();
 
-            _enemy.agent.isStopped = true;
-            _enemy.agent.speed = 0f;
+            _enemy.agentController.agent.isStopped = true;
+            _enemy.agentController.agent.speed = 0f;
             
             WaitBeforeMoveNextWaypoint();
         }

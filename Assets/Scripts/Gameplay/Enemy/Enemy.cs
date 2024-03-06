@@ -1,4 +1,8 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AbilitySystem;
+using Cysharp.Threading.Tasks;
 using DataPersistance.Data.ScriptableObjects;
 using FSM.Enemy;
 using FSM.Enemy.States;
@@ -10,6 +14,9 @@ using UnityHFSM;
 using Microlight.MicroBar;
 using NaughtyAttributes;
 using DG.Tweening;
+using ECM.Controllers;
+using FSM;
+using Gameplay.DamageDealers;
 
 namespace Gameplay.Enemy
 {
@@ -24,6 +31,8 @@ namespace Gameplay.Enemy
         [Foldout("Base Enemy Settings")] public Player.Player player;
         [Foldout("Base Enemy Settings")] public Transform[] waypoints;
         [Foldout("Base Enemy Settings")] public bool canKnockbackable;
+        [Foldout("Base Enemy Settings")] public AbilityBase[] abilities;
+        public List<AbilityHolder> abilityHolders;
         
         [Header("Take Damage Emission Settings")]
         [HorizontalLine(color: EColor.White, height: 1f)]
@@ -39,40 +48,41 @@ namespace Gameplay.Enemy
         
         protected StateMachine<EnemyState> EnemyFSM;
         private LayerMask playerMask;
-        private Rigidbody rb;
+        private WeaponDamageDealer damageDealer;
+        [HideInInspector] public Rigidbody rb;
         [HideInInspector] public SkinnedMeshRenderer meshRenderer;
-        [HideInInspector] public NavMeshAgent agent;
-        [HideInInspector] public BoxCollider boxCollider;
+        [HideInInspector] public BaseAgentController agentController;
+        [HideInInspector] public CapsuleCollider capsuleCollider;
         [HideInInspector] public Animator animator;
         [HideInInspector] public bool waypointReached;
         [HideInInspector] public bool canMoveNextWaypoint;
         [HideInInspector] public int currentWaypoint;
         [HideInInspector] public int currentHealth ;
         [HideInInspector] public bool playerDetected;
-        [HideInInspector] public float lastAttackTime;
+        [HideInInspector] public bool castingAbility;
         
         private void Awake()
         {
             // variables
             playerMask = LayerMask.GetMask("Player");
             rb = GetComponent<Rigidbody>();
-            lastAttackTime = 0;
             playerDetected = false;
             waypointReached = false;
             canMoveNextWaypoint = true;
             currentWaypoint = 0;
             currentHealth = enemySettings.enemyBaseHealth;
+            damageDealer = GetComponentInChildren<WeaponDamageDealer>();
             
             // components
-            agent = GetComponent<NavMeshAgent>();
+            agentController = GetComponent<BaseAgentController>();
             animator = GetComponent<Animator>();
-            boxCollider = GetComponent<BoxCollider>();
+            capsuleCollider = GetComponent<CapsuleCollider>();
             meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             
-            // agent settings
-            agent.radius = enemySettings.radius;
-            agent.height = enemySettings.height;
-            agent.speed = enemySettings.patrolSpeed;
+            // agentController settings
+            // agentController.radius = enemySettings.radius;
+            // agentController.height = enemySettings.height;
+            //agentController.agent.speed = enemySettings.patrolSpeed;
             
             // hp bar initialization
             hpBar.Initialize(currentHealth);
@@ -89,17 +99,36 @@ namespace Gameplay.Enemy
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Idle, t => waypointReached);
+            
+            EnemyFSM.SetStartState(EnemyState.Patrol);
         }
 
         private void Start()
         {
+            EnemyFSM.Init();
+
+            foreach (var ability in abilities)
+            {
+                var holder = gameObject.AddComponent<AbilityHolder>();
+                holder.ability = ability;
+                holder.owner = gameObject;
+                holder.target = player.gameObject;
+            }
+
+            abilityHolders = GetComponents<AbilityHolder>().ToList();
+            
             hpBar.transform.LookAt(hpBar.transform.position + Camera.main.transform.rotation * Vector3.back, Camera.main.transform.rotation * Vector3.back);
+        }
+
+        private void FixedUpdate()
+        {
+            animator.SetFloat(AnimationParameters.Speed, rb.velocity.magnitude);
         }
 
         private void Update()
         {
             EnemyFSM.OnLogic();
-
+            
             stateText.SetText(EnemyFSM.GetActiveHierarchyPath().Split('/')[1]);
             playerDetected = Physics.CheckSphere(transform.position, enemySettings.sphereRadius, playerMask,
                 QueryTriggerInteraction.Collide);
@@ -113,7 +142,7 @@ namespace Gameplay.Enemy
             currentHealth -= damage;
             hpBar.UpdateHealthBar(currentHealth);
             playerDetected = true;
-            if (canKnockbackable) { transform.position += direction; }
+            if (canKnockbackable) { rb.AddForce(direction, ForceMode.Impulse); }
             if (currentHealth > 0) { StartTakeDamageAnim(); }
         }
         
@@ -122,6 +151,16 @@ namespace Gameplay.Enemy
             gameObject.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.1f);
             await meshRenderer.material.DOColor(Color.white * blinkIntensity, blinkDuration / 2).ToUniTask();
             await meshRenderer.material.DOColor(Color.white, blinkDuration / 2).ToUniTask();
+        }
+        
+        public void StartDealDamage()
+        {
+            damageDealer.OnStartDealDamage(this.gameObject);
+        }
+
+        public void EndDealDamage()
+        {
+            damageDealer.OnEndDealDamage(this.gameObject);
         }
     }
 }

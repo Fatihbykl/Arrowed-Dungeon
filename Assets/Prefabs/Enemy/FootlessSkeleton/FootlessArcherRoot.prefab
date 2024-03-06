@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4476726945861322018}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: armRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 331954653414805915}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: handSlotRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,8 +76,11 @@ GameObject:
   - component: {fileID: 100642063604797857}
   - component: {fileID: 7027530745983515270}
   - component: {fileID: 5753424700571465803}
-  - component: {fileID: 7510820401038746455}
-  - component: {fileID: 6544890173753467550}
+  - component: {fileID: 1289187892429522101}
+  - component: {fileID: 2300557710425047743}
+  - component: {fileID: 5373542272375244658}
+  - component: {fileID: 913004116755652984}
+  - component: {fileID: 8519709983875730933}
   m_Layer: 6
   m_Name: FootlessArcher
   m_TagString: Untagged
@@ -94,7 +97,7 @@ Transform:
   m_GameObject: {fileID: 1276648508456243063}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.814, y: 0, z: 1.34}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -156,7 +159,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -168,19 +171,93 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &7510820401038746455
-BoxCollider:
+--- !u!114 &1289187892429522101
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276648508456243063}
-  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673808c3044448dc85e254e4f58bad27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBar: {fileID: 2265162867810439176}
+  enemySettings: {fileID: 11400000, guid: 7a155073eda53074eb59b668d7029e32, type: 2}
+  player: {fileID: 0}
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  canKnockbackable: 1
+  abilities:
+  - {fileID: 11400000, guid: 569bba07f9392f1429cbb48bf7f7ad5b, type: 2}
+  abilityHolders: []
+  blinkIntensity: 10
+  blinkDuration: 2
+  stateText: {fileID: 0}
+  rb: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  agentController: {fileID: 0}
+  capsuleCollider: {fileID: 0}
+  animator: {fileID: 0}
+  waypointReached: 0
+  canMoveNextWaypoint: 0
+  currentWaypoint: 0
+  currentHealth: 0
+  playerDetected: 0
+  castingAbility: 0
+--- !u!114 &2300557710425047743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276648508456243063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ddc8b9346b0b6742ae7292710f8bb68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 5
+  _angularSpeed: 540
+  _acceleration: 50
+  _deceleration: 20
+  _groundFriction: 8
+  _useBrakingFriction: 0
+  _brakingFriction: 8
+  _airFriction: 0
+  _airControl: 0.2
+  _canCrouch: 1
+  _standingHeight: 2
+  _crouchingHeight: 1
+  _baseJumpHeight: 1.5
+  _extraJumpTime: 0.5
+  _extraJumpPower: 25
+  _jumpPreGroundedToleranceTime: 0.15
+  _jumpPostGroundedToleranceTime: 0.15
+  _maxMidAirJumps: 1
+  _useRootMotion: 0
+  _rootMotionRotation: 0
+  _autoBraking: 1
+  _brakingDistance: 2
+  _stoppingDistance: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1
+--- !u!136 &5373542272375244658
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276648508456243063}
+  m_Material: {fileID: 13400000, guid: 156b287201ffd6d47a1601c9088679a8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -191,10 +268,12 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.85, y: 1.6261986, z: 0.8}
-  m_Center: {x: 0, y: 0.80615515, z: -1.3508143e-16}
---- !u!114 &6544890173753467550
+  serializedVersion: 2
+  m_Radius: 0.44686273
+  m_Height: 1.6
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.83, z: -0.01992655}
+--- !u!114 &913004116755652984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,31 +282,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 1276648508456243063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3026ecf6542a446b0d7e9f0ea3f112, type: 3}
+  m_Script: {fileID: 11500000, guid: d9f315d4931b5e24184039d7a11b5e90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpBar: {fileID: 2265162867810439176}
-  enemySettings: {fileID: 11400000, guid: 7a155073eda53074eb59b668d7029e32, type: 2}
-  player: {fileID: 0}
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  blinkIntensity: 2
-  blinkDuration: 0.2
-  stateText: {fileID: 0}
-  meshRenderer: {fileID: 0}
-  agent: {fileID: 0}
-  boxCollider: {fileID: 0}
-  animator: {fileID: 0}
-  waypointReached: 0
-  canMoveNextWaypoint: 0
-  currentWaypoint: 0
-  currentHealth: 0
-  playerDetected: 0
-  lastAttackTime: 0
-  arrowPrefab: {fileID: 7630012633763062820, guid: cd75a7714f65015478741e81f3e05792,
-    type: 3}
-  arrowStartPosition: {fileID: 4851304638737110570}
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 1
+  _groundLimit: 60
+  _stepOffset: 0.44686273
+  _ledgeOffset: 0
+  _castDistance: 0.5
+  _triggerInteraction: 1
+--- !u!114 &8519709983875730933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276648508456243063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54fec9275a443d94889592f81a208e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxLateralSpeed: 10
+  _maxRiseSpeed: 20
+  _maxFallSpeed: 20
+  _useGravity: 1
+  _gravity: {x: 0, y: -30, z: 0}
+  _slideOnSteepSlope: 0
+  _slopeLimit: 45
+  _slideGravityMultiplier: 2
+  _snapToGround: 1
+  _snapStrength: 0.5
 --- !u!1 &1562176230828740987
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2493419877401975159}
   - component: {fileID: 1845303154046740596}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: character_skeleton_archer_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +451,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1c1ee96fc7b6cda40aa3df404528dc66, type: 2}
+  - {fileID: 2100000, guid: c3b4497c3e0677f4aaa53f0085ecbbb7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -613,7 +700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7480882490581696260}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: armLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6900905509757709819}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: KayKit Animated Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -763,7 +850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5097670802651403081}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -794,7 +881,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5903399237886342386}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: handSlotLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -825,7 +912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 413569680967509270}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +1037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6612259672118994668
 Transform:
   m_ObjectHideFlags: 0
@@ -961,8 +1048,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.49, y: 0, z: 4.84}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.74999994, y: 0.74999994, z: 0.74999994}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3578958768261114006}
   - {fileID: 880836628832051748}
@@ -1030,6 +1117,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CoinSplash
+      objectReference: {fileID: 0}
+    - target: {fileID: 6984090815633713113, guid: 5153303409ac49c469bc131d64a2f672,
+        type: 3}
+      propertyPath: player
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

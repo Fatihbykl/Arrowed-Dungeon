@@ -1,4 +1,5 @@
 ﻿using System;
+using ECM.Controllers;
 using UnityEngine;
 using UnityHFSM;
 
@@ -13,23 +14,20 @@ namespace FSM.Enemy.States
         public override void OnEnter()
         {
             base.OnEnter();
-
-            _enemy.animator.SetBool(AnimationParameters.Chase, false);
-            _enemy.animator.SetBool(AnimationParameters.Patrol, true);
+            
             _enemy.waypointReached = false;
-            _enemy.agent.isStopped = false;
-            _enemy.agent.speed = _enemy.enemySettings.patrolSpeed;
-            _enemy.agent.SetDestination(_enemy.waypoints[_enemy.currentWaypoint].position);
+            _enemy.agentController.agent.isStopped = false;
+            _enemy.agentController.speed = _enemy.enemySettings.patrolSpeed;
+            _enemy.agentController.agent.SetDestination(_enemy.waypoints[_enemy.currentWaypoint].position);
         }
 
         public override void OnLogic()
         {
             base.OnLogic();
 
-            if (_enemy.agent.pathPending) { return; }
-            if (_enemy.agent.remainingDistance <= _enemy.agent.stoppingDistance)
+            if (_enemy.agentController.agent.pathPending) { return; }
+            if (!_enemy.agentController.agent.hasPath)
             {
-                NextWaypoint();
                 _enemy.waypointReached = true;
             }
         }
@@ -43,7 +41,7 @@ namespace FSM.Enemy.States
         {
             base.OnExit();
             
-            _enemy.animator.SetBool(AnimationParameters.Patrol, false);
+            NextWaypoint();
         }
     }
 }

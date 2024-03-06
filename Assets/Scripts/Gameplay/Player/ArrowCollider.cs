@@ -1,6 +1,7 @@
 using System;
 using Gameplay.Interfaces;
 using Gameplay.Player.DamageDealers;
+using Managers;
 using UnityEngine;
 
 namespace Gameplay.Player
@@ -11,7 +12,7 @@ namespace Gameplay.Player
 
         private GameObject particle;
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
             IDamageable collideObject = other.gameObject.GetComponent<IDamageable>();
 
@@ -25,6 +26,8 @@ namespace Gameplay.Player
                 {
                     particle = Instantiate(arrowSO.hitParticlePrefab, transform.position, transform.rotation);
                 }
+                
+                AudioManager.instance.PlayArrowImpactSFX();
             }
 
             Destroy(gameObject);

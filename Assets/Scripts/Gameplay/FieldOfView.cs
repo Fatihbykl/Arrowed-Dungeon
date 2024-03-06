@@ -11,15 +11,13 @@ namespace Gameplay
         public float angle;
         public LayerMask targetMask;
         public LayerMask obstructionMask;
-        public GameObject targetArrow;
+        public GameObject targetIndicator;
 
         [HideInInspector] public bool canSee;
         [HideInInspector] public GameObject targetObject;
 
         private void Start()
         {
-            targetArrow = Instantiate(targetArrow);
-            targetArrow.SetActive(false);
             FOVTask();
         }
 
@@ -57,8 +55,8 @@ namespace Gameplay
                         {
                             canSee = true;
                             targetObject = target.gameObject;
-                            targetArrow.transform.SetParent(targetObject.transform, false);
-                            targetArrow.SetActive(true);
+                            targetIndicator.transform.SetParent(targetObject.transform, false);
+                            targetIndicator.SetActive(true);
                             
                             return;
                         }
@@ -66,7 +64,7 @@ namespace Gameplay
                     else
                     {
                         targetObject = null;
-                        targetArrow.SetActive(false);
+                        targetIndicator.SetActive(false);
                         canSee = false;
                     }
                 }
@@ -74,7 +72,7 @@ namespace Gameplay
             else if (canSee)
             {
                 targetObject = null;
-                targetArrow.SetActive(false);
+                targetIndicator.SetActive(false);
                 canSee = false;
             }
         }

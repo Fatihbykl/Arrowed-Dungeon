@@ -1,6 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Managers;
 using UnityEngine;
 using UnityHFSM;
 
@@ -21,9 +22,10 @@ namespace FSM.Enemy.States
         private async void Die()
         {
             // deactivate hp bar and collider for prevent further attacks
-            _enemy.boxCollider.enabled = false;
+            _enemy.capsuleCollider.enabled = false;
             _enemy.hpBar.gameObject.SetActive(false);
             _enemy.GetComponentInChildren<ParticleSystem>().Play();
+            AudioManager.instance.PlayArrowCoinsDropSFX();
             
             // play animation
             _enemy.animator.SetTrigger(AnimationParameters.Die);
@@ -32,7 +34,7 @@ namespace FSM.Enemy.States
             
             // fade out animation
             // await _enemy.meshRenderer.material.DOFade(0f, 1f).ToUniTask();
-
+            
             GameObject.Destroy(_enemy.gameObject, 2f);
         }
     }

@@ -3,6 +3,7 @@ using DG.Tweening;
 using Events;
 using FSM;
 using Gameplay.Interfaces;
+using Managers;
 using Microlight.MicroBar;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,9 +18,9 @@ namespace Gameplay.Player
         public GameObject handSlot;
         private int playerHealth;
 
-        private GameObject currentTarget;
+        public GameObject currentTarget;
 
-        private BoxCollider playerCollider;
+        private CapsuleCollider capsuleCollider;
         private FieldOfView fov;
 
         public Animator animator;
@@ -32,11 +33,13 @@ namespace Gameplay.Player
         public bool canMove = true;
         public bool attackModeActive = false;
 
+        public ParticleSystem dustParticle;
+
         private void Awake()
         {
             attackAction = GetComponent<PlayerInput>().actions["Attack"];
             animator = GetComponent<Animator>();
-            playerCollider = GetComponent<BoxCollider>();
+            capsuleCollider = GetComponent<CapsuleCollider>();
             fov = GetComponent<FieldOfView>();
             playerHealth = stats.baseHealth;
 
@@ -54,7 +57,7 @@ namespace Gameplay.Player
 
             if (currentTarget != null && attackModeActive)
             {
-                transform.LookAt(currentTarget.transform);
+                //transform.LookAt(currentTarget.transform);
                 Attack();
             }
         }
@@ -100,15 +103,20 @@ namespace Gameplay.Player
             var lookRotation = Quaternion.LookRotation(direction);
             lookRotation *= Quaternion.Euler(0, 0, 90f);
             arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position, lookRotation);
-            
-            //arrow.GetComponentInChildren<ParticleSystem>().Play();
-            
             arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            
+            AudioManager.instance.PlayArrowWooshSFX();
 
             ReleaseBowString();
         }
 
-        public void ReleaseBowString()
+        public void PlayFootstepSound()
+        {
+            AudioManager.instance.PlayFootstepSFX();
+            dustParticle.Play();
+        }
+
+        private void ReleaseBowString()
         {
             GameplayEvents.ReleaseBowString?.Invoke();
         }
@@ -122,7 +130,7 @@ namespace Gameplay.Player
         {
             // TODO: prevent enemy attack when dead
 
-            playerCollider.enabled = false;
+            capsuleCollider.enabled = false;
             canMove = false;
 
             animator.SetTrigger(AnimationParameters.Die);

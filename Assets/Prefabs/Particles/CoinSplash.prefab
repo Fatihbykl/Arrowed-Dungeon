@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5295830356962061383}
   - component: {fileID: 6388647282507657268}
   - component: {fileID: 6984090815633713113}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CoinSplash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1035,7 +1035,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -1046,24 +1046,105 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
           value: 1
-          inSlope: 1
+          inSlope: 0
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.10189282
+          value: 0.80910975
+          inSlope: 0.012426722
+          outSlope: 0.012426722
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 1
+        - serializedVersion: 3
+          time: 0.20330612
+          value: 1
+          inSlope: 0.034941383
+          outSlope: 0.034941383
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.64856493
+        - serializedVersion: 3
+          time: 0.30040705
+          value: 0.81223476
+          inSlope: -0.0076216576
+          outSlope: -0.0076216576
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.046636887
+        - serializedVersion: 3
+          time: 0.3988113
+          value: 1
+          inSlope: -0.124686815
+          outSlope: -0.124686815
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.17045064
+        - serializedVersion: 3
+          time: 0.49917042
+          value: 0.80145913
+          inSlope: -0.033332366
+          outSlope: -0.033332366
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.09041472
+        - serializedVersion: 3
+          time: 0.59968394
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.1419302
+        - serializedVersion: 3
+          time: 0.6999651
+          value: 0.79821426
+          inSlope: -0.05532428
+          outSlope: -0.05532428
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.17833452
+        - serializedVersion: 3
+          time: 0.797942
+          value: 1
+          inSlope: -0
+          outSlope: -0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.53680575
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.90063894
+          value: 0.7978017
+          inSlope: 0.023114346
+          outSlope: 0.023114346
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.58409107
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
         m_PreInfinity: 2
-        m_PostInfinity: 2
+        m_PostInfinity: 0
         m_RotationOrder: 4
       minCurve:
         serializedVersion: 2
@@ -4836,7 +4917,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -905690159841262435, guid: e6698767d48f3784e918ac34e248a1f4, type: 3}
+  - {fileID: 2100000, guid: f278483097264e6448ed1661e3cfcd9b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
