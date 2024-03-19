@@ -9,7 +9,7 @@ namespace Gameplay.Player
     public class ArrowCollider : MonoBehaviour
     {
         [SerializeField] private ArrowType arrowSO;
-
+        [SerializeField] private GameObject trail;
         private GameObject particle;
 
         private void OnTriggerEnter(Collider other)
@@ -30,7 +30,8 @@ namespace Gameplay.Player
                 AudioManager.instance.PlayArrowImpactSFX();
             }
 
-            Destroy(gameObject);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(gameObject, 2f);
         }
     }
 }

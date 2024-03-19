@@ -16,6 +16,7 @@ namespace FSM.Enemy.States
         {
             base.OnEnter();
             
+            AIManager.Instance.RemoveUnit(_enemy);
             Die();
         }
 

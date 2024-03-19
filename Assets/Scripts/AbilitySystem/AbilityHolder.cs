@@ -5,21 +5,24 @@ namespace AbilitySystem
 {
     public class AbilityHolder : MonoBehaviour
     {
+        public enum AbilityState { Ready, Cooldown, Casting }
+
         public AbilityBase ability;
         public GameObject owner;
         public GameObject target;
+        public AbilityState currentState = AbilityState.Ready;
 
         private float cooldownTimer;
         private float castTimer;
 
         private void Start()
         {
-            ability.currentState = AbilityBase.AbilityState.Ready;
+            currentState = AbilityState.Ready;
         }
 
         private void Update()
         {
-            if (ability.currentState == AbilityBase.AbilityState.Casting)
+            if (currentState == AbilityState.Casting)
             {
                 if (castTimer > 0)
                 {
@@ -28,11 +31,11 @@ namespace AbilitySystem
                 else
                 {
                     ability.BeginCooldown(owner, target);
-                    ability.currentState = AbilityBase.AbilityState.Cooldown;
+                    currentState = AbilityState.Cooldown;
                     cooldownTimer = ability.cooldown;
                 }
             }
-            else if (ability.currentState == AbilityBase.AbilityState.Cooldown)
+            else if (currentState == AbilityState.Cooldown)
             {
                 if (cooldownTimer > 0)
                 {
@@ -40,17 +43,17 @@ namespace AbilitySystem
                 }
                 else
                 {
-                    ability.currentState = AbilityBase.AbilityState.Ready;
+                    currentState = AbilityState.Ready;
                 }
             }
         }
 
         public void ActivateAbility()
         {
-            if (ability.currentState != AbilityBase.AbilityState.Ready) { return; }
+            if (currentState != AbilityState.Ready) { return; }
 
             ability.Activate(owner, target);
-            ability.currentState = AbilityBase.AbilityState.Casting;
+            currentState = AbilityState.Casting;
             castTimer = ability.castTime;
         }
     }

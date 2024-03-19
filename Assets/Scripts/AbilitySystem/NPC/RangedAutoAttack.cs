@@ -5,16 +5,18 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/Ranged Auto Attack")]
+    [CreateAssetMenu(menuName = "Abilities/NPC/Ranged Auto Attack")]
     public class RangedAutoAttack : AbilityBase
     {
         [Header("Projectile Settings")]
         public GameObject projectilePrefab;
         public GameObject projectileStartPosition;
         
+        private Enemy enemy;
+        
         public override void Activate(GameObject owner, GameObject target)
         {
-            var enemy = owner.GetComponent<Enemy>();
+            enemy = owner.GetComponent<Enemy>();
 
             enemy.castingAbility = true;
             enemy.agentController.agent.isStopped = true;
@@ -27,8 +29,6 @@ namespace AbilitySystem.NPC
 
         public override void BeginCooldown(GameObject owner, GameObject target)
         {
-            var enemy = owner.GetComponent<Enemy>();
-            
             enemy.agentController.agent.isStopped = false;
             enemy.castingAbility = false;
         }

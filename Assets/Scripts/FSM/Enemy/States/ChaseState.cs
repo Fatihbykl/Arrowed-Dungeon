@@ -2,6 +2,7 @@
 using System.Linq;
 using AbilitySystem;
 using DG.Tweening;
+using Managers;
 using UnityEngine;
 using UnityHFSM;
 
@@ -21,6 +22,7 @@ namespace FSM.Enemy.States
         {
             base.OnEnter();
             
+            AIManager.Instance.Units.Add(_enemy);
             _enemy.agentController.agent.isStopped = false;
             _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;
             _enemy.agentController.agent.stoppingDistance = _enemy.enemySettings.stoppingDistance;
@@ -30,7 +32,7 @@ namespace FSM.Enemy.States
         {
             base.OnLogic();
 
-            _enemy.agentController.agent.SetDestination(_enemy.player.transform.position);
+            //_enemy.agentController.agent.SetDestination(_enemy.player.transform.position);
             
             var ability = GetAbility();
             if (ability)
@@ -45,7 +47,7 @@ namespace FSM.Enemy.States
             
             var distanceToTarget = Vector3.Distance(_enemy.transform.position, _enemy.player.transform.position);
             var ability = _enemy.abilityHolders
-                .FirstOrDefault(abilityHolder => abilityHolder.ability.currentState == AbilityBase.AbilityState.Ready &&
+                .FirstOrDefault(abilityHolder => abilityHolder.currentState == AbilityHolder.AbilityState.Ready &&
                                                  abilityHolder.ability.castRange >= distanceToTarget);
             return ability;
         }

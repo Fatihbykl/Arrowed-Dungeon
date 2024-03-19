@@ -17,6 +17,7 @@ using DG.Tweening;
 using ECM.Controllers;
 using FSM;
 using Gameplay.DamageDealers;
+using Managers;
 
 namespace Gameplay.Enemy
 {
@@ -39,12 +40,6 @@ namespace Gameplay.Enemy
         [Space(10)]
         [Foldout("Base Enemy Settings")] public float blinkIntensity = 10f;
         [Foldout("Base Enemy Settings")] public float blinkDuration = 2f;
-        
-        [Header("Test Variables")]
-        [HorizontalLine(color: EColor.White, height: 1f)]
-        [Space(10)]
-        [Foldout("Base Enemy Settings")] public TMP_Text stateText;
-        [Space(10)]
         
         protected StateMachine<EnemyState> EnemyFSM;
         private LayerMask playerMask;
@@ -83,6 +78,7 @@ namespace Gameplay.Enemy
             // agentController.radius = enemySettings.radius;
             // agentController.height = enemySettings.height;
             //agentController.agent.speed = enemySettings.patrolSpeed;
+            //agentController.agent.stoppingDistance = enemySettings.stoppingDistance;
             
             // hp bar initialization
             hpBar.Initialize(currentHealth);
@@ -109,12 +105,12 @@ namespace Gameplay.Enemy
 
             foreach (var ability in abilities)
             {
-                var holder = gameObject.AddComponent<AbilityHolder>();
-                holder.ability = ability;
-                holder.owner = gameObject;
+                var holder = this.gameObject.AddComponent<AbilityHolder>();
+                holder.ability = Instantiate(ability);
+                holder.owner = this.gameObject;
                 holder.target = player.gameObject;
             }
-
+            agentController.agent.stoppingDistance = enemySettings.stoppingDistance;
             abilityHolders = GetComponents<AbilityHolder>().ToList();
             
             hpBar.transform.LookAt(hpBar.transform.position + Camera.main.transform.rotation * Vector3.back, Camera.main.transform.rotation * Vector3.back);
@@ -129,7 +125,6 @@ namespace Gameplay.Enemy
         {
             EnemyFSM.OnLogic();
             
-            stateText.SetText(EnemyFSM.GetActiveHierarchyPath().Split('/')[1]);
             playerDetected = Physics.CheckSphere(transform.position, enemySettings.sphereRadius, playerMask,
                 QueryTriggerInteraction.Collide);
             

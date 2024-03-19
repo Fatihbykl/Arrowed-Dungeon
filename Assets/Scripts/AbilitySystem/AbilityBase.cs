@@ -6,9 +6,6 @@ namespace AbilitySystem
 {
     public abstract class AbilityBase : ScriptableObject
     {
-        public enum AbilityState { Ready, Cooldown, Casting }
-
-        public AbilityState currentState = AbilityState.Ready;
         public float cooldown;
         public float castTime;
         public float castRange;

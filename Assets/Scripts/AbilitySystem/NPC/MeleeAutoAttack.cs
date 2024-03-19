@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/Melee Auto Attack")]
+    [CreateAssetMenu(menuName = "Abilities/NPC/Melee Auto Attack")]
     public class MeleeAutoAttack : AbilityBase
     {
         private Enemy enemy;
@@ -16,7 +16,7 @@ namespace AbilitySystem.NPC
 
             enemy.castingAbility = true;
             enemy.agentController.agent.isStopped = true;
-            //enemy.agentController.agent.ResetPath();
+            enemy.agentController.agent.ResetPath();
             enemy.transform.DOLookAt(enemy.player.transform.position, .4f);
             enemy.animator.SetTrigger(AnimationParameters.Attack);
         }

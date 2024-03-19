@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da4504f48572414a9a0050e52017cde, type: 3}
+  m_Name: RangedThrowAttack
+  m_EditorClassIdentifier: 
+  cooldown: 5
+  castTime: 2
+  castRange: 5
+  throwableObjectPrefab: {fileID: 492165445185635997, guid: c9751134b27da3745ba338f51e917d33,
+    type: 3}
+  flyTime: 2
+  particle: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312,
+    type: 3}
+  indicatorPrefab: {fileID: 7401175116875884582, guid: d7c3fff662d80a341b78e724e1c6c65a,
+    type: 3}
