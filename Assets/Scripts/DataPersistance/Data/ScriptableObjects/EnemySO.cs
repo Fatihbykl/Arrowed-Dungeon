@@ -1,3 +1,4 @@
+using AbilitySystem;
 using UnityEngine;
 
 namespace DataPersistance.Data.ScriptableObjects
@@ -8,14 +9,13 @@ namespace DataPersistance.Data.ScriptableObjects
         [Header("Combat Settings")]
         public int enemyBaseDamage;
         public int enemyBaseHealth;
-        public float attackDelay;
+        public AbilityBase[] abilities;
+        public bool canKnockbackable;
         [Header("Agent Settings")]
         [Tooltip("Awareness size of the enemy.")] public float sphereRadius;
         public float patrolSpeed;
         public float chaseSpeed;
         public float waypointWaitTime;
         public float stoppingDistance;
-        public float radius;
-        public float height;
     }
 }

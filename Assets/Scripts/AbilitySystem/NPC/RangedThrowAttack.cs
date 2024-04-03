@@ -19,7 +19,7 @@ namespace AbilitySystem.NPC
 
         private Vector3 startPoint;
         private Vector3 endPoint;
-        private CircleIndicatorFill circleFill;
+        private IndicatorFill _fill;
         private Enemy enemy;
         private GameObject indicator;
         private GameObject throwableObject;
@@ -56,7 +56,7 @@ namespace AbilitySystem.NPC
         {
             indicator = Instantiate(indicatorPrefab);
             indicator.transform.position = endPoint;
-            circleFill = indicator.GetComponent<CircleIndicatorFill>();
+            _fill = indicator.GetComponent<IndicatorFill>();
         }
 
         private void PrepareEnemy()
@@ -70,7 +70,7 @@ namespace AbilitySystem.NPC
         private async void ThrowObject()
         {
             throwableObject.GetComponent<Rigidbody>().velocity = CalculateVelocity();
-            DOTween.To(() => circleFill.fillProgress, x => circleFill.fillProgress = x, 1f, flyTime);
+            DOTween.To(() => _fill.fillProgress, x => _fill.fillProgress = x, 1f, flyTime);
             await UniTask.WaitForSeconds(flyTime);
             var pos = throwableObject.transform.position;
             pos.y = 1f;

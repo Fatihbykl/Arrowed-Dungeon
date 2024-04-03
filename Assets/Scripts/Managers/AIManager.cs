@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using Gameplay.Enemy;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Managers
 {
     public class AIManager : MonoBehaviour
     {
         private static AIManager _instance;
+        private NavMeshAgent _navMeshAgent;
         public static AIManager Instance
         {
             get
@@ -51,7 +53,10 @@ namespace Managers
         {
             for (int i = 0; i < Units.Count; i++)
             {
-                Units[i].agentController.agent.SetDestination(new Vector3(
+                _navMeshAgent = Units[i].agentController.agent;
+                if (!_navMeshAgent.isOnNavMesh || !Units[i].letAIManagerSetDestination) { continue; }
+
+                _navMeshAgent.SetDestination(new Vector3(
                     Target.position.x + RadiusAroundTarget * Mathf.Cos(2 * Mathf.PI * i / Units.Count),
                     Target.position.y,
                     Target.position.z + RadiusAroundTarget * Mathf.Sin(2 * Mathf.PI * i / Units.Count)

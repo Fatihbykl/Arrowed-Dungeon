@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7768ae0c7e77740b5c80c5e260d3c8, type: 3}
+  m_Name: JumpAttack
+  m_EditorClassIdentifier: 
+  cooldown: 5
+  castTime: 3
+  castRange: 5
+  indicator: {fileID: 7401175116875884582, guid: d7c3fff662d80a341b78e724e1c6c65a,
+    type: 3}
+  damageRange: 5
+  abilityDamage: 100
+  particle: {fileID: 198330214428362902, guid: a97415c6b57076f41a6621a7b51d63a3, type: 3}

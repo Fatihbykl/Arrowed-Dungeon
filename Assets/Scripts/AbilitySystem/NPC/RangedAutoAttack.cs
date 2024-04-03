@@ -1,5 +1,6 @@
 using DG.Tweening;
 using FSM;
+using Gameplay;
 using Gameplay.Enemy;
 using UnityEngine;
 
@@ -9,39 +10,42 @@ namespace AbilitySystem.NPC
     public class RangedAutoAttack : AbilityBase
     {
         [Header("Projectile Settings")]
-        public GameObject projectilePrefab;
-        public GameObject projectileStartPosition;
+        public Projectile projectilePrefab;
         
-        private Enemy enemy;
+        private Enemy _enemy;
+        private Vector3 _targetPosition;
         
         public override void Activate(GameObject owner, GameObject target)
         {
-            enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy>();
 
-            enemy.castingAbility = true;
-            enemy.agentController.agent.isStopped = true;
-            //enemy.agentController.agent.ResetPath();
-            enemy.transform.DOLookAt(enemy.player.transform.position, .4f);
-            enemy.animator.SetTrigger(AnimationParameters.Attack);
-            
-            SendProjectile(owner, target);
+            _enemy.castingAbility = true;
+            _enemy.agentController.speed = 0f;
+            _targetPosition = _enemy.player.transform.position;
+            _enemy.transform.DOLookAt(_targetPosition, .4f);
+            _enemy.animator.SetTrigger(AnimationParameters.Attack);
         }
 
         public override void BeginCooldown(GameObject owner, GameObject target)
         {
-            enemy.agentController.agent.isStopped = false;
-            enemy.castingAbility = false;
+            _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;
+            _enemy.castingAbility = false;
         }
 
-        private void SendProjectile(GameObject owner, GameObject target)
+        public void SendProjectile()
         {
-            var direction = (target.transform.position - owner.transform.position).normalized;
-            var force = direction * 25f;
+            // var direction = (target.transform.position - owner.transform.position).normalized;
+            // var force = direction * 25f;
+            //
+            // var spawn = new Vector3(owner.transform.position.x, 1, owner.transform.position.z);
+            // var arrow = GameObject.Instantiate(projectilePrefab, spawn,
+            //     Quaternion.LookRotation(direction));
+            // arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
 
-            var spawn = new Vector3(owner.transform.position.x, 1, owner.transform.position.z);
-            var arrow = GameObject.Instantiate(projectilePrefab, spawn,
-                Quaternion.LookRotation(direction));
-            arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            var projectile = Instantiate(projectilePrefab);
+            projectile.transform.position = _enemy.projectileSpawnPosition.transform.position;
+            projectile.transform.LookAt(_targetPosition);
+            projectile.target = _enemy.player.gameObject;
         }
     }
 }

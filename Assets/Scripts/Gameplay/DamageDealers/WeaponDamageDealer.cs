@@ -12,16 +12,16 @@ namespace Gameplay.DamageDealers
 
         [SerializeField] private TransformTypes transformTypes;
         [SerializeField] private float weaponLength;
-        [SerializeField] private int weaponDamage;
         [SerializeField] private LayerMask damageTo;
-        [SerializeField] private GameObject rootObject;
+
+        private int weaponDamage;
 
         private void Start()
         {
             canDealDamage = false;
             hasDealtDamage = new List<IDamageable>();
         }
-        
+
         private void Update()
         {
             if (canDealDamage)
@@ -63,13 +63,14 @@ namespace Gameplay.DamageDealers
             return returnValue;
         }
 
-        public void OnStartDealDamage(GameObject sender)
+        public void OnStartDealDamage(int damage)
         {
+            weaponDamage = damage;
             canDealDamage = true;
             hasDealtDamage.Clear();
         }
     
-        public void OnEndDealDamage(GameObject sender)
+        public void OnEndDealDamage()
         {
             canDealDamage = false;
         }

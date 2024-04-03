@@ -16,7 +16,7 @@ namespace FSM.Enemy.States
         {
             base.OnEnter();
             
-            AIManager.Instance.RemoveUnit(_enemy);
+            _enemy.agentController.speed = 0;
             Die();
         }
 
@@ -36,7 +36,7 @@ namespace FSM.Enemy.States
             // fade out animation
             // await _enemy.meshRenderer.material.DOFade(0f, 1f).ToUniTask();
             
-            GameObject.Destroy(_enemy.gameObject, 2f);
+            GameObject.Destroy(_enemy.gameObject.transform.parent.gameObject, 2f);
         }
     }
 }

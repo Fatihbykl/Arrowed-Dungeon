@@ -12,12 +12,10 @@ namespace AbilitySystem.NPC
         public float spinLength;
         
         private Enemy enemy;
-        private TrailRenderer trail;
         
         public override void Activate(GameObject owner, GameObject target)
         {
             enemy = owner.GetComponent<Enemy>();
-            trail = owner.GetComponentInChildren<TrailRenderer>();
             
             enemy.castingAbility = true;
             enemy.animator.SetBool(AnimationParameters.CanSpin, true);
@@ -26,25 +24,16 @@ namespace AbilitySystem.NPC
 
         public override void BeginCooldown(GameObject owner, GameObject target)
         {
-            //enemy.animator.SetBool(AnimationParameters.CanSpin, false);
+            enemy.castingAbility = false;
+            enemy.animator.SetBool(AnimationParameters.CanSpin, false);
         }
         
         private async void StartSpin()
         {
-            // channeling
-            enemy.agentController.agent.isStopped = true;
-            
+            enemy.agentController.speed = 0;
             await UniTask.WaitForSeconds(focusTimeBeforeSpin);
-
-            enemy.agentController.agent.isStopped = false;
-            trail.enabled = true;
-            enemy.animator.SetTrigger(AnimationParameters.StartSpin);
-            
+            enemy.agentController.speed = enemy.enemySettings.chaseSpeed;
             await UniTask.WaitForSeconds(spinLength);
-            
-            trail.enabled = false;
-            enemy.animator.SetBool(AnimationParameters.CanSpin, false);
-            enemy.castingAbility = false;
         }
     }
 }

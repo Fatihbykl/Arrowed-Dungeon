@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AbilitySystem;
+using AbilitySystem.NPC;
 using Cysharp.Threading.Tasks;
 using DataPersistance.Data.ScriptableObjects;
 using FSM.Enemy;
@@ -23,27 +24,22 @@ namespace Gameplay.Enemy
 {
     public class Enemy : MonoBehaviour, IDamageable
     {
-        [Header("Needed Objects")]
+        [Header("References")]
         [HorizontalLine(color: EColor.White, height: 1f)]
         [Space(10)]
-        
-        [Foldout("Base Enemy Settings")] public MicroBar hpBar;
-        [Foldout("Base Enemy Settings")] public EnemySO enemySettings;
-        [Foldout("Base Enemy Settings")] public Player.Player player;
-        [Foldout("Base Enemy Settings")] public Transform[] waypoints;
-        [Foldout("Base Enemy Settings")] public bool canKnockbackable;
-        [Foldout("Base Enemy Settings")] public AbilityBase[] abilities;
-        public List<AbilityHolder> abilityHolders;
-        
+        public EnemySO enemySettings;
+        public GameObject projectileSpawnPosition;
+        public MicroBar hpBar;
+        public Player.Player player;
+        public Transform[] waypoints;
+
         [Header("Take Damage Emission Settings")]
         [HorizontalLine(color: EColor.White, height: 1f)]
         [Space(10)]
-        [Foldout("Base Enemy Settings")] public float blinkIntensity = 10f;
-        [Foldout("Base Enemy Settings")] public float blinkDuration = 2f;
+        public float blinkIntensity = 10f;
+        public float blinkDuration = 2f;
         
-        protected StateMachine<EnemyState> EnemyFSM;
-        private LayerMask playerMask;
-        private WeaponDamageDealer damageDealer;
+        [HideInInspector] public List<AbilityHolder> abilityHolders;
         [HideInInspector] public Rigidbody rb;
         [HideInInspector] public SkinnedMeshRenderer meshRenderer;
         [HideInInspector] public BaseAgentController agentController;
@@ -55,7 +51,12 @@ namespace Gameplay.Enemy
         [HideInInspector] public int currentHealth ;
         [HideInInspector] public bool playerDetected;
         [HideInInspector] public bool castingAbility;
-        
+        [HideInInspector] public bool letAIManagerSetDestination;
+        [HideInInspector] public LayerMask playerMask;
+
+        private StateMachine<EnemyState> EnemyFSM;
+        private WeaponDamageDealer damageDealer;
+
         private void Awake()
         {
             // variables
@@ -64,6 +65,7 @@ namespace Gameplay.Enemy
             playerDetected = false;
             waypointReached = false;
             canMoveNextWaypoint = true;
+            letAIManagerSetDestination = true;
             currentWaypoint = 0;
             currentHealth = enemySettings.enemyBaseHealth;
             damageDealer = GetComponentInChildren<WeaponDamageDealer>();
@@ -103,7 +105,15 @@ namespace Gameplay.Enemy
         {
             EnemyFSM.Init();
 
-            foreach (var ability in abilities)
+            PrepareAbilities();
+
+            hpBar.transform.LookAt(hpBar.transform.position + Camera.main.transform.rotation * Vector3.back, Camera.main.transform.rotation * Vector3.back);
+        }
+
+        private void PrepareAbilities()
+        {
+            if (enemySettings.abilities == null) { return; }
+            foreach (var ability in enemySettings.abilities)
             {
                 var holder = this.gameObject.AddComponent<AbilityHolder>();
                 holder.ability = Instantiate(ability);
@@ -112,8 +122,6 @@ namespace Gameplay.Enemy
             }
             agentController.agent.stoppingDistance = enemySettings.stoppingDistance;
             abilityHolders = GetComponents<AbilityHolder>().ToList();
-            
-            hpBar.transform.LookAt(hpBar.transform.position + Camera.main.transform.rotation * Vector3.back, Camera.main.transform.rotation * Vector3.back);
         }
 
         private void FixedUpdate()
@@ -137,7 +145,7 @@ namespace Gameplay.Enemy
             currentHealth -= damage;
             hpBar.UpdateHealthBar(currentHealth);
             playerDetected = true;
-            if (canKnockbackable) { rb.AddForce(direction, ForceMode.Impulse); }
+            if (enemySettings.canKnockbackable) { rb.AddForce(direction, ForceMode.Impulse); }
             if (currentHealth > 0) { StartTakeDamageAnim(); }
         }
         
@@ -150,12 +158,30 @@ namespace Gameplay.Enemy
         
         public void StartDealDamage()
         {
-            damageDealer.OnStartDealDamage(this.gameObject);
+            damageDealer.OnStartDealDamage(enemySettings.enemyBaseDamage);
         }
 
         public void EndDealDamage()
         {
-            damageDealer.OnEndDealDamage(this.gameObject);
+            damageDealer.OnEndDealDamage();
+        }
+
+        public void SendProjectile()
+        {
+            var rangedAutoAttack = abilityHolders
+                .FirstOrDefault(a => String.Equals(a.ability.name, "RangedAutoAttack(Clone)"))
+                ?.ability as RangedAutoAttack;
+
+            if (rangedAutoAttack != null) rangedAutoAttack.SendProjectile();
+            else
+            {
+                Debug.LogError("RangedAutoAttack(Clone) not found!");
+            }
+        }
+        
+        private void OnDestroy()
+        {
+            AIManager.Instance.RemoveUnit(this);
         }
     }
 }

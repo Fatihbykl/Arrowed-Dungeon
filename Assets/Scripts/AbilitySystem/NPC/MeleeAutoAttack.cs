@@ -15,7 +15,7 @@ namespace AbilitySystem.NPC
             enemy = owner.GetComponent<Enemy>();
 
             enemy.castingAbility = true;
-            enemy.agentController.agent.isStopped = true;
+            enemy.agentController.speed = 0;
             enemy.agentController.agent.ResetPath();
             enemy.transform.DOLookAt(enemy.player.transform.position, .4f);
             enemy.animator.SetTrigger(AnimationParameters.Attack);
@@ -23,7 +23,7 @@ namespace AbilitySystem.NPC
 
         public override void BeginCooldown(GameObject owner, GameObject target)
         {
-            enemy.agentController.agent.isStopped = false;
+            enemy.agentController.speed = enemy.enemySettings.chaseSpeed;
             enemy.castingAbility = false;
         }
     }

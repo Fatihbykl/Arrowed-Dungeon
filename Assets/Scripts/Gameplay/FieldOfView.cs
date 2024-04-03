@@ -21,6 +21,15 @@ namespace Gameplay
             FOVTask();
         }
 
+        private void Update()
+        {
+            if (targetObject == null) { return; }
+
+            var pos = targetObject.transform.position;
+            pos.y = 0.05f;
+            targetIndicator.transform.position = pos;
+        }
+
         private async void FOVTask()
         {
             while (true)
@@ -55,7 +64,7 @@ namespace Gameplay
                         {
                             canSee = true;
                             targetObject = target.gameObject;
-                            targetIndicator.transform.SetParent(targetObject.transform, false);
+                            //targetIndicator.transform.SetParent(targetObject.transform, false);
                             targetIndicator.SetActive(true);
                             
                             return;

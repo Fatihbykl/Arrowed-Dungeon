@@ -17,13 +17,13 @@ namespace Scenes
         [SerializeField] [Range(0, 100)] private float LerpSpeed = 1f;
         [SerializeField] private ParticleSystem particle;
         [SerializeField] private GameObject indicator;
-        private CircleIndicatorFill circleFill;
+        private IndicatorFill _fill;
 
         private void Start()
         {
             indicator = Instantiate(indicator);
             indicator.transform.position = EndPoint.transform.position;
-            circleFill = indicator.GetComponent<CircleIndicatorFill>();
+            _fill = indicator.GetComponent<IndicatorFill>();
             SlerpRectFixedTime();
         }
         
@@ -42,7 +42,7 @@ namespace Scenes
                     EndPoint.position,
                     Curve.Evaluate(time, random)
                 );
-                circleFill.fillProgress = time;
+                _fill.fillProgress = time;
                 time += Time.deltaTime * LerpSpeed;
                 //yield return null;
                 await UniTask.Yield(PlayerLoopTiming.Update);

@@ -16,7 +16,8 @@ namespace FSM
         public static readonly int Speed = Animator.StringToHash("Speed");
         public static readonly int Defend = Animator.StringToHash("Defend");
         public static readonly int CanSpin = Animator.StringToHash("CanSpin");
-        public static readonly int StartSpin = Animator.StringToHash("StartSpin");
+        public static readonly int JumpAttack = Animator.StringToHash("JumpAttack");
+        public static readonly int LineAttack = Animator.StringToHash("LineAttack");
         
         // player and enemy shared parameters
         public static readonly int TakeDamage = Animator.StringToHash("TakeDamage");
