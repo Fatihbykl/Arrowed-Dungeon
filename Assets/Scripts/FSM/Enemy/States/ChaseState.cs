@@ -31,8 +31,6 @@ namespace FSM.Enemy.States
         public override void OnLogic()
         {
             base.OnLogic();
-
-            //_enemy.agentController.agent.SetDestination(_enemy.player.transform.position);
             
             var ability = GetAbility();
             if (ability)

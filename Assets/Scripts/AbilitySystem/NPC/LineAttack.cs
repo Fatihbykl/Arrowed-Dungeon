@@ -4,7 +4,6 @@ using FSM;
 using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using UnityEngine;
-using VFX.AbilityIndicatorScripts;
 
 namespace AbilitySystem.NPC
 {
@@ -13,14 +12,16 @@ namespace AbilitySystem.NPC
     {
         public float attackDistance;
         public GameObject indicator;
-        public ParticleSystem particle;
+        public ParticleSystem slashCharge;
+        public ParticleSystem slashImpact;
 
         private Enemy _enemy;
         private GameObject _indicator;
         private Vector3 _targetDirection;
-        private IndicatorFill _fill;
-        private ParticleSystem _particle;
+        private ParticleSystem _slashCharge;
+        private ParticleSystem _slashImpact;
         private BoxCollider _boxCollider;
+        private Vector3 _currentPos;
 
         public override void Activate(GameObject owner, GameObject target)
         {
@@ -30,6 +31,9 @@ namespace AbilitySystem.NPC
             _enemy.agentController.speed = 0f;
             _enemy.animator.SetTrigger(AnimationParameters.LineAttack);
             _targetDirection = (_enemy.player.transform.position - _enemy.transform.position).normalized;
+            _currentPos = _enemy.transform.position;
+            _currentPos.y = 1f;
+            _slashCharge = Instantiate(slashCharge, _currentPos, Quaternion.LookRotation(_targetDirection));
 
             StartAttack();
         }
@@ -41,7 +45,6 @@ namespace AbilitySystem.NPC
 
             CreateIndicator();
             
-            DOTween.To(() => _fill.fillProgress, x => _fill.fillProgress = x, 1f, castTime);
             await UniTask.WaitForSeconds(castTime);
         }
 
@@ -53,6 +56,10 @@ namespace AbilitySystem.NPC
 
         public void OnHitGround()
         {
+            _slashCharge.Stop();
+            _slashImpact = Instantiate(slashImpact, _currentPos, Quaternion.LookRotation(_targetDirection));
+            _slashImpact.Play();
+            
             Vector3 worldCenter = _boxCollider.transform.TransformPoint(_boxCollider.center);
             Vector3 worldHalfExtents = Vector3.Scale(_boxCollider.size, _boxCollider.transform.lossyScale) * 0.5f;
             
@@ -76,7 +83,6 @@ namespace AbilitySystem.NPC
             _indicator.transform.position = _enemy.transform.position;
             _indicator.transform.rotation = Quaternion.LookRotation(_enemy.transform.forward);
             _indicator.transform.localScale = new Vector3(1, attackDistance, 1);
-            _fill = _indicator.GetComponentInChildren<IndicatorFill>();
             _boxCollider = _indicator.GetComponent<BoxCollider>();
         }
     }

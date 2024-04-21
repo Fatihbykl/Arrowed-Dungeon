@@ -5,7 +5,6 @@ using DG.Tweening;
 using FSM;
 using Gameplay.Enemy;
 using UnityEngine;
-using VFX.AbilityIndicatorScripts;
 
 namespace AbilitySystem.NPC
 {
@@ -19,7 +18,6 @@ namespace AbilitySystem.NPC
 
         private Vector3 startPoint;
         private Vector3 endPoint;
-        private IndicatorFill _fill;
         private Enemy enemy;
         private GameObject indicator;
         private GameObject throwableObject;
@@ -56,7 +54,6 @@ namespace AbilitySystem.NPC
         {
             indicator = Instantiate(indicatorPrefab);
             indicator.transform.position = endPoint;
-            _fill = indicator.GetComponent<IndicatorFill>();
         }
 
         private void PrepareEnemy()
@@ -70,7 +67,6 @@ namespace AbilitySystem.NPC
         private async void ThrowObject()
         {
             throwableObject.GetComponent<Rigidbody>().velocity = CalculateVelocity();
-            DOTween.To(() => _fill.fillProgress, x => _fill.fillProgress = x, 1f, flyTime);
             await UniTask.WaitForSeconds(flyTime);
             var pos = throwableObject.transform.position;
             pos.y = 1f;

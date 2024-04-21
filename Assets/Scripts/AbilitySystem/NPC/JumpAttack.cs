@@ -4,7 +4,6 @@ using FSM;
 using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using UnityEngine;
-using VFX.AbilityIndicatorScripts;
 
 namespace AbilitySystem.NPC
 {
@@ -23,7 +22,6 @@ namespace AbilitySystem.NPC
         private float _distanceToTarget;
         private Vector3 _targetPos;
         private GameObject _indicator;
-        private IndicatorFill _fill;
         
         public override void Activate(GameObject owner, GameObject target)
         {
@@ -35,7 +33,6 @@ namespace AbilitySystem.NPC
             _indicator = Instantiate(indicator);
             _indicator.transform.position = _targetPos;
             _indicator.transform.localScale = new Vector3(damageRange, damageRange, damageRange);
-            _fill = _indicator.GetComponent<IndicatorFill>();
             
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 1f;
@@ -50,7 +47,6 @@ namespace AbilitySystem.NPC
             _enemy.agentController.speed = _distanceToTarget / time;
             _enemy.agentController.agent.SetDestination(_targetPos);
             
-            DOTween.To(() => _fill.fillProgress, x => _fill.fillProgress = x, 1f, time);
             await UniTask.WaitForSeconds(time);
             
             _particle = Instantiate(particle);

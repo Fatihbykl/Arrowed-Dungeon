@@ -4,7 +4,6 @@ using FSM;
 using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using UnityEngine;
-using VFX.AbilityIndicatorScripts;
 
 namespace AbilitySystem.NPC
 {
@@ -17,7 +16,6 @@ namespace AbilitySystem.NPC
         public ParticleSystem particle;
 
         private GameObject _indicator;
-        private IndicatorFill _fill;
         private ParticleSystem _particle;
         private Enemy _enemy;
         
@@ -32,14 +30,12 @@ namespace AbilitySystem.NPC
             _indicator = Instantiate(rangeIndicator);
             _indicator.transform.localScale = new Vector3(explosionRange, explosionRange, explosionRange);
             _indicator.transform.position = pos;
-            _fill = _indicator.GetComponent<IndicatorFill>();
 
             StartExploding();
         }
 
         private async void StartExploding()
         {
-            DOTween.To(() => _fill.fillProgress, x => _fill.fillProgress = x, 1f, timeBeforeExplode);
             await UniTask.WaitForSeconds(timeBeforeExplode);
             _particle = Instantiate(particle);
             var pos = _enemy.transform.position;
