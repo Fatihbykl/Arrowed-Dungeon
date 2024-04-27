@@ -30,7 +30,7 @@ namespace AbilitySystem
                 }
                 else
                 {
-                    ability.BeginCooldown(owner, target);
+                    ability.BeginCooldown();
                     currentState = AbilityState.Cooldown;
                     cooldownTimer = ability.cooldown;
                 }
@@ -43,7 +43,14 @@ namespace AbilitySystem
                 }
                 else
                 {
-                    currentState = AbilityState.Ready;
+                    if (ability.IsReady())
+                    {
+                        currentState = AbilityState.Ready;
+                    }
+                    else
+                    {
+                        cooldownTimer = 0.5f;
+                    }
                 }
             }
         }

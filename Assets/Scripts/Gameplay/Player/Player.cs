@@ -28,13 +28,13 @@ namespace Gameplay.Player
         private InputAction attackAction;
 
         private GameObject arrow;
-        public GameObject arrowPrefab;
+        public Projectile arrowPrefab;
         public GameObject bow;
         public bool canMove = true;
         public bool attackModeActive = false;
 
         public ParticleSystem dustParticle;
-
+        
         private void Awake()
         {
             attackAction = GetComponent<PlayerInput>().actions["Attack"];
@@ -97,13 +97,18 @@ namespace Gameplay.Player
 
         public void SendArrow()
         {
-            var direction = (currentTarget.transform.position - transform.position).normalized;
-            var force = direction * 25f;
+            // var direction = (currentTarget.transform.position - transform.position).normalized;
+            // var lookRotation = Quaternion.LookRotation(direction);
+            // lookRotation *= Quaternion.Euler(0, 0, 90f);
+            // arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position, lookRotation);
+            // arrow.GetComponent<Projectile>().target = currentTarget;
 
-            var lookRotation = Quaternion.LookRotation(direction);
-            lookRotation *= Quaternion.Euler(0, 0, 90f);
-            arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position, lookRotation);
-            arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            var targetPos = currentTarget.transform.position;
+            targetPos.y = 1f;
+            Projectile projectile = Instantiate(arrowPrefab);
+            projectile.transform.position = bow.transform.position;
+            projectile.transform.LookAt(targetPos);
+            projectile.target = currentTarget;
             
             AudioManager.instance.PlayArrowWooshSFX();
 

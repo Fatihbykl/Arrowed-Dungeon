@@ -48,7 +48,7 @@ namespace AbilitySystem.NPC
             await UniTask.WaitForSeconds(castTime);
         }
 
-        public override void BeginCooldown(GameObject owner, GameObject target)
+        public override void BeginCooldown()
         {
             _enemy.castingAbility = false;
             _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;

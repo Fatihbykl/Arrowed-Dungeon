@@ -41,7 +41,7 @@ namespace AbilitySystem.NPC
             throwableObject.transform.position = startPoint;
         }
 
-        public override void BeginCooldown(GameObject owner, GameObject target)
+        public override void BeginCooldown()
         {
             Destroy(indicator);
             Destroy(throwableObject.gameObject);

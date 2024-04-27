@@ -12,11 +12,9 @@ namespace AbilitySystem.NPC
     {
         public float timeBeforeExplode;
         public float explosionRange;
-        public GameObject rangeIndicator;
-        public ParticleSystem particle;
+        public GameObject particle;
 
-        private GameObject _indicator;
-        private ParticleSystem _particle;
+        private GameObject _particle;
         private Enemy _enemy;
         
         public override void Activate(GameObject owner, GameObject target)
@@ -27,9 +25,9 @@ namespace AbilitySystem.NPC
             _enemy.animator.SetBool(AnimationParameters.Attack, true);
             var pos = _enemy.transform.position;
 
-            _indicator = Instantiate(rangeIndicator);
-            _indicator.transform.localScale = new Vector3(explosionRange, explosionRange, explosionRange);
-            _indicator.transform.position = pos;
+            _particle = Instantiate(particle);
+            _particle.transform.localScale = new Vector3(explosionRange / 7, explosionRange / 7, explosionRange / 7);
+            _particle.transform.position = pos;
 
             StartExploding();
         }
@@ -37,11 +35,7 @@ namespace AbilitySystem.NPC
         private async void StartExploding()
         {
             await UniTask.WaitForSeconds(timeBeforeExplode);
-            _particle = Instantiate(particle);
-            var pos = _enemy.transform.position;
-            pos.y = 1f;
-            _particle.transform.position = pos;
-            _particle.Play();
+            
             DealDamage();
             DestroyObjects();
         }
@@ -57,7 +51,6 @@ namespace AbilitySystem.NPC
 
         private void DestroyObjects()
         {
-            Destroy(_indicator);
             Destroy(_particle.gameObject, 2f);
             Destroy(_enemy.gameObject.transform.parent.gameObject);
         }

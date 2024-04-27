@@ -11,7 +11,7 @@ namespace Behaviours
     {
         private Enemy _enemy;
         private JumpAttack _jumpAttack;
-
+        private float start, end;
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _enemy = animator.gameObject.GetComponent<Enemy>();
@@ -33,10 +33,13 @@ namespace Behaviours
             {
                 Debug.LogError("JumpAttack(Clone) not found!");
             }
+
+            start = Time.time;
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller)
         {
+            end = Time.time;
             _jumpAttack.OnAnimationLand();
         }
     }

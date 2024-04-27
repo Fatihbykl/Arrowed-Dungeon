@@ -47,6 +47,7 @@ namespace FSM.Enemy.States
             var ability = _enemy.abilityHolders
                 .FirstOrDefault(abilityHolder => abilityHolder.currentState == AbilityHolder.AbilityState.Ready &&
                                                  abilityHolder.ability.castRange >= distanceToTarget);
+            
             return ability;
         }
     }

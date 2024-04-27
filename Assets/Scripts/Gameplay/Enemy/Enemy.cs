@@ -22,7 +22,7 @@ using Managers;
 
 namespace Gameplay.Enemy
 {
-    public class Enemy : MonoBehaviour, IDamageable
+    public class Enemy : MonoBehaviour, IDamageable, IHealable
     {
         [Header("References")]
         [HorizontalLine(color: EColor.White, height: 1f)]
@@ -48,7 +48,7 @@ namespace Gameplay.Enemy
         [HideInInspector] public bool waypointReached;
         [HideInInspector] public bool canMoveNextWaypoint;
         [HideInInspector] public int currentWaypoint;
-        [HideInInspector] public int currentHealth ;
+        public int currentHealth ;
         [HideInInspector] public bool playerDetected;
         [HideInInspector] public bool castingAbility;
         [HideInInspector] public bool letAIManagerSetDestination;
@@ -183,6 +183,12 @@ namespace Gameplay.Enemy
         private void OnDestroy()
         {
             AIManager.Instance.RemoveUnit(this);
+        }
+
+        public void Heal(int healthAmount)
+        {
+            var newHealth = currentHealth + healthAmount;
+            currentHealth = newHealth <= enemySettings.enemyBaseHealth ? newHealth : enemySettings.enemyBaseHealth;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace AbilitySystem.NPC
             enemy.animator.SetTrigger(AnimationParameters.Attack);
         }
 
-        public override void BeginCooldown(GameObject owner, GameObject target)
+        public override void BeginCooldown()
         {
             enemy.agentController.speed = enemy.enemySettings.chaseSpeed;
             enemy.castingAbility = false;

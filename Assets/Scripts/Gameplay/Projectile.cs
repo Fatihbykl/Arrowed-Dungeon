@@ -9,6 +9,8 @@ namespace Gameplay
         public bool followTarget;
         public float speed = 15f;
         public float rotateSpeed = 200f;
+        public GameObject muzzlePrefab;
+        public GameObject hitPrefab;
         
         [Header("PREDICTION")] 
         public float maxDistancePredict = 100;
@@ -22,11 +24,14 @@ namespace Gameplay
 
         private Rigidbody _rb;
         private Rigidbody _targetRb;
+        private Vector3 _position;
         
         private void Start()
         {
             _rb = GetComponent<Rigidbody>();
             _targetRb = target.GetComponent<Rigidbody>();
+            
+            InstantiateMuzzleParticle();
         }
 
         private void FixedUpdate()
@@ -35,23 +40,66 @@ namespace Gameplay
 
             if (followTarget)
             {
-                var leadTimePercentage = Mathf.InverseLerp(minDistancePredict, maxDistancePredict, Vector3.Distance(transform.position, target.transform.position));
+                var leadTimePercentage = Mathf.InverseLerp(minDistancePredict, maxDistancePredict, Vector3.Distance(transform.position, GetTargetPositionLockedY(1f)));
             
                 PredictMovement(leadTimePercentage);
                 AddDeviation(leadTimePercentage);
                 RotateRocket();
             }
         }
-
-        private void OnTriggerEnter(Collider other)
+        
+        public Vector3 GetTargetPositionLockedY(float y)
         {
+            _position = target.transform.position;
+            _position.y = y;
+            return _position;
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            InstantiateHitParticle(other);
             Destroy(gameObject);
+        }
+
+        private void InstantiateMuzzleParticle()
+        {
+            if (muzzlePrefab != null) {
+                var muzzleVFX = Instantiate (muzzlePrefab, transform.position, Quaternion.identity);
+                muzzleVFX.transform.forward = gameObject.transform.forward;
+                var ps = muzzleVFX.GetComponent<ParticleSystem>();
+                if (ps != null)
+                    Destroy (muzzleVFX, ps.main.duration);
+                else {
+                    var psChild = muzzleVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy (muzzleVFX, psChild.main.duration);
+                }
+            }
+        }
+
+        private void InstantiateHitParticle(Collision co)
+        {
+            ContactPoint contact = co.contacts[0];
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            Vector3 pos = contact.point;
+            
+            if (hitPrefab != null)
+            {
+                var hitVFX = Instantiate(hitPrefab, pos, rot) as GameObject;
+
+                var ps = hitVFX.GetComponent<ParticleSystem>();
+                if (ps == null)
+                {
+                    var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(hitVFX, psChild.main.duration);
+                }
+                else
+                    Destroy(hitVFX, ps.main.duration);
+            }
         }
 
         private void PredictMovement(float leadTimePercentage) {
             var predictionTime = Mathf.Lerp(0, maxTimePrediction, leadTimePercentage);
-        
-            _standardPrediction = _targetRb.position + _targetRb.velocity * predictionTime;
+            _standardPrediction = GetTargetPositionLockedY(1f) + _targetRb.velocity * predictionTime;
         }
         
         private void AddDeviation(float leadTimePercentage) {

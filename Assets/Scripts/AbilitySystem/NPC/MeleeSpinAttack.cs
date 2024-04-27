@@ -22,7 +22,7 @@ namespace AbilitySystem.NPC
             StartSpin();
         }
 
-        public override void BeginCooldown(GameObject owner, GameObject target)
+        public override void BeginCooldown()
         {
             enemy.castingAbility = false;
             enemy.animator.SetBool(AnimationParameters.CanSpin, false);

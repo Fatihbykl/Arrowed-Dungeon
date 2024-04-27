@@ -242,11 +242,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySettings: {fileID: 11400000, guid: 83fdf77eea5c6c24fb804be26f2d2cab, type: 2}
-  projectileSpawnPosition: {fileID: 0}
+  projectileSpawnPosition: {fileID: 1314442599974752100}
   hpBar: {fileID: 1997250028467577294}
   player: {fileID: 0}
   waypoints:
-  - {fileID: 0}
   - {fileID: 0}
   blinkIntensity: 5
   blinkDuration: 0.2
@@ -634,6 +633,37 @@ Transform:
   - {fileID: 2398690833632120135}
   m_Father: {fileID: 1062169493207032114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1314442599974752100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2768799956969381841}
+  m_Layer: 0
+  m_Name: ProjectileSpawnPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2768799956969381841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314442599974752100}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.082, y: 0.596, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4464893395197129571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1702567769650230779
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +694,8 @@ Transform:
   m_LocalPosition: {x: 0.35356987, y: -0.0097415745, z: -0.21139893}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 2768799956969381841}
   m_Father: {fileID: 3459100281184526781}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &2226578101655954166

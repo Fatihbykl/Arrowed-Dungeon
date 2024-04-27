@@ -22,11 +22,12 @@ namespace AbilitySystem.NPC
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
             _targetPosition = _enemy.player.transform.position;
+            _targetPosition.y = 1f;
             _enemy.transform.DOLookAt(_targetPosition, .4f);
             _enemy.animator.SetTrigger(AnimationParameters.Attack);
         }
 
-        public override void BeginCooldown(GameObject owner, GameObject target)
+        public override void BeginCooldown()
         {
             _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;
             _enemy.castingAbility = false;
