@@ -14,7 +14,7 @@ namespace Gameplay.Dungeon
         [SerializeField] private float shakeMultiplier = 6;
         [SerializeField] private bool broken = false;
 
-        public void TakeDamage(int damage, Vector3 direction)
+        public void TakeDamage(int damage)
         {
             if (broken) { return; }
 

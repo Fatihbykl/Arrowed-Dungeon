@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/NPC/Melee Spin Attack")]
+    [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Melee Spin Attack")]
     public class MeleeSpinAttack : AbilityBase
     {
         public float focusTimeBeforeSpin;

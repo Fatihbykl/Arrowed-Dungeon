@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/NPC/Jump Attack")]
+    [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Jump Attack")]
     public class JumpAttack : AbilityBase
     {
         public GameObject indicator;
@@ -60,7 +60,7 @@ namespace AbilitySystem.NPC
             Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, damageRange, _enemy.playerMask);
             if (colliders.Length > 0)
             {
-                colliders[0].GetComponent<IDamageable>().TakeDamage(abilityDamage, Vector3.zero);
+                colliders[0].GetComponent<IDamageable>().TakeDamage(abilityDamage);
             }
         }
 

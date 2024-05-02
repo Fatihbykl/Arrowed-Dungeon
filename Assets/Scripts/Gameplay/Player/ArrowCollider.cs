@@ -20,7 +20,7 @@ namespace Gameplay.Player
             {
                 Vector3 direction = (other.transform.position - transform.position).normalized * arrowSO.knockbackForce;
                 direction.y = 0;
-                collideObject.TakeDamage(arrowSO.baseDamage, transform.forward * arrowSO.knockbackForce);
+                collideObject.TakeDamage(arrowSO.baseDamage);
              
                 if (arrowSO.hitParticlePrefab != null)
                 {

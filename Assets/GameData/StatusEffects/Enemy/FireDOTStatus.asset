@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c3d7eb9e6957b54880d56203aad0e73, type: 3}
-  m_Name: RangedAutoAttack
+  m_Script: {fileID: 11500000, guid: 768a902502d34e939a90acf76ca5e549, type: 3}
+  m_Name: FireDOTStatus
   m_EditorClassIdentifier: 
-  cooldown: 2
-  castTime: 1
-  castRange: 5.2
-  projectilePrefab: {fileID: 1792988112141855903, guid: e3500458a56425e418897fc78183523e,
+  duration: 5
+  vfxPrefab: {fileID: 3475284553342622268, guid: 49cbcdd7b11d1ab42ab2c414464c5e00,
     type: 3}
+  interval: 1
+  damageEveryInterval: 10

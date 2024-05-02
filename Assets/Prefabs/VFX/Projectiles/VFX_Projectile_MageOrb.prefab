@@ -19715,7 +19715,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990014330961623050}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -19747,9 +19747,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  followTarget: 0
-  speed: 15
-  rotateSpeed: 200
+  followTarget: 1
+  speed: 10
+  rotateSpeed: 360
   muzzlePrefab: {fileID: 717308829677962954, guid: 115bb8c7f11b4f14891b0a26cf363be7,
     type: 3}
   hitPrefab: {fileID: 4096393898009392573, guid: 4dff2767ae536494cbc64364fe848400,

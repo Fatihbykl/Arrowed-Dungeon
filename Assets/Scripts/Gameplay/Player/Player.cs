@@ -62,7 +62,7 @@ namespace Gameplay.Player
             }
         }
 
-        public void TakeDamage(int damage, Vector3 direction)
+        public void TakeDamage(int damage)
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
             playerHealth -= damage;
@@ -97,12 +97,6 @@ namespace Gameplay.Player
 
         public void SendArrow()
         {
-            // var direction = (currentTarget.transform.position - transform.position).normalized;
-            // var lookRotation = Quaternion.LookRotation(direction);
-            // lookRotation *= Quaternion.Euler(0, 0, 90f);
-            // arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position, lookRotation);
-            // arrow.GetComponent<Projectile>().target = currentTarget;
-
             var targetPos = currentTarget.transform.position;
             targetPos.y = 1f;
             Projectile projectile = Instantiate(arrowPrefab);

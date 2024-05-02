@@ -25,7 +25,7 @@ namespace Gameplay.Dungeon
         private void OnTriggerEnter(Collider other)
         {
             IDamageable damageableObject = other.gameObject.GetComponent<IDamageable>();
-            damageableObject.TakeDamage(trapDamage, Vector3.zero);
+            damageableObject.TakeDamage(trapDamage);
         }
 
         private void Update()

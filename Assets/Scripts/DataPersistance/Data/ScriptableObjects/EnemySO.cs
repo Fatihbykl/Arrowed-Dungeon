@@ -9,12 +9,14 @@ namespace DataPersistance.Data.ScriptableObjects
         [Header("Combat Settings")]
         public int enemyBaseDamage;
         public int enemyBaseHealth;
+        public int enemyBaseArmor;
+        public float chaseSpeed;
         public AbilityBase[] abilities;
         public bool canKnockbackable;
+
         [Header("Agent Settings")]
         [Tooltip("Awareness size of the enemy.")] public float sphereRadius;
         public float patrolSpeed;
-        public float chaseSpeed;
         public float waypointWaitTime;
         public float stoppingDistance;
     }

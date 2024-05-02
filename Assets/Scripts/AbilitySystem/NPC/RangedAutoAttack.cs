@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using FSM;
 using Gameplay;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/NPC/Ranged Auto Attack")]
+    [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Ranged Auto Attack")]
     public class RangedAutoAttack : AbilityBase
     {
         [Header("Projectile Settings")]
@@ -14,7 +15,17 @@ namespace AbilitySystem.NPC
         
         private Enemy _enemy;
         private Vector3 _targetPosition;
-        
+        private Animator _animator;
+        private AnimationEvent _animationEvent;
+        private AnimationClip _animationClip;
+
+        public static Action<GameObject> rangedAutoAttackEvent;
+
+        private void Awake()
+        {
+            rangedAutoAttackEvent += OnSendProjectile;
+        }
+
         public override void Activate(GameObject owner, GameObject target)
         {
             _enemy = owner.GetComponent<Enemy>();
@@ -27,22 +38,17 @@ namespace AbilitySystem.NPC
             _enemy.animator.SetTrigger(AnimationParameters.Attack);
         }
 
+
         public override void BeginCooldown()
         {
             _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;
             _enemy.castingAbility = false;
         }
 
-        public void SendProjectile()
+        private void OnSendProjectile(GameObject sender)
         {
-            // var direction = (target.transform.position - owner.transform.position).normalized;
-            // var force = direction * 25f;
-            //
-            // var spawn = new Vector3(owner.transform.position.x, 1, owner.transform.position.z);
-            // var arrow = GameObject.Instantiate(projectilePrefab, spawn,
-            //     Quaternion.LookRotation(direction));
-            // arrow.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-
+            if (sender != _enemy.gameObject) { return; }
+            
             var projectile = Instantiate(projectilePrefab);
             projectile.transform.position = _enemy.projectileSpawnPosition.transform.position;
             projectile.transform.LookAt(_targetPosition);

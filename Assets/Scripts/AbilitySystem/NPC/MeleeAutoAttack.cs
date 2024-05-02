@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/NPC/Melee Auto Attack")]
+    [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Melee Auto Attack")]
     public class MeleeAutoAttack : AbilityBase
     {
         private Enemy enemy;

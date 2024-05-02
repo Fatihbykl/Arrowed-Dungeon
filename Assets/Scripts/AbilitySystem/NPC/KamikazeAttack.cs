@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/NPC/Kamikaze Attack")]
+    [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Kamikaze Attack")]
     public class KamikazeAttack : AbilityBase
     {
         public float timeBeforeExplode;
@@ -45,7 +45,7 @@ namespace AbilitySystem.NPC
             Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, explosionRange, _enemy.playerMask);
             if (colliders.Length > 0)
             {
-                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemySettings.enemyBaseDamage, Vector3.zero);
+                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemySettings.enemyBaseDamage);
             }
         }
 

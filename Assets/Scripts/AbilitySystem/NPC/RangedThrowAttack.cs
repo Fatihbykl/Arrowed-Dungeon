@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/NPC/Ranged Throw Attack")]
+    [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Ranged Throw Attack")]
     public class RangedThrowAttack : AbilityBase
     {
         [SerializeField] private GameObject throwableObjectPrefab;

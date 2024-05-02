@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/NPC/Line Attack")]
+    [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Line Attack")]
     public class LineAttack : AbilityBase
     {
         public float attackDistance;
@@ -66,7 +66,7 @@ namespace AbilitySystem.NPC
             Collider[] colliders = Physics.OverlapBox(worldCenter, worldHalfExtents, _boxCollider.transform.rotation, 1 << 7);
             if (colliders.Length > 0)
             {
-                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemySettings.enemyBaseDamage, Vector3.zero);
+                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemySettings.enemyBaseDamage);
             }
             DestroyObjects();
         }

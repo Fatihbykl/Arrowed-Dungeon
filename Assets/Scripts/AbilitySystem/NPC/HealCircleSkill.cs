@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace AbilitySystem.NPC
 {
-    [CreateAssetMenu(menuName = "Abilities/NPC/Heal Circle")]
+    [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Heal Circle")]
     public class HealCircleSkill : AbilityBase
     {
         public GameObject healParticle;
@@ -54,7 +54,7 @@ namespace AbilitySystem.NPC
             
             for (int i = 0; i < healDuration / healInterval; i++)
             {
-                Collider[] colliders = Physics.OverlapSphere(_healCirclePosition, _circleSize, mask);
+                Collider[] colliders = Physics.OverlapSphere(_healCirclePosition, circleSize, mask);
                 if (colliders.Length > 0)
                 {
                     for (int j = 0; j < colliders.Length; j++)

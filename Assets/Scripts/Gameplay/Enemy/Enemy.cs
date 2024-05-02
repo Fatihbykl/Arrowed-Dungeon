@@ -141,18 +141,17 @@ namespace Gameplay.Enemy
                 new Vector3(transform.position.x - 0.5f, hpBar.transform.position.y, transform.position.z);
         }
 
-        public void TakeDamage(int damage, Vector3 direction)
+        public void TakeDamage(int damage)
         {
             currentHealth -= damage;
             hpBar.UpdateHealthBar(currentHealth);
             playerDetected = true;
-            if (enemySettings.canKnockbackable) { rb.AddForce(direction, ForceMode.Impulse); }
             if (currentHealth > 0) { StartTakeDamageAnim(); }
         }
         
         private async void StartTakeDamageAnim()
         {
-            gameObject.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.1f);
+            //gameObject.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.1f);
             await meshRenderer.material.DOColor(Color.white * blinkIntensity, blinkDuration / 2).ToUniTask();
             await meshRenderer.material.DOColor(Color.white, blinkDuration / 2).ToUniTask();
         }
@@ -169,15 +168,7 @@ namespace Gameplay.Enemy
 
         public void SendProjectile()
         {
-            var rangedAutoAttack = abilityHolders
-                .FirstOrDefault(a => String.Equals(a.ability.name, "RangedAutoAttack(Clone)"))
-                ?.ability as RangedAutoAttack;
-
-            if (rangedAutoAttack != null) rangedAutoAttack.SendProjectile();
-            else
-            {
-                Debug.LogError("RangedAutoAttack(Clone) not found!");
-            }
+            RangedAutoAttack.rangedAutoAttackEvent.Invoke(gameObject);
         }
         
         private void OnDestroy()

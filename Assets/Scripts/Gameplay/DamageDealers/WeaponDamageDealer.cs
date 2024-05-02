@@ -33,7 +33,7 @@ namespace Gameplay.DamageDealers
                     if (hitObject != null && !hasDealtDamage.Contains(hitObject))
                     {
                         hasDealtDamage.Add(hitObject);
-                        hitObject.TakeDamage(weaponDamage, Vector3.zero);
+                        hitObject.TakeDamage(weaponDamage);
                     }
                 }
             }

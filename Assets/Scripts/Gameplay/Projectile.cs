@@ -1,4 +1,6 @@
 using System;
+using Gameplay.Interfaces;
+using StatusEffectSystem;
 using UnityEngine;
 
 namespace Gameplay
@@ -6,6 +8,7 @@ namespace Gameplay
     public class Projectile : MonoBehaviour
     {
         public GameObject target;
+        public StatusEffectBase statusEffect;
         public bool followTarget;
         public float speed = 15f;
         public float rotateSpeed = 200f;
@@ -58,6 +61,8 @@ namespace Gameplay
         private void OnCollisionEnter(Collision other)
         {
             InstantiateHitParticle(other);
+            other.gameObject.GetComponent<IDamageable>().TakeDamage(10);
+            statusEffect.ApplyStatus(other.gameObject);
             Destroy(gameObject);
         }
 
