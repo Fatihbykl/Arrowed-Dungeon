@@ -83,7 +83,7 @@ namespace AbilitySystem.NPC
         {
             _enemy.castingAbility = false;
             _enemy.letAIManagerSetDestination = true;
-            _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;
+            _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
         }
     }
 }

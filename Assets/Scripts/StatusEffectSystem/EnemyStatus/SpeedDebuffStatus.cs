@@ -1,8 +1,9 @@
 using Cysharp.Threading.Tasks;
 using Gameplay.Enemy;
+using StatSystem;
 using UnityEngine;
 
-namespace StatusEffectSystem
+namespace StatusEffectSystem.EnemyStatus
 {
     [CreateAssetMenu(menuName = "Custom/Status Effect/Enemy/Speed Debuff Status")]
     public class SpeedDebuffStatus : StatusEffectBase
@@ -12,30 +13,33 @@ namespace StatusEffectSystem
         
         private Enemy _enemy;
         private GameObject _particle;
-        private float _slowAmount;
-        private float _enemyCurrentSpeed;
+        private StatModifier _modifier;
 
         public override void ApplyStatus(GameObject target)
         {
             _enemy = target.GetComponent<Enemy>();
-            _particle = Instantiate(vfxPrefab, _enemy.transform);
-            _particle.transform.position = Vector3.zero;
-            _enemyCurrentSpeed = _enemy.enemySettings.chaseSpeed;
-            _slowAmount = _enemyCurrentSpeed * slowPercent;
-
-            SlowDownEnemy();
+            if (!_enemy.isInStatusEffect)
+            {
+                _enemy.isInStatusEffect = true;
+                _particle = Instantiate(vfxPrefab, _enemy.transform);
+                _particle.transform.position = _enemy.transform.position;
+                
+                SlowDownEnemy();
+            }
         }
 
         private async void SlowDownEnemy()
         {
-            _enemy.agentController.speed = _enemyCurrentSpeed - _slowAmount;
+            _modifier = new StatModifier(-slowPercent, StatModType.PercentAdd);
+            _enemy.enemyStats.chaseSpeed.AddModifier(_modifier);
             await UniTask.WaitForSeconds(duration);
             RemoveStatus();
         }
 
         public override void RemoveStatus()
         {
-            _enemy.agentController.speed = _enemyCurrentSpeed;
+            _enemy.enemyStats.chaseSpeed.RemoveModifier(_modifier);
+            _enemy.isInStatusEffect = false;
             Destroy(_particle);
         }
     }

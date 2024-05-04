@@ -241,14 +241,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673808c3044448dc85e254e4f58bad27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySettings: {fileID: 11400000, guid: 83fdf77eea5c6c24fb804be26f2d2cab, type: 2}
+  enemyStats:
+    damage:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    maxHealth:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    health:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    armor:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    chaseSpeed:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+  abilities: []
+  isRanged: 0
   projectileSpawnPosition: {fileID: 1314442599974752100}
   hpBar: {fileID: 1997250028467577294}
-  player: {fileID: 0}
   waypoints:
   - {fileID: 0}
+  sphereRadius: 0
+  waypointWaitTime: 0
+  patrolSpeed: 0
+  stoppingDistance: 0
   blinkIntensity: 5
   blinkDuration: 0.2
+  player: {fileID: 0}
   abilityHolders: []
   rb: {fileID: 0}
   meshRenderer: {fileID: 0}
@@ -258,10 +294,10 @@ MonoBehaviour:
   waypointReached: 0
   canMoveNextWaypoint: 0
   currentWaypoint: 0
-  currentHealth: 0
   playerDetected: 0
   castingAbility: 0
   letAIManagerSetDestination: 0
+  isInStatusEffect: 0
   playerMask:
     serializedVersion: 2
     m_Bits: 0

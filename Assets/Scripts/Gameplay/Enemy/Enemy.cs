@@ -4,13 +4,10 @@ using System.Linq;
 using AbilitySystem;
 using AbilitySystem.NPC;
 using Cysharp.Threading.Tasks;
-using DataPersistance.Data.ScriptableObjects;
 using FSM.Enemy;
 using FSM.Enemy.States;
 using Gameplay.Interfaces;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityHFSM;
 using Microlight.MicroBar;
 using NaughtyAttributes;
@@ -19,26 +16,61 @@ using ECM.Controllers;
 using FSM;
 using Gameplay.DamageDealers;
 using Managers;
+using StatSystem;
 
 namespace Gameplay.Enemy
 {
+    [Serializable]
+    public class EnemyStats
+    {
+        public IntegerStat damage;
+        public IntegerStat maxHealth;
+        [HideInInspector] public IntegerStat health;
+        public IntegerStat armor;
+        public FloatStat chaseSpeed;
+
+        public void InitHealth()
+        {
+            health.BaseValue = maxHealth.BaseValue;
+            health.useUpperBound = true;
+            health.upperBound = maxHealth.BaseValue;
+        }
+    }
     public class Enemy : MonoBehaviour, IDamageable, IHealable
     {
+        [Header("Stats")]
+        [HorizontalLine(color: EColor.White, height: 1f)]
+        [Space(10)]
+        //public EnemySO enemySettings;
+        public EnemyStats enemyStats;
+        
+        
         [Header("References")]
         [HorizontalLine(color: EColor.White, height: 1f)]
         [Space(10)]
-        public EnemySO enemySettings;
+        public AbilityBase[] abilities;
+        public bool isRanged;
+        [ShowIf("isRanged")]
         public GameObject projectileSpawnPosition;
         public MicroBar hpBar;
-        public Player.Player player;
         public Transform[] waypoints;
-
-        [Header("Take Damage Emission Settings")]
+        
+        [Header("Agent Settings")]
         [HorizontalLine(color: EColor.White, height: 1f)]
         [Space(10)]
-        public float blinkIntensity = 10f;
-        public float blinkDuration = 2f;
+        [InfoBox("Awareness size of the enemy.")]
+        public float sphereRadius;
+        public float waypointWaitTime;
+        public float patrolSpeed;
+        public float stoppingDistance;
         
+        [Header("Take Damage Blink Settings")]
+        [HorizontalLine(color: EColor.White, height: 1f)]
+        [Space(10)]
+        public float blinkIntensity = 5f;
+        public float blinkDuration = 0.2f;
+        
+        [HideInInspector] public Player.Player player;
         [HideInInspector] public List<AbilityHolder> abilityHolders;
         [HideInInspector] public Rigidbody rb;
         [HideInInspector] public SkinnedMeshRenderer meshRenderer;
@@ -48,10 +80,10 @@ namespace Gameplay.Enemy
         [HideInInspector] public bool waypointReached;
         [HideInInspector] public bool canMoveNextWaypoint;
         [HideInInspector] public int currentWaypoint;
-        public int currentHealth ;
         [HideInInspector] public bool playerDetected;
         [HideInInspector] public bool castingAbility;
         [HideInInspector] public bool letAIManagerSetDestination;
+        [HideInInspector] public bool isInStatusEffect;
         [HideInInspector] public LayerMask playerMask;
 
         private StateMachine<EnemyState> EnemyFSM;
@@ -67,8 +99,10 @@ namespace Gameplay.Enemy
             canMoveNextWaypoint = true;
             letAIManagerSetDestination = true;
             currentWaypoint = 0;
-            currentHealth = enemySettings.enemyBaseHealth;
             damageDealer = GetComponentInChildren<WeaponDamageDealer>();
+            
+            // event
+            enemyStats.chaseSpeed.StatChanged += OnSpeedStatChanged;
             
             // components
             agentController = GetComponent<BaseAgentController>();
@@ -76,14 +110,9 @@ namespace Gameplay.Enemy
             capsuleCollider = GetComponent<CapsuleCollider>();
             meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             
-            // agentController settings
-            // agentController.radius = enemySettings.radius;
-            // agentController.height = enemySettings.height;
-            //agentController.agent.speed = enemySettings.patrolSpeed;
-            //agentController.agent.stoppingDistance = enemySettings.stoppingDistance;
-            
             // hp bar initialization
-            hpBar.Initialize(currentHealth);
+            enemyStats.InitHealth();
+            hpBar.Initialize(enemyStats.health.BaseValue);
             
             // FSM
             EnemyFSM = new StateMachine<EnemyState>();
@@ -92,7 +121,7 @@ namespace Gameplay.Enemy
             EnemyFSM.AddState(EnemyState.Patrol, new PatrolState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Die, new DieState(this, EnemyFSM));
             EnemyFSM.AddState(EnemyState.Chase, new ChaseState(this, EnemyFSM));
-            EnemyFSM.AddTransitionFromAny(EnemyState.Die, t => currentHealth <= 0, forceInstantly: true);
+            EnemyFSM.AddTransitionFromAny(EnemyState.Die, t => enemyStats.health.Value <= 0, forceInstantly: true);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Patrol, t => canMoveNextWaypoint);
             EnemyFSM.AddTransition(EnemyState.Idle, EnemyState.Chase, t => playerDetected);
             EnemyFSM.AddTransition(EnemyState.Patrol, EnemyState.Chase, t => playerDetected);
@@ -100,6 +129,8 @@ namespace Gameplay.Enemy
             
             EnemyFSM.SetStartState(EnemyState.Patrol);
         }
+
+        
 
         private void Start()
         {
@@ -113,15 +144,15 @@ namespace Gameplay.Enemy
 
         private void PrepareAbilities()
         {
-            if (enemySettings.abilities == null) { return; }
-            foreach (var ability in enemySettings.abilities)
+            if (abilities == null) { return; }
+            foreach (var ability in abilities)
             {
                 var holder = this.gameObject.AddComponent<AbilityHolder>();
                 holder.ability = Instantiate(ability);
                 holder.owner = this.gameObject;
                 holder.target = player.gameObject;
             }
-            agentController.agent.stoppingDistance = enemySettings.stoppingDistance;
+            agentController.agent.stoppingDistance = stoppingDistance;
             abilityHolders = GetComponents<AbilityHolder>().ToList();
         }
 
@@ -134,7 +165,7 @@ namespace Gameplay.Enemy
         {
             EnemyFSM.OnLogic();
             
-            playerDetected = Physics.CheckSphere(transform.position, enemySettings.sphereRadius, playerMask,
+            playerDetected = Physics.CheckSphere(transform.position, sphereRadius, playerMask,
                 QueryTriggerInteraction.Collide);
             
             hpBar.transform.position =
@@ -143,10 +174,10 @@ namespace Gameplay.Enemy
 
         public void TakeDamage(int damage)
         {
-            currentHealth -= damage;
-            hpBar.UpdateHealthBar(currentHealth);
+            enemyStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
+            hpBar.UpdateHealthBar(enemyStats.health.Value);
             playerDetected = true;
-            if (currentHealth > 0) { StartTakeDamageAnim(); }
+            if (enemyStats.health.Value > 0) { StartTakeDamageAnim(); }
         }
         
         private async void StartTakeDamageAnim()
@@ -158,7 +189,7 @@ namespace Gameplay.Enemy
         
         public void StartDealDamage()
         {
-            damageDealer.OnStartDealDamage(enemySettings.enemyBaseDamage);
+            damageDealer.OnStartDealDamage(enemyStats.damage.Value);
         }
 
         public void EndDealDamage()
@@ -171,15 +202,16 @@ namespace Gameplay.Enemy
             RangedAutoAttack.rangedAutoAttackEvent.Invoke(gameObject);
         }
         
-        private void OnDestroy()
+        private void OnSpeedStatChanged()
         {
-            AIManager.Instance.RemoveUnit(this);
+            agentController.speed = enemyStats.chaseSpeed.Value;
         }
 
         public void Heal(int healthAmount)
         {
-            var newHealth = currentHealth + healthAmount;
-            currentHealth = newHealth <= enemySettings.enemyBaseHealth ? newHealth : enemySettings.enemyBaseHealth;
+            var newHealth = enemyStats.health.Value + healthAmount;
+            //newHealth = newHealth <= enemyStats.health.baseValue ? newHealth : enemyStats.health.baseValue;
+            enemyStats.health.AddModifier(new StatModifier(newHealth, StatModType.Flat));
         }
     }
 }

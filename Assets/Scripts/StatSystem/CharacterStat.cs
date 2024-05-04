@@ -1,54 +1,63 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using NaughtyAttributes;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace StatSystem
 {
 	[Serializable]
-	public class CharacterStat
+	public class CharacterStat<T>
 	{
-		public float BaseValue;
+		[SerializeField]
+		protected float baseValue;
+
+		public bool useUpperBound;
+		public bool useLowerBound;
+		public float upperBound;
+		public float lowerBound;
 
 		protected bool isDirty = true;
-		protected float lastBaseValue;
+		protected float value;
 
-		protected float _value;
-		public virtual float Value {
-			get {
-				if(isDirty || lastBaseValue != BaseValue) {
-					lastBaseValue = BaseValue;
-					_value = CalculateFinalValue();
-					isDirty = false;
-				}
-				return _value;
-			}
+		public event Action StatChanged;
+		
+		public virtual T Value => default;
+
+		public virtual T BaseValue
+		{
+			get => default;
+			set {  }
 		}
+		
 
-		protected readonly List<StatModifier> statModifiers;
-		public readonly ReadOnlyCollection<StatModifier> StatModifiers;
+		private readonly List<StatModifier> _statModifiers;
+		public readonly ReadOnlyCollection<StatModifier> statModifiers;
 
 		public CharacterStat()
 		{
-			statModifiers = new List<StatModifier>();
-			StatModifiers = statModifiers.AsReadOnly();
+			_statModifiers = new List<StatModifier>();
+			statModifiers = _statModifiers.AsReadOnly();
 		}
 
 		public CharacterStat(float baseValue) : this()
 		{
-			BaseValue = baseValue;
+			this.baseValue = baseValue;
 		}
 
 		public virtual void AddModifier(StatModifier mod)
 		{
 			isDirty = true;
-			statModifiers.Add(mod);
+			_statModifiers.Add(mod);
 		}
 
 		public virtual bool RemoveModifier(StatModifier mod)
 		{
-			if (statModifiers.Remove(mod))
+			if (_statModifiers.Remove(mod))
 			{
 				isDirty = true;
+				StatChanged?.Invoke();
 				return true;
 			}
 			return false;
@@ -56,7 +65,7 @@ namespace StatSystem
 
 		public virtual bool RemoveAllModifiersFromSource(object source)
 		{
-			int numRemovals = statModifiers.RemoveAll(mod => mod.Source == source);
+			int numRemovals = _statModifiers.RemoveAll(mod => mod.Source == source);
 
 			if (numRemovals > 0)
 			{
@@ -77,14 +86,14 @@ namespace StatSystem
 		
 		protected virtual float CalculateFinalValue()
 		{
-			float finalValue = BaseValue;
+			float finalValue = baseValue;
 			float sumPercentAdd = 0;
 
-			statModifiers.Sort(CompareModifierOrder);
+			_statModifiers.Sort(CompareModifierOrder);
 
-			for (int i = 0; i < statModifiers.Count; i++)
+			for (int i = 0; i < _statModifiers.Count; i++)
 			{
-				StatModifier mod = statModifiers[i];
+				StatModifier mod = _statModifiers[i];
 
 				if (mod.Type == StatModType.Flat)
 				{
@@ -94,7 +103,7 @@ namespace StatSystem
 				{
 					sumPercentAdd += mod.Value;
 
-					if (i + 1 >= statModifiers.Count || statModifiers[i + 1].Type != StatModType.PercentAdd)
+					if (i + 1 >= _statModifiers.Count || _statModifiers[i + 1].Type != StatModType.PercentAdd)
 					{
 						finalValue *= 1 + sumPercentAdd;
 						sumPercentAdd = 0;
@@ -106,8 +115,7 @@ namespace StatSystem
 				}
 			}
 
-			// Workaround for float calculation errors, like displaying 12.00001 instead of 12
-			return (float)Math.Round(finalValue, 4);
+			return finalValue;
 		}
 	}
 }

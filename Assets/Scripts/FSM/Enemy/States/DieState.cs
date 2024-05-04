@@ -17,6 +17,8 @@ namespace FSM.Enemy.States
             base.OnEnter();
             
             _enemy.agentController.speed = 0;
+            AIManager.Instance.RemoveUnit(_enemy);
+            _enemy.agentController.agent.ResetPath();
             Die();
         }
 
@@ -30,13 +32,12 @@ namespace FSM.Enemy.States
             
             // play animation
             _enemy.animator.SetTrigger(AnimationParameters.Die);
-            var dieAnimation = _enemy.animator.GetCurrentAnimatorStateInfo(0);
-            await UniTask.WaitForSeconds(dieAnimation.length / dieAnimation.speed);
+            await UniTask.WaitForSeconds(2.5f);
             
             // fade out animation
             // await _enemy.meshRenderer.material.DOFade(0f, 1f).ToUniTask();
             
-            GameObject.Destroy(_enemy.gameObject.transform.parent.gameObject, 2f);
+            GameObject.Destroy(_enemy.gameObject.transform.parent.gameObject);
         }
     }
 }

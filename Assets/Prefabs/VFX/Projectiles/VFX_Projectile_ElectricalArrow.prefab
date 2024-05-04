@@ -15360,7 +15360,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7546317412506478694}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -15413,6 +15413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  statusEffect: {fileID: 11400000, guid: ecbc02fb6f7ccb64594abda7dff56d2f, type: 2}
   followTarget: 0
   speed: 25
   rotateSpeed: 200

@@ -15,7 +15,6 @@ namespace FSM.Enemy.States
         {
             base.OnEnter();
 
-            _enemy.agentController.agent.isStopped = true;
             _enemy.agentController.agent.speed = 0f;
             
             WaitBeforeMoveNextWaypoint();
@@ -24,7 +23,7 @@ namespace FSM.Enemy.States
         private async void WaitBeforeMoveNextWaypoint()
         {
             _enemy.canMoveNextWaypoint = false;
-            await UniTask.WaitForSeconds(_enemy.enemySettings.waypointWaitTime);
+            await UniTask.WaitForSeconds(_enemy.waypointWaitTime);
             _enemy.canMoveNextWaypoint = true;
         }
     }

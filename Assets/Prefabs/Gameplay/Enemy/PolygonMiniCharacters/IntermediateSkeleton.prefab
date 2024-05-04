@@ -312,15 +312,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673808c3044448dc85e254e4f58bad27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySettings: {fileID: 11400000, guid: 11c82fa551e9f9648a20712a0b6d135e, type: 2}
+  enemyStats:
+    damage:
+      baseValue: 10
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    maxHealth:
+      baseValue: 100
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    health:
+      baseValue: 100
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    armor:
+      baseValue: 10
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    chaseSpeed:
+      baseValue: 2.37
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+  abilities:
+  - {fileID: 11400000, guid: 341fa1a89f3e68e44a43aafbf5d12d8b, type: 2}
+  - {fileID: 11400000, guid: 8df6fb0357c27194d84b4a54733c98e0, type: 2}
+  isRanged: 0
   projectileSpawnPosition: {fileID: 0}
   hpBar: {fileID: 3650789238431241023}
-  player: {fileID: 0}
   waypoints:
   - {fileID: 0}
-  - {fileID: 0}
+  sphereRadius: 3
+  waypointWaitTime: 2
+  patrolSpeed: 1.5
+  stoppingDistance: 1
   blinkIntensity: 5
   blinkDuration: 0.2
+  player: {fileID: 0}
   abilityHolders: []
   rb: {fileID: 0}
   meshRenderer: {fileID: 0}
@@ -330,10 +367,10 @@ MonoBehaviour:
   waypointReached: 0
   canMoveNextWaypoint: 0
   currentWaypoint: 0
-  currentHealth: 0
   playerDetected: 0
   castingAbility: 0
   letAIManagerSetDestination: 0
+  isInStatusEffect: 0
   playerMask:
     serializedVersion: 2
     m_Bits: 0

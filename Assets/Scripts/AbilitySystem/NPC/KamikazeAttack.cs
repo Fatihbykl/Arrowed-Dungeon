@@ -45,7 +45,7 @@ namespace AbilitySystem.NPC
             Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, explosionRange, _enemy.playerMask);
             if (colliders.Length > 0)
             {
-                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemySettings.enemyBaseDamage);
+                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemyStats.damage.Value);
             }
         }
 

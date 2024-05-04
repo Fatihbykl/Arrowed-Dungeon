@@ -74,8 +74,8 @@ namespace AbilitySystem.NPC
         public override bool IsReady()
         {
             _lowHpEnemy = AIManager.Instance.Units
-                .Where(enemy => enemy.currentHealth != enemy.enemySettings.enemyBaseHealth)
-                .OrderBy(enemy => enemy.currentHealth)
+                .Where(enemy => enemy.enemyStats.health.Value != enemy.enemyStats.health.BaseValue)
+                .OrderBy(enemy => enemy.enemyStats.health.Value)
                 .FirstOrDefault();
         
             if (_lowHpEnemy)

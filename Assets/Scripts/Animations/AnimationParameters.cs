@@ -24,6 +24,7 @@ namespace FSM
         // player and enemy shared parameters
         public static readonly int TakeDamage = Animator.StringToHash("TakeDamage");
         public static readonly int Die = Animator.StringToHash("Die");
+        public static readonly int Stun = Animator.StringToHash("Stun");
         
         // dungeon parameters
         public static readonly int Open = Animator.StringToHash("Open");

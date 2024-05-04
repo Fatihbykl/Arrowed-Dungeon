@@ -32,7 +32,7 @@ namespace AbilitySystem.NPC
         {
             enemy.agentController.speed = 0;
             await UniTask.WaitForSeconds(focusTimeBeforeSpin);
-            enemy.agentController.speed = enemy.enemySettings.chaseSpeed;
+            enemy.agentController.speed = enemy.enemyStats.chaseSpeed.Value;
             await UniTask.WaitForSeconds(spinLength);
         }
     }

@@ -1243,8 +1243,7 @@ Transform:
   m_LocalPosition: {x: -0.113, y: -0.048, z: -0.06}
   m_LocalScale: {x: 1.7399995, y: 1.7399995, z: 2.0253828}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 2731410852128970703}
+  m_Children: []
   m_Father: {fileID: 3119279898056174428}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2733993127096738562
@@ -1670,15 +1669,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673808c3044448dc85e254e4f58bad27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySettings: {fileID: 11400000, guid: 9bd589e912d1aac4b88d303b6503748f, type: 2}
+  enemyStats:
+    damage:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    maxHealth:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    health:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    armor:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+    chaseSpeed:
+      baseValue: 0
+      useUpperBound: 0
+      useLowerBound: 0
+      upperBound: 0
+      lowerBound: 0
+  abilities: []
+  isRanged: 0
   projectileSpawnPosition: {fileID: 0}
   hpBar: {fileID: 7289524648458322695}
-  player: {fileID: 0}
   waypoints:
   - {fileID: 0}
-  - {fileID: 0}
+  sphereRadius: 0
+  waypointWaitTime: 0
+  patrolSpeed: 0
+  stoppingDistance: 0
   blinkIntensity: 5
   blinkDuration: 0.2
+  player: {fileID: 0}
   abilityHolders: []
   rb: {fileID: 0}
   meshRenderer: {fileID: 0}
@@ -1688,10 +1722,10 @@ MonoBehaviour:
   waypointReached: 0
   canMoveNextWaypoint: 0
   currentWaypoint: 0
-  currentHealth: 0
   playerDetected: 0
   castingAbility: 0
   letAIManagerSetDestination: 0
+  isInStatusEffect: 0
   playerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1904,115 +1938,6 @@ Transform:
   - {fileID: 928858137264840213}
   m_Father: {fileID: 7953205520873770363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &3422283023176346938
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2359107097919517868}
-    m_Modifications:
-    - target: {fileID: 763799897560185546, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185547, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185547, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_Name
-      value: CFXR2 Sparks Rain
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.17780688
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.17780688
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.17780688
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0236998
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.03900006
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.15600008
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.70710677
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.0000001788138
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.000000135973
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
---- !u!4 &2731410852128970703 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 763799897560185589, guid: 798157bad7358b04499c9d71cd3c0d9b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3422283023176346938}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6681798138775857087
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -51,7 +51,7 @@ namespace AbilitySystem.NPC
         public override void BeginCooldown()
         {
             _enemy.castingAbility = false;
-            _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;
+            _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
         }
 
         public void OnHitGround()
@@ -66,7 +66,7 @@ namespace AbilitySystem.NPC
             Collider[] colliders = Physics.OverlapBox(worldCenter, worldHalfExtents, _boxCollider.transform.rotation, 1 << 7);
             if (colliders.Length > 0)
             {
-                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemySettings.enemyBaseDamage);
+                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemyStats.damage.Value);
             }
             DestroyObjects();
         }

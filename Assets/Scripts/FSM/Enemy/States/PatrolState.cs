@@ -17,7 +17,7 @@ namespace FSM.Enemy.States
             
             _enemy.waypointReached = false;
             _enemy.agentController.agent.isStopped = false;
-            _enemy.agentController.speed = _enemy.enemySettings.patrolSpeed;
+            _enemy.agentController.speed = _enemy.patrolSpeed;
             _enemy.agentController.agent.SetDestination(_enemy.waypoints[_enemy.currentWaypoint].position);
         }
 

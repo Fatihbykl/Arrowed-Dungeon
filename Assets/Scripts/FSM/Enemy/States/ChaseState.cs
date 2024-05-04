@@ -23,9 +23,8 @@ namespace FSM.Enemy.States
             base.OnEnter();
             
             AIManager.Instance.Units.Add(_enemy);
-            _enemy.agentController.agent.isStopped = false;
-            _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;
-            _enemy.agentController.stoppingDistance = _enemy.enemySettings.stoppingDistance;
+            _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
+            _enemy.agentController.stoppingDistance = _enemy.stoppingDistance;
         }
 
         public override void OnLogic()

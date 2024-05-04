@@ -1,9 +1,8 @@
 using Cysharp.Threading.Tasks;
 using Gameplay.Enemy;
-using Gameplay.Interfaces;
 using UnityEngine;
 
-namespace StatusEffectSystem
+namespace StatusEffectSystem.EnemyStatus
 {
     [CreateAssetMenu(menuName = "Custom/Status Effect/Enemy/Burn Damage Over Time Status")]
     public class BurnDamageOverTimeStatus : StatusEffectBase
@@ -17,10 +16,14 @@ namespace StatusEffectSystem
         public override void ApplyStatus(GameObject target)
         {
             _enemy = target.GetComponent<Enemy>();
-            _particle = Instantiate(vfxPrefab, _enemy.transform);
-            _particle.transform.position = Vector3.zero;
+            if (!_enemy.isInStatusEffect)
+            {
+                _enemy.isInStatusEffect = true;
+                _particle = Instantiate(vfxPrefab, _enemy.transform);
+                _particle.transform.position = _enemy.transform.position;
 
-            DamageOverTime();
+                DamageOverTime();
+            }
         }
 
         private async void DamageOverTime()
@@ -39,6 +42,7 @@ namespace StatusEffectSystem
         {
             if (!_enemy) { return; }
             
+            _enemy.isInStatusEffect = false;
             Destroy(_particle);
         }
     }

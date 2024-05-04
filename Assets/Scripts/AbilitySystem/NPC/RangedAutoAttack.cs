@@ -41,7 +41,7 @@ namespace AbilitySystem.NPC
 
         public override void BeginCooldown()
         {
-            _enemy.agentController.speed = _enemy.enemySettings.chaseSpeed;
+            _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
             _enemy.castingAbility = false;
         }
 
