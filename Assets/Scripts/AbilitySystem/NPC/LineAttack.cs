@@ -1,6 +1,8 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using FSM;
+using Gameplay.DamageDealers;
 using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using UnityEngine;
@@ -13,15 +15,20 @@ namespace AbilitySystem.NPC
         public float attackDistance;
         public GameObject indicator;
         public ParticleSystem slashCharge;
-        public ParticleSystem slashImpact;
+        public GameObject slashImpact;
 
         private Enemy _enemy;
         private GameObject _indicator;
         private Vector3 _targetDirection;
         private ParticleSystem _slashCharge;
-        private ParticleSystem _slashImpact;
+        private GameObject _slashImpact;
         private BoxCollider _boxCollider;
         private Vector3 _currentPos;
+
+        private void Awake()
+        {
+            Enemy.LineAttackHitEvent += OnHitGround;
+        }
 
         public override void Activate(GameObject owner, GameObject target)
         {
@@ -33,17 +40,17 @@ namespace AbilitySystem.NPC
             _targetDirection = (_enemy.player.transform.position - _enemy.transform.position).normalized;
             _currentPos = _enemy.transform.position;
             _currentPos.y = 1f;
-            _slashCharge = Instantiate(slashCharge, _currentPos, Quaternion.LookRotation(_targetDirection));
+            _slashCharge = Instantiate(slashCharge, _enemy.GetComponentInChildren<WeaponDamageDealer>().gameObject.transform);
 
             StartAttack();
         }
 
         private async void StartAttack()
         {
-            _enemy.transform.DOLookAt(_enemy.player.transform.position, 0.2f);
+            await _enemy.transform.DOLookAt(_enemy.player.transform.position, 0.2f);
             await UniTask.WaitForSeconds(0.2f);
 
-            CreateIndicator();
+            //CreateIndicator();
             
             await UniTask.WaitForSeconds(castTime);
         }
@@ -54,20 +61,22 @@ namespace AbilitySystem.NPC
             _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
         }
 
-        public void OnHitGround()
+        private void OnHitGround(GameObject sender)
         {
+            if (sender != _enemy.gameObject) { return; }
+            
             _slashCharge.Stop();
             _slashImpact = Instantiate(slashImpact, _currentPos, Quaternion.LookRotation(_targetDirection));
-            _slashImpact.Play();
+            //_slashImpact.Play();
             
-            Vector3 worldCenter = _boxCollider.transform.TransformPoint(_boxCollider.center);
-            Vector3 worldHalfExtents = Vector3.Scale(_boxCollider.size, _boxCollider.transform.lossyScale) * 0.5f;
-            
-            Collider[] colliders = Physics.OverlapBox(worldCenter, worldHalfExtents, _boxCollider.transform.rotation, 1 << 7);
-            if (colliders.Length > 0)
-            {
-                colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemyStats.damage.Value);
-            }
+            // Vector3 worldCenter = _boxCollider.transform.TransformPoint(_boxCollider.center);
+            // Vector3 worldHalfExtents = Vector3.Scale(_boxCollider.size, _boxCollider.transform.lossyScale) * 0.5f;
+            //
+            // Collider[] colliders = Physics.OverlapBox(worldCenter, worldHalfExtents, _boxCollider.transform.rotation, 1 << 7);
+            // if (colliders.Length > 0)
+            // {
+            //     colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemyStats.damage.Value);
+            // }
             DestroyObjects();
         }
 

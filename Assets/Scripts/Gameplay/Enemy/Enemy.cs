@@ -88,6 +88,10 @@ namespace Gameplay.Enemy
 
         private StateMachine<EnemyState> EnemyFSM;
         private WeaponDamageDealer damageDealer;
+        
+        // Events
+        public static event Action<GameObject> RangedAutoAttackEvent;
+        public static event Action<GameObject> LineAttackHitEvent;
 
         private void Awake()
         {
@@ -199,7 +203,12 @@ namespace Gameplay.Enemy
 
         public void SendProjectile()
         {
-            RangedAutoAttack.rangedAutoAttackEvent.Invoke(gameObject);
+            RangedAutoAttackEvent?.Invoke(gameObject);
+        }
+        
+        public void LineAttackHit()
+        {
+            LineAttackHitEvent?.Invoke(gameObject);
         }
         
         private void OnSpeedStatChanged()

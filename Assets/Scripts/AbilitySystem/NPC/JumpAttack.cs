@@ -42,7 +42,7 @@ namespace AbilitySystem.NPC
             start = Time.time;
         }
 
-        public async void OnAnimationJump()
+        public  void OnAnimationJump()
         {
             
             _enemy.agentController.speed = 3;

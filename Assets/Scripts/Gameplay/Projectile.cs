@@ -32,7 +32,11 @@ namespace Gameplay
         private void Start()
         {
             _rb = GetComponent<Rigidbody>();
-            _targetRb = target.GetComponent<Rigidbody>();
+
+            if (target)
+            {
+                _targetRb = target.GetComponent<Rigidbody>();
+            }
             
             InstantiateMuzzleParticle();
         }
@@ -61,8 +65,14 @@ namespace Gameplay
         private void OnCollisionEnter(Collision other)
         {
             InstantiateHitParticle(other);
-            other.gameObject.GetComponent<IDamageable>().TakeDamage(10);
-            statusEffect.ApplyStatus(other.gameObject);
+            if (other.gameObject.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage(10);
+            }
+            if (statusEffect)
+            {
+                statusEffect.ApplyStatus(other.gameObject);
+            }
             Destroy(gameObject);
         }
 

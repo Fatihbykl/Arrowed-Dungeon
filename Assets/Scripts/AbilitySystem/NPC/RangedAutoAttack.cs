@@ -19,11 +19,9 @@ namespace AbilitySystem.NPC
         private AnimationEvent _animationEvent;
         private AnimationClip _animationClip;
 
-        public static Action<GameObject> rangedAutoAttackEvent;
-
         private void Awake()
         {
-            rangedAutoAttackEvent += OnSendProjectile;
+            Enemy.RangedAutoAttackEvent += OnSendProjectile;
         }
 
         public override void Activate(GameObject owner, GameObject target)
