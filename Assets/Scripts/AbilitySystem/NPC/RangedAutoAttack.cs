@@ -27,7 +27,7 @@ namespace AbilitySystem.NPC
         public override void Activate(GameObject owner, GameObject target)
         {
             _enemy = owner.GetComponent<Enemy>();
-
+            
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
             _targetPosition = _enemy.player.transform.position;

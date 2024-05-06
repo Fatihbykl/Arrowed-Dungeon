@@ -26,7 +26,7 @@ namespace AbilitySystem.NPC
             var pos = _enemy.transform.position;
 
             _particle = Instantiate(particle);
-            _particle.transform.localScale = new Vector3(explosionRange / 7, explosionRange / 7, explosionRange / 7);
+            _particle.transform.localScale = new Vector3(explosionRange / 3, explosionRange / 3, explosionRange / 3);
             _particle.transform.position = pos;
 
             StartExploding();
@@ -35,7 +35,7 @@ namespace AbilitySystem.NPC
         private async void StartExploding()
         {
             await UniTask.WaitForSeconds(timeBeforeExplode);
-            
+            _enemy.TriggerDie();
             DealDamage();
             DestroyObjects();
         }
@@ -52,7 +52,6 @@ namespace AbilitySystem.NPC
         private void DestroyObjects()
         {
             Destroy(_particle.gameObject, 2f);
-            Destroy(_enemy.gameObject.transform.parent.gameObject);
         }
     }
 }

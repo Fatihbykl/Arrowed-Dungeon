@@ -31,7 +31,7 @@ namespace FSM.Enemy.States
         {
             base.OnLogic();
 
-            if (!_enemy.castingAbility) { _enemy.transform.DOLookAt(_enemy.player.transform.position, 0.5f); }
+            //if (!_enemy.castingAbility) { _enemy.transform.DOLookAt(_enemy.player.transform.position, 0.5f); }
             var ability = GetAbility();
             if (ability)
             {

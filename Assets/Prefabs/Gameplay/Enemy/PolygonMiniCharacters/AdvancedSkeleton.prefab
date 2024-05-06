@@ -401,13 +401,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStats:
     damage:
-      baseValue: 0
+      baseValue: 20
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     maxHealth:
-      baseValue: 0
+      baseValue: 100
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
@@ -419,27 +419,30 @@ MonoBehaviour:
       upperBound: 0
       lowerBound: 0
     armor:
-      baseValue: 0
+      baseValue: 20
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     chaseSpeed:
-      baseValue: 0
+      baseValue: 2
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
-  abilities: []
-  isRanged: 0
-  projectileSpawnPosition: {fileID: 0}
-  hpBar: {fileID: 5497265491999873003}
+  abilities:
+  - {fileID: 11400000, guid: 341fa1a89f3e68e44a43aafbf5d12d8b, type: 2}
+  - {fileID: 11400000, guid: ebdb0f29326561b4c9d3dc2ad1aa8fc1, type: 2}
   waypoints:
   - {fileID: 0}
-  sphereRadius: 0
-  waypointWaitTime: 0
-  patrolSpeed: 0
-  stoppingDistance: 0
+  isRanged: 0
+  projectileSpawnPosition: {fileID: 0}
+  healVFXPrefab: {fileID: 0}
+  hpBar: {fileID: 5497265491999873003}
+  sphereRadius: 2
+  waypointWaitTime: 2
+  patrolSpeed: 2
+  stoppingDistance: 1
   blinkIntensity: 5
   blinkDuration: 0.2
   player: {fileID: 0}
@@ -1765,7 +1768,6 @@ GameObject:
   - component: {fileID: 1078334123808263625}
   - component: {fileID: 350187682961613896}
   - component: {fileID: 3025428233907245632}
-  - component: {fileID: 2094075410454674622}
   - component: {fileID: 5133475021860624685}
   m_Layer: 0
   m_Name: Prop_Naginata_01
@@ -1786,7 +1788,8 @@ Transform:
   m_LocalPosition: {x: 0.8449259, y: -0.15008883, z: -0.575194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5389277891800898927}
   m_Father: {fileID: 9055669189949539929}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &350187682961613896
@@ -1839,23 +1842,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2094075410454674622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8061086906621094430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f503e1cf1329244968eb4636f7ae60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transformTypes: 0
-  weaponLength: 1.5
-  damageTo:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &5133475021860624685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1868,7 +1854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebef3a85376c8b54b85689b0638a3e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 83419962c56ea5244869a4407d83ce86, type: 2}
+  material: {fileID: 2100000, guid: 8637dff4c7317554e8cace1c4f87d3dd, type: 2}
   duration: 0.5
   corner: 1
   loop: 0
@@ -1973,6 +1959,55 @@ Transform:
   - {fileID: 7563161820956167438}
   m_Father: {fileID: 9055669189949539929}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9081080980310613296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5389277891800898927}
+  - component: {fileID: 3295364170309936410}
+  m_Layer: 0
+  m_Name: DamageDealer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5389277891800898927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081080980310613296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.002, y: -0.954, z: 0.009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1078334123808263625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3295364170309936410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081080980310613296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f503e1cf1329244968eb4636f7ae60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformTypes: 0
+  weaponLength: 2.2
+  damageTo:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1001 &3187747618344131924
 PrefabInstance:
   m_ObjectHideFlags: 0

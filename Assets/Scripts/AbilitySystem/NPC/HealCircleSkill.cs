@@ -30,7 +30,7 @@ namespace AbilitySystem.NPC
 
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
-            _circleSize = circleSize / 8;
+            _circleSize = circleSize / 4; // adjustment for match visual effect with overlap sphere
             _enemy.animator.SetTrigger(AnimationParameters.HealSkill);
 
             CreateHealCircle();

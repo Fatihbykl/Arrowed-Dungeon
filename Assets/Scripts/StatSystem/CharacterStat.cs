@@ -50,6 +50,7 @@ namespace StatSystem
 		{
 			isDirty = true;
 			_statModifiers.Add(mod);
+			StatChanged?.Invoke();
 		}
 
 		public virtual bool RemoveModifier(StatModifier mod)
@@ -70,9 +71,17 @@ namespace StatSystem
 			if (numRemovals > 0)
 			{
 				isDirty = true;
+				StatChanged?.Invoke();
 				return true;
 			}
 			return false;
+		}
+		
+		public virtual void RemoveAllModifiers()
+		{
+			_statModifiers.Clear();
+			isDirty = true;
+			StatChanged?.Invoke();
 		}
 
 		protected virtual int CompareModifierOrder(StatModifier a, StatModifier b)

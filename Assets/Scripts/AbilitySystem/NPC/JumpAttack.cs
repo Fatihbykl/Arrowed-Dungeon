@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using FSM;
@@ -22,39 +23,52 @@ namespace AbilitySystem.NPC
         private float _distanceToTarget;
         private Vector3 _targetPos;
         private GameObject _indicator;
-        private float start, end;
-        
+
+        private void Awake()
+        {
+            Enemy.JumpAttackJumpEvent += OnAnimationJump;
+            Enemy.JumpAttackLandEvent += OnAnimationLand;
+        }
+
         public override void Activate(GameObject owner, GameObject target)
         {
             _enemy = owner.GetComponent<Enemy>();
             
             _targetPos = _enemy.player.transform.position;
             _distanceToTarget = Vector3.Distance(_enemy.transform.position, _targetPos);
+            _enemy.transform.DOLookAt(_targetPos, 0.5f);
             
-            _particle = Instantiate(particle);
-            _particle.transform.position = _targetPos;
-            // _indicator.transform.localScale = new Vector3(damageRange, damageRange, damageRange);
+            _indicator = Instantiate(indicator);
+            _indicator.transform.position = _targetPos;
+            _indicator.transform.localScale = new Vector3(damageRange / 2.4f, damageRange / 2.4f, damageRange / 2.4f);
             
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 1f;
             _enemy.letAIManagerSetDestination = false;
             _enemy.animator.SetTrigger(AnimationParameters.JumpAttack);
-            start = Time.time;
         }
 
-        public  void OnAnimationJump()
+        private void OnAnimationJump(GameObject sender)
         {
+            if (sender != _enemy.gameObject) { return; }
             
             _enemy.agentController.speed = 3;
             _enemy.agentController.agent.SetDestination(_targetPos);
- 
-            // _particle = Instantiate(particle);
-            // var particlePos = _targetPos;
-            // particlePos.y = 0.5f;
-            // _particle.transform.position = particlePos;
-            // _particle.Play();
         }
-        
+
+        private void OnAnimationLand(GameObject sender)
+        {
+            if (sender != _enemy.gameObject) { return; }
+            
+            _particle = Instantiate(particle);
+            _particle.transform.position = _targetPos;
+            _particle.transform.localScale = new Vector3(damageRange / 2.4f, damageRange / 2.4f, damageRange / 2.4f);
+            
+            DealDamage();
+            DestroyObjects();
+            _enemy.agentController.speed = 0f;
+        }
+
         private void DealDamage()
         {
             Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, damageRange, _enemy.playerMask);
@@ -68,15 +82,6 @@ namespace AbilitySystem.NPC
         {
             Destroy(_indicator);
             Destroy(_particle.gameObject, 2f);
-        }
-
-        public void OnAnimationLand()
-        {
-            DealDamage();
-            DestroyObjects();
-            end = Time.time;
-            Debug.Log(end - start);
-            _enemy.agentController.speed = 0f;
         }
 
         public override void BeginCooldown()

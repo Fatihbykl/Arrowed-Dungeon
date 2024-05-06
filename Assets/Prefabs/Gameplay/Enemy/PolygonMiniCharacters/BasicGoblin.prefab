@@ -563,13 +563,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStats:
     damage:
-      baseValue: 0
+      baseValue: 20
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     maxHealth:
-      baseValue: 0
+      baseValue: 100
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
@@ -581,27 +581,29 @@ MonoBehaviour:
       upperBound: 0
       lowerBound: 0
     armor:
-      baseValue: 0
+      baseValue: 10
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     chaseSpeed:
-      baseValue: 0
+      baseValue: 2
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
-  abilities: []
-  isRanged: 0
-  projectileSpawnPosition: {fileID: 0}
-  hpBar: {fileID: 8678034653446051626}
+  abilities:
+  - {fileID: 11400000, guid: 341fa1a89f3e68e44a43aafbf5d12d8b, type: 2}
   waypoints:
   - {fileID: 0}
-  sphereRadius: 0
-  waypointWaitTime: 0
-  patrolSpeed: 0
-  stoppingDistance: 0
+  isRanged: 0
+  projectileSpawnPosition: {fileID: 0}
+  healVFXPrefab: {fileID: 0}
+  hpBar: {fileID: 8678034653446051626}
+  sphereRadius: 3
+  waypointWaitTime: 2
+  patrolSpeed: 2
+  stoppingDistance: 0.1
   blinkIntensity: 5
   blinkDuration: 0.2
   player: {fileID: 0}
@@ -642,7 +644,7 @@ MonoBehaviour:
   _brakingFriction: 8
   _airFriction: 0
   _airControl: 0.2
-  _canCrouch: 1
+  _canCrouch: 0
   _standingHeight: 2
   _crouchingHeight: 1
   _baseJumpHeight: 1.5
@@ -653,7 +655,7 @@ MonoBehaviour:
   _maxMidAirJumps: 1
   _useRootMotion: 0
   _rootMotionRotation: 0
-  _autoBraking: 1
+  _autoBraking: 0
   _brakingDistance: 2
   _stoppingDistance: 1
   groundMask:
@@ -1604,6 +1606,7 @@ GameObject:
   - component: {fileID: 8243930392376796539}
   - component: {fileID: 7006370657230677043}
   - component: {fileID: 8949997049858287013}
+  - component: {fileID: 7746930442597629926}
   m_Layer: 0
   m_Name: Prop_Club_01
   m_TagString: Untagged
@@ -1676,6 +1679,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7746930442597629926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7525229203783987779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f503e1cf1329244968eb4636f7ae60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformTypes: 0
+  weaponLength: 1
+  damageTo:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &7532321616352892181
 GameObject:
   m_ObjectHideFlags: 0

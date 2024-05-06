@@ -1671,13 +1671,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStats:
     damage:
-      baseValue: 0
+      baseValue: 50
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     maxHealth:
-      baseValue: 0
+      baseValue: 100
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
@@ -1689,27 +1689,29 @@ MonoBehaviour:
       upperBound: 0
       lowerBound: 0
     armor:
-      baseValue: 0
+      baseValue: 10
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     chaseSpeed:
-      baseValue: 0
+      baseValue: 3
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
-  abilities: []
-  isRanged: 0
-  projectileSpawnPosition: {fileID: 0}
-  hpBar: {fileID: 7289524648458322695}
+  abilities:
+  - {fileID: 11400000, guid: d2f31a94dccc2a24794b76a680753c6e, type: 2}
   waypoints:
   - {fileID: 0}
-  sphereRadius: 0
-  waypointWaitTime: 0
-  patrolSpeed: 0
-  stoppingDistance: 0
+  isRanged: 0
+  projectileSpawnPosition: {fileID: 0}
+  healVFXPrefab: {fileID: 0}
+  hpBar: {fileID: 7289524648458322695}
+  sphereRadius: 3
+  waypointWaitTime: 2
+  patrolSpeed: 2
+  stoppingDistance: 1
   blinkIntensity: 5
   blinkDuration: 0.2
   player: {fileID: 0}
