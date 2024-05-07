@@ -23,17 +23,16 @@ namespace AbilitySystem.NPC
         private float _distanceToTarget;
         private Vector3 _targetPos;
         private GameObject _indicator;
-
-        private void Awake()
-        {
-            Enemy.JumpAttackJumpEvent += OnAnimationJump;
-            Enemy.JumpAttackLandEvent += OnAnimationLand;
-        }
-
-        public override void Activate(GameObject owner, GameObject target)
+        
+        public override void OnCreate(GameObject owner)
         {
             _enemy = owner.GetComponent<Enemy>();
-            
+            _enemy.JumpAttackJumpEvent += OnAnimationJump;
+            _enemy.JumpAttackLandEvent += OnAnimationLand;
+        }
+
+        public override void Activate(GameObject target)
+        {
             _targetPos = _enemy.player.transform.position;
             _distanceToTarget = Vector3.Distance(_enemy.transform.position, _targetPos);
             _enemy.transform.DOLookAt(_targetPos, 0.5f);
@@ -89,6 +88,12 @@ namespace AbilitySystem.NPC
             _enemy.castingAbility = false;
             _enemy.letAIManagerSetDestination = true;
             _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
+        }
+
+        private void OnDestroy()
+        {
+            _enemy.JumpAttackJumpEvent -= OnAnimationJump;
+            _enemy.JumpAttackLandEvent -= OnAnimationLand;
         }
     }
 }

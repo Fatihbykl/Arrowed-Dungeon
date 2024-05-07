@@ -11,28 +11,31 @@ namespace AbilitySystem.NPC
         public float focusTimeBeforeSpin;
         public float spinLength;
         
-        private Enemy enemy;
-        
-        public override void Activate(GameObject owner, GameObject target)
+        private Enemy _enemy;
+
+        public override void OnCreate(GameObject owner)
         {
-            enemy = owner.GetComponent<Enemy>();
-            
-            enemy.castingAbility = true;
-            enemy.animator.SetBool(AnimationParameters.CanSpin, true);
+            _enemy = owner.GetComponent<Enemy>();
+        }
+
+        public override void Activate(GameObject target)
+        {
+            _enemy.castingAbility = true;
+            _enemy.animator.SetBool(AnimationParameters.CanSpin, true);
             StartSpin();
         }
 
         public override void BeginCooldown()
         {
-            enemy.castingAbility = false;
-            enemy.animator.SetBool(AnimationParameters.CanSpin, false);
+            _enemy.castingAbility = false;
+            _enemy.animator.SetBool(AnimationParameters.CanSpin, false);
         }
         
         private async void StartSpin()
         {
-            enemy.agentController.speed = 0;
+            _enemy.agentController.speed = 0;
             await UniTask.WaitForSeconds(focusTimeBeforeSpin);
-            enemy.agentController.speed = enemy.enemyStats.chaseSpeed.Value;
+            _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
             await UniTask.WaitForSeconds(spinLength);
         }
     }

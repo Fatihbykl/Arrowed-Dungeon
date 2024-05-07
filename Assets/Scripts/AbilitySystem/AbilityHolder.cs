@@ -8,12 +8,11 @@ namespace AbilitySystem
         public enum AbilityState { Ready, Cooldown, Casting }
 
         public AbilityBase ability;
-        public GameObject owner;
         public GameObject target;
         public AbilityState currentState = AbilityState.Ready;
 
-        private float cooldownTimer;
-        private float castTimer;
+        private float _cooldownTimer;
+        private float _castTimer;
 
         private void Start()
         {
@@ -24,22 +23,22 @@ namespace AbilitySystem
         {
             if (currentState == AbilityState.Casting)
             {
-                if (castTimer > 0)
+                if (_castTimer > 0)
                 {
-                    castTimer -= Time.deltaTime;
+                    _castTimer -= Time.deltaTime;
                 }
                 else
                 {
                     ability.BeginCooldown();
                     currentState = AbilityState.Cooldown;
-                    cooldownTimer = ability.cooldown;
+                    _cooldownTimer = ability.cooldown;
                 }
             }
             else if (currentState == AbilityState.Cooldown)
             {
-                if (cooldownTimer > 0)
+                if (_cooldownTimer > 0)
                 {
-                    cooldownTimer -= Time.deltaTime;
+                    _cooldownTimer -= Time.deltaTime;
                 }
                 else
                 {
@@ -49,7 +48,7 @@ namespace AbilitySystem
                     }
                     else
                     {
-                        cooldownTimer = 0.5f;
+                        _cooldownTimer = 0.5f;
                     }
                 }
             }
@@ -59,9 +58,9 @@ namespace AbilitySystem
         {
             if (currentState != AbilityState.Ready) { return; }
 
-            ability.Activate(owner, target);
+            ability.Activate(target);
             currentState = AbilityState.Casting;
-            castTimer = ability.castTime;
+            _castTimer = ability.castTime;
         }
     }
 }

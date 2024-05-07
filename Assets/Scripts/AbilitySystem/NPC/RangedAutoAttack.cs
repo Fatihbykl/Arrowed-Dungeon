@@ -19,15 +19,14 @@ namespace AbilitySystem.NPC
         private AnimationEvent _animationEvent;
         private AnimationClip _animationClip;
 
-        private void Awake()
-        {
-            Enemy.RangedAutoAttackEvent += OnSendProjectile;
-        }
-
-        public override void Activate(GameObject owner, GameObject target)
+        public override void OnCreate(GameObject owner)
         {
             _enemy = owner.GetComponent<Enemy>();
-            
+            _enemy.RangedAutoAttackEvent += OnSendProjectile;
+        }
+
+        public override void Activate(GameObject target)
+        {
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
             _targetPosition = _enemy.player.transform.position;
@@ -51,6 +50,11 @@ namespace AbilitySystem.NPC
             projectile.transform.position = _enemy.projectileSpawnPosition.transform.position;
             projectile.transform.LookAt(_targetPosition);
             projectile.target = _enemy.player.gameObject;
+        }
+
+        private void OnDestroy()
+        {
+            _enemy.RangedAutoAttackEvent -= OnSendProjectile;
         }
     }
 }

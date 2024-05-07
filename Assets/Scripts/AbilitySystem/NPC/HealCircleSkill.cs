@@ -24,10 +24,13 @@ namespace AbilitySystem.NPC
         private GameObject _particle;
         private float _circleSize;
 
-        public override void Activate(GameObject owner, GameObject target)
+        public override void OnCreate(GameObject owner)
         {
             _enemy = owner.GetComponent<Enemy>();
+        }
 
+        public override void Activate(GameObject target)
+        {
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
             _circleSize = circleSize / 4; // adjustment for match visual effect with overlap sphere

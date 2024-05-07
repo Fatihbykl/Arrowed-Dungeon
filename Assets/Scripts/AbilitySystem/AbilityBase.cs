@@ -10,8 +10,9 @@ namespace AbilitySystem
         public float castTime;
         public float castRange;
 
+        public virtual void OnCreate(GameObject owner) { }
         public virtual bool IsReady() { return true; }
-        public virtual void Activate(GameObject owner, GameObject target) { }
+        public virtual void Activate(GameObject target) { }
         public virtual void BeginCooldown() { }
     }
 }

@@ -8,23 +8,26 @@ namespace AbilitySystem.NPC
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Melee Auto Attack")]
     public class MeleeAutoAttack : AbilityBase
     {
-        private Enemy enemy;
-        
-        public override void Activate(GameObject owner, GameObject target)
-        {
-            enemy = owner.GetComponent<Enemy>();
+        private Enemy _enemy;
 
-            enemy.castingAbility = true;
-            enemy.agentController.speed = 0;
-            enemy.agentController.agent.ResetPath();
-            enemy.transform.DOLookAt(enemy.player.transform.position, .4f);
-            enemy.animator.SetTrigger(AnimationParameters.Attack);
+        public override void OnCreate(GameObject owner)
+        {
+            _enemy = owner.GetComponent<Enemy>();
+        }
+
+        public override void Activate(GameObject target)
+        {
+            _enemy.castingAbility = true;
+            _enemy.agentController.speed = 0;
+            _enemy.agentController.agent.ResetPath();
+            _enemy.transform.DOLookAt(_enemy.player.transform.position, .4f);
+            _enemy.animator.SetTrigger(AnimationParameters.Attack);
         }
 
         public override void BeginCooldown()
         {
-            enemy.agentController.speed = enemy.enemyStats.chaseSpeed.Value;
-            enemy.castingAbility = false;
+            _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
+            _enemy.castingAbility = false;
         }
     }
 }

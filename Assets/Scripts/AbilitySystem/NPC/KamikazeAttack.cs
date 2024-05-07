@@ -16,10 +16,14 @@ namespace AbilitySystem.NPC
 
         private GameObject _particle;
         private Enemy _enemy;
-        
-        public override void Activate(GameObject owner, GameObject target)
+
+        public override void OnCreate(GameObject owner)
         {
             _enemy = owner.GetComponent<Enemy>();
+        }
+
+        public override void Activate(GameObject target)
+        {
             _enemy.agentController.speed = 0;
             _enemy.castingAbility = true;
             _enemy.animator.SetBool(AnimationParameters.Attack, true);

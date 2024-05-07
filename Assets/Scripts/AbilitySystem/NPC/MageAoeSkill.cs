@@ -18,11 +18,14 @@ namespace AbilitySystem.NPC
         private float _circleSize;
         private GameObject _particle;
         private Vector3 _explosionPosition;
-        
-        public override void Activate(GameObject owner, GameObject target)
+
+        public override void OnCreate(GameObject owner)
         {
             _enemy = owner.GetComponent<Enemy>();
+        }
 
+        public override void Activate(GameObject target)
+        {
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
             _circleSize = circleSize / 7;

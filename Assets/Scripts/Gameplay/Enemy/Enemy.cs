@@ -92,10 +92,10 @@ namespace Gameplay.Enemy
         private WeaponDamageDealer damageDealer;
         
         // Events
-        public static event Action<GameObject> RangedAutoAttackEvent;
-        public static event Action<GameObject> LineAttackHitEvent;
-        public static event Action<GameObject> JumpAttackJumpEvent;
-        public static event Action<GameObject> JumpAttackLandEvent;
+        public event Action<GameObject> RangedAutoAttackEvent;
+        public event Action<GameObject> LineAttackHitEvent;
+        public event Action<GameObject> JumpAttackJumpEvent;
+        public event Action<GameObject> JumpAttackLandEvent;
 
         private void Awake()
         {
@@ -158,7 +158,7 @@ namespace Gameplay.Enemy
             {
                 var holder = gameObject.AddComponent<AbilityHolder>();
                 holder.ability = Instantiate(ability);
-                holder.owner = gameObject;
+                holder.ability.OnCreate(gameObject);
                 holder.target = player.gameObject;
             }
             agentController.agent.stoppingDistance = stoppingDistance;
