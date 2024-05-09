@@ -12,8 +12,8 @@ public class Arrow : MonoBehaviour
     public float speed;
     public bool isAlive = true;
 
-    private Rigidbody rb;
-    private Vector3 lastVelocity;
+    private Rigidbody _rb;
+    private Vector3 _lastVelocity;
 
     private void OnEnable()
     {
@@ -23,7 +23,7 @@ public class Arrow : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
 
         var arrowRenderer = GetComponent<Renderer>();
 
@@ -38,7 +38,7 @@ public class Arrow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        lastVelocity = rb.velocity;
+        _lastVelocity = _rb.velocity;
     }
 
     public void TakeDamage(Vector3 contactPoint, int damage = 1)
@@ -53,25 +53,25 @@ public class Arrow : MonoBehaviour
 
     public void ArrowReflect(Vector3 contactPoint)
     {
-        var direction = Vector3.Reflect(lastVelocity.normalized, contactPoint);
+        var direction = Vector3.Reflect(_lastVelocity.normalized, contactPoint);
 
-        rb.velocity = direction * lastVelocity.magnitude;
+        _rb.velocity = direction * _lastVelocity.magnitude;
         transform.rotation = Quaternion.Euler(0, Mathf.Atan2(direction.z, direction.x) * -Mathf.Rad2Deg + 90, 0);
     }
 
     private void ArrowDyingAnim(Vector3 contactPoint)
     {
-        var direction = Vector3.Reflect(lastVelocity.normalized, contactPoint);
+        var direction = Vector3.Reflect(_lastVelocity.normalized, contactPoint);
         direction.y = -9.81f;
-        rb.velocity = direction;
+        _rb.velocity = direction;
 
-        rb.constraints = RigidbodyConstraints.None;
+        _rb.constraints = RigidbodyConstraints.None;
         isAlive = false;
     }
 
     private void onFreezeSkillActivated(float amount)
     {
-        rb.velocity *= amount;
+        _rb.velocity *= amount;
     }
     private void onDestroyerSkillActivated(int damage)
     {

@@ -109,12 +109,6 @@ namespace Gameplay.Player
             ReleaseBowString();
         }
 
-        public void PlayFootstepSound()
-        {
-            AudioManager.instance.PlayFootstepSFX();
-            dustParticle.Play();
-        }
-
         private void ReleaseBowString()
         {
             GameplayEvents.ReleaseBowString?.Invoke();

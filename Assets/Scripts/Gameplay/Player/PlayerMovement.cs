@@ -2,17 +2,18 @@ using ECM.Controllers;
 using FSM;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Gameplay.Player
 {
     public class PlayerMovement : BaseCharacterController
     {
-        private InputAction moveAction;
+        public FloatingJoystick floatingJoystick;
+        
         private Player player;
         
         void Start()
         {
-            moveAction = GetComponent<PlayerInput>().actions["Move"];
             player = GetComponent<Player>();
         }
         
@@ -61,12 +62,12 @@ namespace Gameplay.Player
         {
             base.HandleInput();
             
-            var input = moveAction.ReadValue<Vector2>();
+            var input = Vector3.forward * floatingJoystick.Vertical + Vector3.right * floatingJoystick.Horizontal;
             moveDirection = new Vector3
             {
                 x = input.x,
                 y = 0.0f,
-                z = input.y
+                z = input.z
             };
         }
         
