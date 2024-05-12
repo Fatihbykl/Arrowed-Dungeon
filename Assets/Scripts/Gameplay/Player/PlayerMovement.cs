@@ -33,11 +33,11 @@ namespace Gameplay.Player
                         value = GetAngleBetween(moveDirection, transform.forward, transform.up);
                     }
                     player.animator.SetFloat(AnimationParameters.Strafe, value);
-                    speed = player.stats.walkingSpeed;
+                    speed = player.playerStats.walkingSpeed.Value;
                 }
                 else
                 {
-                    speed = player.stats.runningSpeed;
+                    speed = player.playerStats.runningSpeed.Value;
                 }
             }
             else

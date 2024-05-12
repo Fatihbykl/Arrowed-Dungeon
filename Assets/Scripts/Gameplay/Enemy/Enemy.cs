@@ -41,7 +41,6 @@ namespace Gameplay.Enemy
         [Header("Stats")]
         [HorizontalLine(color: EColor.White, height: 1f)]
         [Space(10)]
-        //public EnemySO enemySettings;
         public EnemyStats enemyStats;
         
         

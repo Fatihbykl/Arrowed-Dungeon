@@ -10,11 +10,13 @@ namespace StatusEffectSystem.EnemyStatus
     {
         [Range(0, 1f)]
         public float armorDebuffPercentage;
+        [Range(0, 1f)]
         public int attackDamageDebuff;
         
         private Enemy _enemy;
         private GameObject _particle;
         private StatModifier _armorModifier;
+        private StatModifier _damageModifier;
         
         public override void ApplyStatus(GameObject target)
         {
@@ -32,8 +34,10 @@ namespace StatusEffectSystem.EnemyStatus
         private async void DebuffEnemy()
         {
             _armorModifier = new StatModifier(-armorDebuffPercentage, StatModType.PercentAdd);
+            _damageModifier = new StatModifier(-attackDamageDebuff, StatModType.PercentAdd);
             _enemy.enemyStats.armor.AddModifier(_armorModifier);
-            Debug.Log(_enemy.enemyStats.armor.Value);
+            _enemy.enemyStats.damage.AddModifier(_damageModifier);
+
             await UniTask.WaitForSeconds(duration);
             RemoveStatus();
         }
@@ -42,7 +46,7 @@ namespace StatusEffectSystem.EnemyStatus
         {
             _enemy.isInStatusEffect = false;
             _enemy.enemyStats.armor.RemoveModifier(_armorModifier);
-            Debug.Log(_enemy.enemyStats.armor.Value);
+            _enemy.enemyStats.armor.RemoveModifier(_damageModifier);
             Destroy(_particle);
         }
     }

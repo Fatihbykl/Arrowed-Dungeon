@@ -6,8 +6,6 @@ namespace Events
     public static class GameplayEvents
     {
         public static Action<string, int> ArrowDead;
-        public static Action HoldBowString;
-        public static Action ReleaseBowString;
         public static Action<int> PlayerGetDamaged;
 
         public static Action<int, int, GameObject, GameObject> KeyCollected;

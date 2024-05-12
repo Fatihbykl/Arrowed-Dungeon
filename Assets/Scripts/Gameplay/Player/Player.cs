@@ -5,6 +5,7 @@ using FSM;
 using Gameplay.Interfaces;
 using Managers;
 using Microlight.MicroBar;
+using StatSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,86 +13,80 @@ namespace Gameplay.Player
 {
     public class Player : MonoBehaviour, IDamageable
     {
-        public PlayerStats stats;
+        public PlayerStats playerStats;
         public MicroBar hpBar;
+        public GameObject bow;
         public GameObject bowPlacement;
         public GameObject handSlot;
-        private int playerHealth;
-
-        public GameObject currentTarget;
-
-        private CapsuleCollider capsuleCollider;
-        private FieldOfView fov;
-
-        public Animator animator;
-        private float lastAttackTime;
-        private InputAction attackAction;
-
-        private GameObject arrow;
         public Projectile arrowPrefab;
-        public GameObject bow;
-        public bool canMove = true;
-        public bool attackModeActive = false;
+        public GameObject visualEffects;
 
-        public ParticleSystem dustParticle;
+        [HideInInspector] public GameObject currentTarget;
+        [HideInInspector] public Animator animator;
+        [HideInInspector] public bool attackModeActive;
+        [HideInInspector] public bool castingAbility;
+
+        private CapsuleCollider _capsuleCollider;
+        private InputAction _attackAction;
+        private float _lastAttackTime;
+        private GameObject _arrow;
+        private FieldOfView _fov;
+
+        public event Action ReleaseBowString;
+        public event Action HoldBowString;
         
         private void Awake()
         {
-            attackAction = GetComponent<PlayerInput>().actions["Attack"];
+            _attackAction = GetComponent<PlayerInput>().actions["Attack"];
+            _capsuleCollider = GetComponent<CapsuleCollider>();
             animator = GetComponent<Animator>();
-            capsuleCollider = GetComponent<CapsuleCollider>();
-            fov = GetComponent<FieldOfView>();
-            playerHealth = stats.baseHealth;
+            _fov = GetComponent<FieldOfView>();
 
-            hpBar.Initialize(playerHealth);
+            playerStats.InitHealth();
+            hpBar.Initialize(playerStats.health.BaseValue);
+
+            for (int i = 0; i < visualEffects.transform.childCount; i++)
+            {
+                Debug.Log(visualEffects.transform.GetChild(i).name);
+            }
         }
 
         private void Update()
         {
-            currentTarget = fov.targetObject;
+            currentTarget = _fov.targetObject;
 
-            if (attackAction.triggered)
-            {
-                ToggleAttackMode();
-            }
-
-            if (currentTarget != null && attackModeActive)
-            {
-                //transform.LookAt(currentTarget.transform);
-                Attack();
-            }
+            if (_attackAction.triggered) { ToggleAttackMode(); }
+            if (currentTarget != null && attackModeActive) { Attack(); }
         }
 
         public void TakeDamage(int damage)
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
-            playerHealth -= damage;
-            if (playerHealth <= 0)
-            {
-                Die();
-            }
+            playerStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
+            
+            if (playerStats.health.Value <= 0) { Die(); }
 
-            hpBar.UpdateHealthBar(playerHealth);
+            hpBar.UpdateHealthBar(playerStats.health.Value);
         }
 
         public void AttachBow()
         {
             bow.transform.SetParent(handSlot.transform, false);
-            HoldBowString();
+            OnHoldBowString();
         }
 
         public void DisarmBow()
         {
             bow.transform.SetParent(bowPlacement.transform, false);
-            ReleaseBowString();
+            OnReleaseBowString();
         }
 
         private void Attack()
         {
-            if (Time.time - lastAttackTime >= stats.attackCooldown)
+            if (Time.time - _lastAttackTime >= playerStats.attackCooldown.Value)
             {
                 animator.SetTrigger(AnimationParameters.Attack);
-                lastAttackTime = Time.time;
+                _lastAttackTime = Time.time;
             }
         }
 
@@ -106,33 +101,32 @@ namespace Gameplay.Player
             
             AudioManager.instance.PlayArrowWooshSFX();
 
-            ReleaseBowString();
+            OnReleaseBowString();
         }
 
-        private void ReleaseBowString()
+        private void OnReleaseBowString()
         {
-            GameplayEvents.ReleaseBowString?.Invoke();
+            ReleaseBowString?.Invoke();
         }
 
-        public void HoldBowString()
+        public void OnHoldBowString()
         {
-            GameplayEvents.HoldBowString?.Invoke();
+            HoldBowString?.Invoke();
         }
 
         private void Die()
         {
             // TODO: prevent enemy attack when dead
 
-            capsuleCollider.enabled = false;
-            canMove = false;
-
+            _capsuleCollider.enabled = false;
+            
             animator.SetTrigger(AnimationParameters.Die);
             this.enabled = false;
         }
 
         private void ToggleAttackMode()
         {
-            lastAttackTime = Time.time;
+            _lastAttackTime = Time.time;
             attackModeActive = !attackModeActive;
             animator.SetTrigger(attackModeActive ? AnimationParameters.EquipBow : AnimationParameters.DisarmBow);
             animator.SetBool(AnimationParameters.AttackMode, attackModeActive);
@@ -142,9 +136,21 @@ namespace Gameplay.Player
     [Serializable]
     public class PlayerStats
     {
-        public float runningSpeed;
-        public float walkingSpeed;
-        public int baseHealth;
-        public float attackCooldown;
+        public IntegerStat maxHealth;
+        public IntegerStat damage;
+        public IntegerStat armor;
+        public FloatStat missChance; // stability
+        public FloatStat runningSpeed;
+        public FloatStat walkingSpeed;
+        public FloatStat attackCooldown;
+
+        [HideInInspector] public VitalStat health;
+
+        public void InitHealth()
+        {
+            health.BaseValue = maxHealth.BaseValue;
+            health.useUpperBound = true;
+            health.upperBound = maxHealth.BaseValue;
+        }
     }
 }
