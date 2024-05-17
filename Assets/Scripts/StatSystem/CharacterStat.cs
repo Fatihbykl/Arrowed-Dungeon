@@ -7,12 +7,24 @@ using UnityEngine.Serialization;
 
 namespace StatSystem
 {
+	public enum StatID
+	{
+		None,
+		MaxHealth,
+		Damage,
+		Armor,
+		MissChance,
+		RunningSpeed,
+		WalkingSpeed,
+		AttackCooldown
+	}
+	
 	[Serializable]
 	public class CharacterStat<T>
 	{
 		[SerializeField]
 		protected float baseValue;
-
+		public StatID id;
 		public bool useUpperBound;
 		public bool useLowerBound;
 		public float upperBound;

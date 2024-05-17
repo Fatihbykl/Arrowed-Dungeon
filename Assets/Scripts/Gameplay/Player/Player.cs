@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Events;
 using FSM;
 using Gameplay.Interfaces;
+using InventorySystem;
 using Managers;
 using Microlight.MicroBar;
 using StatSystem;
@@ -37,6 +39,8 @@ namespace Gameplay.Player
         
         private void Awake()
         {
+            Inventory.Instance.StatsChanged += OnStatsChanged;
+            
             _attackAction = GetComponent<PlayerInput>().actions["Attack"];
             _capsuleCollider = GetComponent<CapsuleCollider>();
             animator = GetComponent<Animator>();
@@ -44,11 +48,11 @@ namespace Gameplay.Player
 
             playerStats.InitHealth();
             hpBar.Initialize(playerStats.health.BaseValue);
+        }
 
-            for (int i = 0; i < visualEffects.transform.childCount; i++)
-            {
-                Debug.Log(visualEffects.transform.GetChild(i).name);
-            }
+        private void OnStatsChanged()
+        {
+            
         }
 
         private void Update()
@@ -152,5 +156,6 @@ namespace Gameplay.Player
             health.useUpperBound = true;
             health.upperBound = maxHealth.BaseValue;
         }
+        
     }
 }

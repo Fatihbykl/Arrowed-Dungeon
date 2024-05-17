@@ -7,11 +7,14 @@ namespace InventorySystem
 {
     public class Inventory : MonoBehaviour
     {
-        public Dictionary<string, InventorySlot> inventorySlots;
+        public List<InventorySlot> inventorySlots;
         // 0=Head, 1=Chest, 2=Shoes, 3=ShoulderPad, 4=Gloves, 5=Weapon
         public List<InventorySlot> equipmentSlots;
         public static Inventory Instance { get; private set; }
         public Item[] testItems;
+
+        public event Action RefreshUI;
+        public event Action StatsChanged;
 
         private void Awake()
         {
@@ -23,12 +26,12 @@ namespace InventorySystem
             }
             Instance = this;
 
-            inventorySlots = new Dictionary<string, InventorySlot>();
-            equipmentSlots = new List<InventorySlot>(6);
+            equipmentSlots = new List<InventorySlot> { null, null, null, null, null, null };
 
             foreach (var testItem in testItems)
             {
                 AddItem(testItem, 3);
+                //Equip(inventorySlots.GetValueOrDefault(testItem.id));
             }
         }
 
@@ -38,14 +41,14 @@ namespace InventorySystem
             if (slot == null)
             {
                 var newSlot = new InventorySlot(item, count);
-                inventorySlots.Add(item.id, newSlot);
+                inventorySlots.Add(newSlot);
                 // added new slot
             }
             else
             {
                 slot.IncreaseCount(count);
-                // updated event?
             }
+            RefreshUI?.Invoke();
         }
 
         public void RemoveItem(Item item, int count)
@@ -54,7 +57,9 @@ namespace InventorySystem
             if (slot == null) { return; }
             
             slot.DecreaseCount(count);
-            if (slot.itemCount <= 0) { inventorySlots.Remove(slot.item.id); }
+            if (slot.itemCount <= 0) { inventorySlots.Remove(slot); }
+            
+            RefreshUI?.Invoke();
         }
 
         public void Equip(InventorySlot slot)
@@ -67,19 +72,25 @@ namespace InventorySystem
             {
                 AddItem(equipSlot.item, 1);
             }
-            equipmentSlots.Insert(index, slot);
+            equipmentSlots[index] = slot;
             RemoveItem(slot.item, 1);
+            
+            RefreshUI?.Invoke();
+            StatsChanged?.Invoke();
         }
 
         public void RemoveFromEquipment(InventorySlot slot)
         {
-            equipmentSlots.RemoveAt((int)slot.item.itemType);
+            equipmentSlots[(int)slot.item.itemType] = null;
             AddItem(slot.item, 1);
+            
+            RefreshUI?.Invoke();
+            StatsChanged?.Invoke();
         }
 
         private InventorySlot GetInventorySlot(Item item)
         {
-            return inventorySlots.GetValueOrDefault(item.id);
+            return inventorySlots.FirstOrDefault(slot => slot.item.id == item.id);
         }
     }
 }
