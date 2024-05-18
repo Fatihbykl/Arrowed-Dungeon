@@ -34,7 +34,9 @@ namespace InventorySystem
         public string description;
         public ItemType itemType;
         public ItemRarity itemRarity;
+        public int clothIndex;
         public StatModifier[] modifiers;
+        
         [InfoBox("Prefab for instantiating in game.")]
         public GameObject prefab;
     }

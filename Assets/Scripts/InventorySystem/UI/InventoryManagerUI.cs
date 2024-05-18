@@ -20,7 +20,6 @@ namespace InventorySystem.UI
         [Header("Equipment Slots")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(10)]
         [InfoBox("Place in order! 0=Head, 1=Chest, 2=Shoes, 3=Shoulder Pad, 4=Gloves, 5=Weapon")]
         public List<GameObject> equipments;
-        public InventorySlot[] emptyEquipmentSlots;
         
         [Header("Popup")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(10)]
         public GameObject equipPopupPanel;
@@ -72,11 +71,6 @@ namespace InventorySystem.UI
             {
                 _equipmentInventorySlots[i].SetActive(false);
                 _othersInventorySlots[i].SetActive(false);
-            }
-
-            for (int i = 0; i < equipments.Count; i++)
-            {
-                equipments[i].GetComponent<InventorySlotUI>().Init(emptyEquipmentSlots[i]);
             }
         }
 

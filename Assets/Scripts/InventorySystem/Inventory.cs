@@ -10,6 +10,7 @@ namespace InventorySystem
         public List<InventorySlot> inventorySlots;
         // 0=Head, 1=Chest, 2=Shoes, 3=ShoulderPad, 4=Gloves, 5=Weapon
         public List<InventorySlot> equipmentSlots;
+        public InventorySlot[] defaultSlots;
         public static Inventory Instance { get; private set; }
         public Item[] testItems;
 
@@ -26,12 +27,14 @@ namespace InventorySystem
             }
             Instance = this;
 
-            equipmentSlots = new List<InventorySlot> { null, null, null, null, null, null };
+            equipmentSlots = new List<InventorySlot>
+            {
+                defaultSlots[0], defaultSlots[1], defaultSlots[2], defaultSlots[3], defaultSlots[4], defaultSlots[5]
+            };
 
             foreach (var testItem in testItems)
             {
                 AddItem(testItem, 3);
-                //Equip(inventorySlots.GetValueOrDefault(testItem.id));
             }
         }
 
@@ -42,7 +45,6 @@ namespace InventorySystem
             {
                 var newSlot = new InventorySlot(item, count);
                 inventorySlots.Add(newSlot);
-                // added new slot
             }
             else
             {
@@ -68,7 +70,7 @@ namespace InventorySystem
 
             var index = (int)slot.item.itemType;
             var equipSlot = equipmentSlots.ElementAtOrDefault(index);
-            if (equipSlot != null)
+            if (equipSlot.item.id != "dummy")
             {
                 AddItem(equipSlot.item, 1);
             }
@@ -81,7 +83,8 @@ namespace InventorySystem
 
         public void RemoveFromEquipment(InventorySlot slot)
         {
-            equipmentSlots[(int)slot.item.itemType] = null;
+            var index = (int)slot.item.itemType;
+            equipmentSlots[index] = defaultSlots[index];
             AddItem(slot.item, 1);
 
             EquipmentChanged?.Invoke();
