@@ -24,7 +24,6 @@ namespace StatSystem
 	{
 		[SerializeField]
 		protected float baseValue;
-		public StatID id;
 		public bool useUpperBound;
 		public bool useLowerBound;
 		public float upperBound;

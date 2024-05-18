@@ -10,11 +10,13 @@ namespace Gameplay.Player
     {
         public FloatingJoystick floatingJoystick;
         
-        private Player player;
+        private Player _player;
+        private PlayerStats _playerStats;
         
         void Start()
         {
-            player = GetComponent<Player>();
+            _player = GetComponent<Player>();
+            _playerStats = GetComponent<PlayerStats>();
         }
         
         protected override void Animate()
@@ -25,19 +27,19 @@ namespace Gameplay.Player
             {
                 animator.SetBool(AnimationParameters.Moving, true);
                 
-                if (player.attackModeActive)
+                if (_player.attackModeActive)
                 {
                     float value = 0.0f;
-                    if (player.currentTarget != null)
+                    if (_player.currentTarget != null)
                     {
                         value = GetAngleBetween(moveDirection, transform.forward, transform.up);
                     }
-                    player.animator.SetFloat(AnimationParameters.Strafe, value);
-                    speed = player.playerStats.walkingSpeed.Value;
+                    _player.animator.SetFloat(AnimationParameters.Strafe, value);
+                    speed = _playerStats.walkingSpeed.Value;
                 }
                 else
                 {
-                    speed = player.playerStats.runningSpeed.Value;
+                    speed = _playerStats.runningSpeed.Value;
                 }
             }
             else
@@ -48,9 +50,9 @@ namespace Gameplay.Player
 
         protected override void UpdateRotation()
         {
-            if (player.attackModeActive && player.currentTarget != null)
+            if (_player.attackModeActive && _player.currentTarget != null)
             {
-                RotateTowards((player.currentTarget.transform.position - transform.position).normalized);
+                RotateTowards((_player.currentTarget.transform.position - transform.position).normalized);
             }
             else
             {

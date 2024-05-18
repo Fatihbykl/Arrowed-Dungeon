@@ -1,21 +1,28 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using Gameplay.Player;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace InventorySystem.UI
 {
     public class InventoryManagerUI : MonoBehaviour
     {
+        [Header("Slots")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(10)]
         public int maxSlotCount;
         public GameObject inventorySlotPrefab;
         public GameObject inventoryEquipments;
         public GameObject inventoryOthers;
 
-        [FormerlySerializedAs("popupPanel")] [Header("Popup")] 
+        [Header("Equipment Slots")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(10)]
+        [InfoBox("Place in order! 0=Head, 1=Chest, 2=Shoes, 3=Shoulder Pad, 4=Gloves, 5=Weapon")]
+        public List<GameObject> equipments;
+        public InventorySlot[] emptyEquipmentSlots;
+        
+        [Header("Popup")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(10)]
         public GameObject equipPopupPanel;
         public GameObject equipButton;
         public GameObject unequipButton;
@@ -26,12 +33,18 @@ namespace InventorySystem.UI
         private List<GameObject> _equipmentInventorySlots;
         private List<GameObject> _othersInventorySlots;
 
+        [Header("Player Stats")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(10)]
+        public PlayerStats stats;
+        public TextMeshProUGUI attack;
+        public TextMeshProUGUI defence;
+        public TextMeshProUGUI health;
+        public TextMeshProUGUI missChance;
+        public TextMeshProUGUI runSpeed;
+        public TextMeshProUGUI walkSpeed;
+        public TextMeshProUGUI attackCooldown;
+
         public static Action<InventorySlot, SlotType> OpenEquipPopup;
-
-        [InfoBox("Place in order! 0=Head, 1=Chest, 2=Shoes, 3=Shoulder Pad, 4=Gloves, 5=Weapon")]
-        public List<GameObject> equipments;
-        public InventorySlot[] emptyEquipmentSlots;
-
+        
         private void Start()
         {
             Inventory.Instance.RefreshUI += OnRefreshUI;
@@ -84,7 +97,6 @@ namespace InventorySystem.UI
                     _equipmentInventorySlots[i].GetComponent<InventorySlotUI>().Init(slot);
                     _equipmentInventorySlots[i].SetActive(true);
                 }
-                
             }
 
             for (int i = 0; i < Inventory.Instance.equipmentSlots.Count; i++)
@@ -93,6 +105,14 @@ namespace InventorySystem.UI
                 if (slot == null) { continue; }
                 equipments[i].GetComponent<InventorySlotUI>().Init(slot);
             }
+
+            attack.text = stats.damage.Value.ToString();
+            defence.text = stats.armor.Value.ToString();
+            health.text = stats.maxHealth.Value.ToString();
+            missChance.text = stats.missChance.Value.ToString(CultureInfo.CurrentCulture);
+            runSpeed.text = stats.runningSpeed.Value.ToString(CultureInfo.CurrentCulture);
+            walkSpeed.text = stats.walkingSpeed.Value.ToString(CultureInfo.CurrentCulture);
+            attackCooldown.text = stats.attackCooldown.Value.ToString(CultureInfo.CurrentCulture);
         }
 
         private void OnOpenEquipPopup(InventorySlot slot, SlotType slotType)

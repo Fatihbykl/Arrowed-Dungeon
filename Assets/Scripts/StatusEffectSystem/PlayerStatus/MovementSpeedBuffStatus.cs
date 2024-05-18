@@ -12,11 +12,13 @@ namespace StatusEffectSystem.PlayerStatus
         public float speedBuffPercentage;
 
         private Player _player;
+        private PlayerStats _playerStats;
         private StatModifier _speedModifier;
         
         public override void ApplyStatus(GameObject target)
         {
             _player = target.GetComponent<Player>();
+            _playerStats = _player.GetComponent<PlayerStats>();
 
             BuffPlayer();
         }
@@ -24,8 +26,8 @@ namespace StatusEffectSystem.PlayerStatus
         private async void BuffPlayer()
         {
             _speedModifier = new StatModifier(speedBuffPercentage, StatModType.PercentAdd);
-            _player.playerStats.runningSpeed.AddModifier(_speedModifier);
-            _player.playerStats.walkingSpeed.AddModifier(_speedModifier);
+            _playerStats.runningSpeed.AddModifier(_speedModifier);
+            _playerStats.walkingSpeed.AddModifier(_speedModifier);
 
             await UniTask.WaitForSeconds(duration);
             RemoveStatus();
@@ -33,8 +35,8 @@ namespace StatusEffectSystem.PlayerStatus
 
         public override void RemoveStatus()
         {
-            _player.playerStats.runningSpeed.RemoveModifier(_speedModifier);
-            _player.playerStats.walkingSpeed.RemoveModifier(_speedModifier);
+            _playerStats.runningSpeed.RemoveModifier(_speedModifier);
+            _playerStats.walkingSpeed.RemoveModifier(_speedModifier);
         }
     }
 }

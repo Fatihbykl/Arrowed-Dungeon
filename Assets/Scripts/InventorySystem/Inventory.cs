@@ -14,7 +14,7 @@ namespace InventorySystem
         public Item[] testItems;
 
         public event Action RefreshUI;
-        public event Action StatsChanged;
+        public event Action EquipmentChanged;
 
         private void Awake()
         {
@@ -74,18 +74,18 @@ namespace InventorySystem
             }
             equipmentSlots[index] = slot;
             RemoveItem(slot.item, 1);
-            
+
+            EquipmentChanged?.Invoke();
             RefreshUI?.Invoke();
-            StatsChanged?.Invoke();
         }
 
         public void RemoveFromEquipment(InventorySlot slot)
         {
             equipmentSlots[(int)slot.item.itemType] = null;
             AddItem(slot.item, 1);
-            
+
+            EquipmentChanged?.Invoke();
             RefreshUI?.Invoke();
-            StatsChanged?.Invoke();
         }
 
         private InventorySlot GetInventorySlot(Item item)

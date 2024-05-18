@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using DG.Tweening;
-using Events;
 using FSM;
 using Gameplay.Interfaces;
 using InventorySystem;
@@ -13,9 +10,9 @@ using UnityEngine.InputSystem;
 
 namespace Gameplay.Player
 {
+    [RequireComponent(typeof(PlayerStats))]
     public class Player : MonoBehaviour, IDamageable
     {
-        public PlayerStats playerStats;
         public MicroBar hpBar;
         public GameObject bow;
         public GameObject bowPlacement;
@@ -30,6 +27,7 @@ namespace Gameplay.Player
 
         private CapsuleCollider _capsuleCollider;
         private InputAction _attackAction;
+        private PlayerStats _playerStats;
         private float _lastAttackTime;
         private GameObject _arrow;
         private FieldOfView _fov;
@@ -39,20 +37,14 @@ namespace Gameplay.Player
         
         private void Awake()
         {
-            Inventory.Instance.StatsChanged += OnStatsChanged;
-            
             _attackAction = GetComponent<PlayerInput>().actions["Attack"];
             _capsuleCollider = GetComponent<CapsuleCollider>();
+            _playerStats = GetComponent<PlayerStats>();
             animator = GetComponent<Animator>();
             _fov = GetComponent<FieldOfView>();
 
-            playerStats.InitHealth();
-            hpBar.Initialize(playerStats.health.BaseValue);
-        }
-
-        private void OnStatsChanged()
-        {
-            
+            _playerStats.InitHealth();
+            hpBar.Initialize(_playerStats.health.BaseValue);
         }
 
         private void Update()
@@ -66,11 +58,11 @@ namespace Gameplay.Player
         public void TakeDamage(int damage)
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
-            playerStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
+            _playerStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
             
-            if (playerStats.health.Value <= 0) { Die(); }
+            if (_playerStats.health.Value <= 0) { Die(); }
 
-            hpBar.UpdateHealthBar(playerStats.health.Value);
+            hpBar.UpdateHealthBar(_playerStats.health.Value);
         }
 
         public void AttachBow()
@@ -87,7 +79,7 @@ namespace Gameplay.Player
 
         private void Attack()
         {
-            if (Time.time - _lastAttackTime >= playerStats.attackCooldown.Value)
+            if (Time.time - _lastAttackTime >= _playerStats.attackCooldown.Value)
             {
                 animator.SetTrigger(AnimationParameters.Attack);
                 _lastAttackTime = Time.time;
@@ -135,27 +127,5 @@ namespace Gameplay.Player
             animator.SetTrigger(attackModeActive ? AnimationParameters.EquipBow : AnimationParameters.DisarmBow);
             animator.SetBool(AnimationParameters.AttackMode, attackModeActive);
         }
-    }
-
-    [Serializable]
-    public class PlayerStats
-    {
-        public IntegerStat maxHealth;
-        public IntegerStat damage;
-        public IntegerStat armor;
-        public FloatStat missChance; // stability
-        public FloatStat runningSpeed;
-        public FloatStat walkingSpeed;
-        public FloatStat attackCooldown;
-
-        [HideInInspector] public VitalStat health;
-
-        public void InitHealth()
-        {
-            health.BaseValue = maxHealth.BaseValue;
-            health.useUpperBound = true;
-            health.upperBound = maxHealth.BaseValue;
-        }
-        
     }
 }
