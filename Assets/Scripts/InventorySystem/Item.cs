@@ -39,5 +39,15 @@ namespace InventorySystem
         
         [InfoBox("Prefab for instantiating in game.")]
         public GameObject prefab;
+
+        public Item GetCopy()
+        {
+            return Instantiate(this);
+        }
+
+        public void Destroy()
+        {
+            Destroy(this);
+        }
     }
 }

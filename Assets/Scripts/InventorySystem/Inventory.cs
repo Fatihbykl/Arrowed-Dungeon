@@ -43,7 +43,7 @@ namespace InventorySystem
             var slot = GetInventorySlot(item);
             if (slot == null)
             {
-                var newSlot = new InventorySlot(item, count);
+                var newSlot = new InventorySlot(item.GetCopy(), count);
                 inventorySlots.Add(newSlot);
             }
             else
@@ -59,7 +59,11 @@ namespace InventorySystem
             if (slot == null) { return; }
             
             slot.DecreaseCount(count);
-            if (slot.itemCount <= 0) { inventorySlots.Remove(slot); }
+            if (slot.itemCount <= 0)
+            {
+                slot.item.Destroy();
+                inventorySlots.Remove(slot);
+            }
             
             RefreshUI?.Invoke();
         }
@@ -91,7 +95,7 @@ namespace InventorySystem
             RefreshUI?.Invoke();
         }
 
-        private InventorySlot GetInventorySlot(Item item)
+        public InventorySlot GetInventorySlot(Item item)
         {
             return inventorySlots.FirstOrDefault(slot => slot.item.id == item.id);
         }
