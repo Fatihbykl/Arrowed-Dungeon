@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1053641260404470776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4231997607683216550}
+  - component: {fileID: 315381591748723492}
+  m_Layer: 0
+  m_Name: Inventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4231997607683216550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053641260404470776}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.245137, y: 1.140752, z: -0.45331687}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &315381591748723492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053641260404470776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c50dd8545a3448b67a4f47d2bdb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySlots: []
+  equipmentSlots: []
+  defaultSlots:
+  - item: {fileID: 11400000, guid: 622140da700ccb54ab85ce0db50e1768, type: 2}
+    itemCount: 0
+  - item: {fileID: 11400000, guid: 4c4f544bba255214699d69b3d01eed18, type: 2}
+    itemCount: 0
+  - item: {fileID: 11400000, guid: be9e8ed608167f042bf735fb9920be96, type: 2}
+    itemCount: 0
+  - item: {fileID: 11400000, guid: a056329a50be08c4b89de85bdab568bd, type: 2}
+    itemCount: 0
+  - item: {fileID: 11400000, guid: c20baf5e4487d4446af51c32d04265a8, type: 2}
+    itemCount: 0
+  - item: {fileID: 11400000, guid: e92c21da1746442439bb96dbf8d7d818, type: 2}
+    itemCount: 0
+  testItems:
+  - {fileID: 11400000, guid: 44bc4dbf34fced84caf260a4a486e92f, type: 2}
+  - {fileID: 11400000, guid: cf20c98bff032ec4b878fd98d6966aac, type: 2}

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gameplay.Player;
 using InventorySystem;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace CraftSystem
     {
         public List<InventorySlot> materials;
         public InventorySlot result;
-        public int craftCost;
+        public Cost craftCost;
 
         public bool CanCraft()
         {

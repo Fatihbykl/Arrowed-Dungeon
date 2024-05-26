@@ -34,7 +34,7 @@ namespace InventorySystem
 
             foreach (var testItem in testItems)
             {
-                AddItem(testItem, 3);
+                AddItem(testItem, 2);
             }
         }
 
@@ -44,6 +44,7 @@ namespace InventorySystem
             if (slot == null)
             {
                 var newSlot = new InventorySlot(item.GetCopy(), count);
+                Debug.Log(newSlot.item.id + "------");
                 inventorySlots.Add(newSlot);
             }
             else

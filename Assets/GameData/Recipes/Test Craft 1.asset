@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4dadd0d5aab914e88aefbe415a8039, type: 3}
   m_Name: Test Craft 1
   m_EditorClassIdentifier: 
-  materials: []
+  materials:
+  - item: {fileID: 11400000, guid: cf20c98bff032ec4b878fd98d6966aac, type: 2}
+    itemCount: 1
   result:
-    item: {fileID: 0}
-    itemCount: 0
-  craftCost: 0
+    item: {fileID: 11400000, guid: 44bc4dbf34fced84caf260a4a486e92f, type: 2}
+    itemCount: 1
+  craftCost:
+    amount: 50
+    coinType: 0

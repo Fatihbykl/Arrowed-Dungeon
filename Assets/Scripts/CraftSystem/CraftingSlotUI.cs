@@ -11,7 +11,7 @@ namespace CraftSystem
         public TextMeshProUGUI itemName;
         public GameObject infoScreen;
         
-        //[HideInInspector]
+        [HideInInspector]
         public CraftingRecipe recipe;
 
         public void Init()
@@ -21,9 +21,9 @@ namespace CraftSystem
             itemName.text = recipe.result.item.title;
         }
 
-        public void OnButtonClicked()
+        public void OnRecipeClicked()
         {
-            
+            CraftingManager.RecipeClicked?.Invoke(this);
         }
     }
 }
