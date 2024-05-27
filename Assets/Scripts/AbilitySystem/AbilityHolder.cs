@@ -11,7 +11,7 @@ namespace AbilitySystem
         public GameObject target;
         public AbilityState currentState = AbilityState.Ready;
 
-        private float _cooldownTimer;
+        public float _cooldownTimer;
         private float _castTimer;
 
         private void Start()
@@ -54,11 +54,14 @@ namespace AbilitySystem
             }
         }
 
-        public void ActivateAbility()
+        public void ActivateAbility(Vector2? direction = null)
         {
+            
             if (currentState != AbilityState.Ready) { return; }
 
-            ability.Activate(target);
+            if (direction == null) { ability.Activate(target); }
+            else { ability.Activate(target, direction); }
+            
             currentState = AbilityState.Casting;
             _castTimer = ability.castTime;
         }

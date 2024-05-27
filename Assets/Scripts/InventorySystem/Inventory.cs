@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AbilitySystem;
 using UnityEngine;
 
 namespace InventorySystem
@@ -11,6 +12,7 @@ namespace InventorySystem
         // 0=Head, 1=Chest, 2=Shoes, 3=ShoulderPad, 4=Gloves, 5=Weapon
         public List<InventorySlot> equipmentSlots;
         public InventorySlot[] defaultSlots;
+        public AbilityBase[] skills;
         public static Inventory Instance { get; private set; }
         public Item[] testItems;
 
@@ -44,7 +46,6 @@ namespace InventorySystem
             if (slot == null)
             {
                 var newSlot = new InventorySlot(item.GetCopy(), count);
-                Debug.Log(newSlot.item.id + "------");
                 inventorySlots.Add(newSlot);
             }
             else

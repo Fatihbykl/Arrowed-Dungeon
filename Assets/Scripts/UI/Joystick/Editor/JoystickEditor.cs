@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UI.Joystick.Base;
 using UnityEngine;
 using UnityEditor;
 
@@ -14,6 +15,8 @@ public class JoystickEditor : Editor
     protected SerializedProperty background;
     private SerializedProperty handle;
     private SerializedProperty indicator;
+    private SerializedProperty skillType;
+    private SerializedProperty cooldownImage;
 
     protected Vector2 center = new Vector2(0.5f, 0.5f);
 
@@ -27,6 +30,8 @@ public class JoystickEditor : Editor
         background = serializedObject.FindProperty("background");
         handle = serializedObject.FindProperty("handle");
         indicator = serializedObject.FindProperty("indicator");
+        skillType = serializedObject.FindProperty("skillType");
+        cooldownImage = serializedObject.FindProperty("cooldownImage");
     }
 
     public override void OnInspectorGUI()
@@ -57,6 +62,8 @@ public class JoystickEditor : Editor
         EditorGUILayout.PropertyField(snapX, new GUIContent("Snap X", "Snap the horizontal input to a whole value."));
         EditorGUILayout.PropertyField(snapY, new GUIContent("Snap Y", "Snap the vertical input to a whole value."));
         EditorGUILayout.PropertyField(indicator, new GUIContent("indicator", "indicator"));
+        EditorGUILayout.PropertyField(skillType, new GUIContent("skillType", "Skill type"));
+        EditorGUILayout.PropertyField(cooldownImage, new GUIContent("cooldownImage", "Radial cooldown"));
     }
 
     protected virtual void DrawComponents()

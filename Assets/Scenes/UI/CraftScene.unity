@@ -2078,9 +2078,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5334129159138363764, guid: ccda80fb2310d7f439a7a85b8badd05a,
         type: 3}
+      propertyPath: popup
+      value: 
+      objectReference: {fileID: 8734248255673652393}
+    - target: {fileID: 5334129159138363764, guid: ccda80fb2310d7f439a7a85b8badd05a,
+        type: 3}
       propertyPath: content
       value: 
       objectReference: {fileID: 35425346}
+    - target: {fileID: 5334129159138363764, guid: ccda80fb2310d7f439a7a85b8badd05a,
+        type: 3}
+      propertyPath: popupText
+      value: 
+      objectReference: {fileID: 8734248256797638638}
+    - target: {fileID: 5334129159138363764, guid: ccda80fb2310d7f439a7a85b8badd05a,
+        type: 3}
+      propertyPath: popupImage
+      value: 
+      objectReference: {fileID: 8734248256175360641}
     - target: {fileID: 5334129159138363764, guid: ccda80fb2310d7f439a7a85b8badd05a,
         type: 3}
       propertyPath: recipeInfoParent
@@ -3496,7 +3511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8734248255673652394
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3505,7 +3520,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8734248255673652393}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2050}
+  m_LocalPosition: {x: 0, y: 0, z: -2080}
   m_LocalScale: {x: 1.00008, y: 1.00008, z: 1.00008}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4126,7 +4141,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8734248256681262794}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 753749246}
+        m_TargetAssemblyTypeName: CraftSystem.CraftingManager, Assembly-CSharp
+        m_MethodName: ClosePopup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8734248256681262794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4202,7 +4229,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -77.301, y: -81.201}
+  m_AnchoredPosition: {x: -77.301025, y: -81.20099}
   m_SizeDelta: {x: 104, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8734248256719093788

@@ -20,6 +20,7 @@ namespace AbilitySystem.Player
         {
             _player.castingAbility = true;
             // animation
+            speedBuffStatus.ApplyStatus(_player.gameObject);
             _player.visualEffects.transform.GetChild(particleIndex).gameObject.SetActive(true);
         }
 

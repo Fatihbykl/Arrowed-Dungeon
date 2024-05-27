@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using AbilitySystem;
 using FSM;
 using Gameplay.Interfaces;
 using InventorySystem;
@@ -45,6 +47,7 @@ namespace Gameplay.Player
 
             _playerStats.InitHealth();
             hpBar.Initialize(_playerStats.health.BaseValue);
+            PrepareAbilities();
         }
 
         private void Update()
@@ -126,6 +129,18 @@ namespace Gameplay.Player
             attackModeActive = !attackModeActive;
             animator.SetTrigger(attackModeActive ? AnimationParameters.EquipBow : AnimationParameters.DisarmBow);
             animator.SetBool(AnimationParameters.AttackMode, attackModeActive);
+        }
+        
+        private void PrepareAbilities()
+        {
+            var abilities = Inventory.Instance.skills;
+            if (abilities == null) { return; }
+            foreach (var ability in abilities)
+            {
+                var holder = gameObject.AddComponent<AbilityHolder>();
+                holder.ability = Instantiate(ability);
+                holder.ability.OnCreate(gameObject);
+            }
         }
     }
 }
