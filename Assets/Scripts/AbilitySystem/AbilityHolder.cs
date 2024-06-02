@@ -54,12 +54,12 @@ namespace AbilitySystem
             }
         }
 
-        public void ActivateAbility(Vector2? direction = null)
+        public void ActivateAbility(Vector3 direction)
         {
             
             if (currentState != AbilityState.Ready) { return; }
 
-            if (direction == null) { ability.Activate(target); }
+            if (direction == Vector3.zero) { ability.Activate(target); }
             else { ability.Activate(target, direction); }
             
             currentState = AbilityState.Casting;

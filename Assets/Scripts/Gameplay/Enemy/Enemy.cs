@@ -184,6 +184,8 @@ namespace Gameplay.Enemy
         {
             enemyStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
             playerDetected = true;
+            var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
+            DynamicTextManager.CreateText(textPos, damage.ToString(), DynamicTextManager.defaultData);
             if (enemyStats.health.Value > 0) { StartTakeDamageAnim(); }
         }
 

@@ -14,7 +14,8 @@ public class JoystickEditor : Editor
     private SerializedProperty snapY;
     protected SerializedProperty background;
     private SerializedProperty handle;
-    private SerializedProperty indicator;
+    private SerializedProperty directionalIndicator;
+    private SerializedProperty regionalIndicator;
     private SerializedProperty skillType;
     private SerializedProperty cooldownImage;
 
@@ -29,7 +30,8 @@ public class JoystickEditor : Editor
         snapY = serializedObject.FindProperty("snapY");
         background = serializedObject.FindProperty("background");
         handle = serializedObject.FindProperty("handle");
-        indicator = serializedObject.FindProperty("indicator");
+        directionalIndicator = serializedObject.FindProperty("directionalIndicator");
+        regionalIndicator = serializedObject.FindProperty("regionalIndicator");
         skillType = serializedObject.FindProperty("skillType");
         cooldownImage = serializedObject.FindProperty("cooldownImage");
     }
@@ -61,9 +63,14 @@ public class JoystickEditor : Editor
         EditorGUILayout.PropertyField(axisOptions, new GUIContent("Axis Options", "Which axes the joystick uses."));
         EditorGUILayout.PropertyField(snapX, new GUIContent("Snap X", "Snap the horizontal input to a whole value."));
         EditorGUILayout.PropertyField(snapY, new GUIContent("Snap Y", "Snap the vertical input to a whole value."));
-        EditorGUILayout.PropertyField(indicator, new GUIContent("indicator", "indicator"));
-        EditorGUILayout.PropertyField(skillType, new GUIContent("skillType", "Skill type"));
-        EditorGUILayout.PropertyField(cooldownImage, new GUIContent("cooldownImage", "Radial cooldown"));
+
+        if (skillType != null)
+        {
+            EditorGUILayout.PropertyField(directionalIndicator, new GUIContent("directionalIndicator", "directional indicator"));
+            EditorGUILayout.PropertyField(regionalIndicator, new GUIContent("regionalIndicator", "regional indicator"));
+            EditorGUILayout.PropertyField(skillType, new GUIContent("skillType", "Skill type"));
+            EditorGUILayout.PropertyField(cooldownImage, new GUIContent("cooldownImage", "Radial cooldown"));
+        }
     }
 
     protected virtual void DrawComponents()

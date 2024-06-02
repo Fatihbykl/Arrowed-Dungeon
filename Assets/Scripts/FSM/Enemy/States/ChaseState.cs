@@ -5,6 +5,7 @@ using DG.Tweening;
 using Managers;
 using UnityEngine;
 using UnityHFSM;
+using Vector2 = System.Numerics.Vector2;
 
 namespace FSM.Enemy.States
 {
@@ -35,7 +36,7 @@ namespace FSM.Enemy.States
             var ability = GetAbility();
             if (ability)
             {
-                ability.ActivateAbility();
+                ability.ActivateAbility(Vector3.zero);
             }
         }
 

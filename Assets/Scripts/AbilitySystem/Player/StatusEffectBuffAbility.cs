@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace AbilitySystem.Player
 {
-    [CreateAssetMenu(menuName = "Custom/Abilities/Player/Movement Speed Buff Ability")]
-    public class MovementSpeedBuffAbility : AbilityBase
+    [CreateAssetMenu(menuName = "Custom/Abilities/Player/Status Effect Buff Ability")]
+    public class StatusEffectBuffAbility : AbilityBase
     {
-        public StatusEffectBase speedBuffStatus;
+        public StatusEffectBase statusEffect;
         public int particleIndex;
 
         private Gameplay.Player.Player _player;
@@ -20,7 +20,7 @@ namespace AbilitySystem.Player
         {
             _player.castingAbility = true;
             // animation
-            speedBuffStatus.ApplyStatus(_player.gameObject);
+            statusEffect.ApplyStatus(_player.gameObject);
             _player.visualEffects.transform.GetChild(particleIndex).gameObject.SetActive(true);
         }
 

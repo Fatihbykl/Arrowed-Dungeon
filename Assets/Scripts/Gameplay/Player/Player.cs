@@ -17,6 +17,7 @@ namespace Gameplay.Player
     {
         public MicroBar hpBar;
         public GameObject bow;
+        public GameObject arrow;
         public GameObject bowPlacement;
         public GameObject handSlot;
         public Projectile arrowPrefab;
@@ -55,7 +56,11 @@ namespace Gameplay.Player
             currentTarget = _fov.targetObject;
 
             if (_attackAction.triggered) { ToggleAttackMode(); }
-            if (currentTarget != null && attackModeActive) { Attack(); }
+
+            if (currentTarget != null && attackModeActive && !castingAbility)
+            {
+                Attack();
+            }
         }
 
         public void TakeDamage(int damage)
@@ -70,13 +75,15 @@ namespace Gameplay.Player
 
         public void AttachBow()
         {
-            bow.transform.SetParent(handSlot.transform, false);
+            bow.SetActive(true);
+            arrow.SetActive(true);
             OnHoldBowString();
         }
 
         public void DisarmBow()
         {
-            bow.transform.SetParent(bowPlacement.transform, false);
+            bow.SetActive(false);
+            arrow.SetActive(false);
             OnReleaseBowString();
         }
 
@@ -105,11 +112,13 @@ namespace Gameplay.Player
 
         private void OnReleaseBowString()
         {
+            arrow.SetActive(false);
             ReleaseBowString?.Invoke();
         }
 
         public void OnHoldBowString()
         {
+            arrow.SetActive(true);
             HoldBowString?.Invoke();
         }
 
