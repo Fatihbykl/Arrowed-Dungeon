@@ -128,6 +128,7 @@ namespace Gameplay.Player
 
             _capsuleCollider.enabled = false;
             
+            animator.SetLayerWeight(1, 0);
             animator.SetTrigger(AnimationParameters.Die);
             this.enabled = false;
         }

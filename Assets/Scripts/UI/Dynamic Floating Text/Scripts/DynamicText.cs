@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UI.Dynamic_Floating_Text.Scripts;
 
 public class DynamicText : MonoBehaviour
 {

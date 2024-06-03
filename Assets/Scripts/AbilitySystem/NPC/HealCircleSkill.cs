@@ -5,6 +5,7 @@ using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AbilitySystem.NPC
 {
@@ -13,7 +14,7 @@ namespace AbilitySystem.NPC
     {
         public GameObject healParticle;
         public LayerMask mask;
-        public float circleSize;
+        public float circleRadius;
         public float healInterval;
         public float healDuration;
         public int healAmountEveryInterval;
@@ -22,7 +23,7 @@ namespace AbilitySystem.NPC
         private Enemy _lowHpEnemy;
         private Vector3 _healCirclePosition;
         private GameObject _particle;
-        private float _circleSize;
+        private float _circleScale;
 
         public override void OnCreate(GameObject owner)
         {
@@ -33,7 +34,7 @@ namespace AbilitySystem.NPC
         {
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
-            _circleSize = circleSize / 4; // adjustment for match visual effect with overlap sphere
+            _circleScale = circleRadius / 4; // adjustment for match visual effect with overlap sphere
             _enemy.animator.SetTrigger(AnimationParameters.HealSkill);
 
             CreateHealCircle();
@@ -47,7 +48,7 @@ namespace AbilitySystem.NPC
             _healCirclePosition = _lowHpEnemy.transform.position;
             
             _particle = Instantiate(healParticle);
-            _particle.transform.localScale = new Vector3(_circleSize, _circleSize, _circleSize);
+            _particle.transform.localScale = Vector3.one * _circleScale;
             _particle.transform.position = _healCirclePosition;
         }
 
@@ -57,7 +58,7 @@ namespace AbilitySystem.NPC
             
             for (int i = 0; i < healDuration / healInterval; i++)
             {
-                Collider[] colliders = Physics.OverlapSphere(_healCirclePosition, circleSize, mask);
+                Collider[] colliders = Physics.OverlapSphere(_healCirclePosition, circleRadius, mask);
                 if (colliders.Length > 0)
                 {
                     for (int j = 0; j < colliders.Length; j++)

@@ -17,6 +17,7 @@ using FSM;
 using Gameplay.DamageDealers;
 using Managers;
 using StatSystem;
+using Random = UnityEngine.Random;
 
 namespace Gameplay.Enemy
 {
@@ -184,9 +185,17 @@ namespace Gameplay.Enemy
         {
             enemyStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
             playerDetected = true;
-            var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
-            DynamicTextManager.CreateText(textPos, damage.ToString(), DynamicTextManager.defaultData);
+            CreateDamageText(damage);
             if (enemyStats.health.Value > 0) { StartTakeDamageAnim(); }
+        }
+
+        private void CreateDamageText(int damage)
+        {
+            var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
+            textPos.x += (Random.value - 0.5f) / 3f;
+            textPos.y += Random.value;
+            textPos.z += (Random.value - 0.5f) / 3f;
+            DynamicTextManager.CreateText(textPos, damage.ToString(), DynamicTextManager.defaultData);
         }
 
         private async void StartTakeDamageAnim()
@@ -250,7 +259,7 @@ namespace Gameplay.Enemy
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireSphere(transform.position, 2.4f);
+            Gizmos.DrawWireSphere(transform.position, 5/2f);
         }
     }
 }

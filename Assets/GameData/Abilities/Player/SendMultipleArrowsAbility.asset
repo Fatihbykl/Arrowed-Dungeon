@@ -9,16 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8afe1af0de123ef43adfea709964cdf4, type: 3}
-  m_Name: MageAoeSkill
+  m_Script: {fileID: 11500000, guid: 9ca3719a60f744a41a26fbdc1ff2b709, type: 3}
+  m_Name: SendMultipleArrowsAbility
   m_EditorClassIdentifier: 
-  cooldown: 5
+  cooldown: 2
   castTime: 2
-  castRange: 5
-  skillType: 0
-  icon: {fileID: 0}
-  particle: {fileID: 7010904236482317908, guid: e3fda06ab629a9b43a186196464e1aa4,
+  castRange: 0
+  skillType: 1
+  icon: {fileID: 362099136, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  arrowPrefab: {fileID: 4454029433749756691, guid: 3346f3833ecb03f4195d55ef456c6418,
     type: 3}
-  damage: 200
-  circleRadius: 4
-  waitBeforeExplosion: 1

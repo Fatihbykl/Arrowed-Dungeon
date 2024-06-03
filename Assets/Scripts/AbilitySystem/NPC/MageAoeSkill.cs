@@ -11,11 +11,11 @@ namespace AbilitySystem.NPC
     {
         public GameObject particle;
         public int damage;
-        public float circleSize;
+        public float circleRadius;
         public float waitBeforeExplosion;
         
         private Enemy _enemy;
-        private float _circleSize;
+        private float _circleScale;
         private GameObject _particle;
         private Vector3 _explosionPosition;
 
@@ -28,7 +28,7 @@ namespace AbilitySystem.NPC
         {
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
-            _circleSize = circleSize / 7;
+            _circleScale = circleRadius / 3.5f;
             _enemy.animator.SetTrigger(AnimationParameters.MageAoESkill);
 
             CreateParticle();
@@ -40,7 +40,7 @@ namespace AbilitySystem.NPC
             _explosionPosition = _enemy.player.transform.position;
             
             _particle = Instantiate(particle);
-            _particle.transform.localScale = new Vector3(_circleSize, _circleSize, _circleSize);
+            _particle.transform.localScale = Vector3.one * _circleScale;
             _particle.transform.position = _explosionPosition;
         }
 
@@ -48,7 +48,7 @@ namespace AbilitySystem.NPC
         {
             await UniTask.WaitForSeconds(waitBeforeExplosion);
             
-            Collider[] colliders = Physics.OverlapSphere(_explosionPosition, circleSize, _enemy.playerMask);
+            Collider[] colliders = Physics.OverlapSphere(_explosionPosition, circleRadius, _enemy.playerMask);
             if (colliders.Length > 0)
             {
                 if (colliders[0].TryGetComponent(out IDamageable player))

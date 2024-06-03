@@ -4,6 +4,7 @@ using FSM;
 using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AbilitySystem.NPC
 {
@@ -11,11 +12,12 @@ namespace AbilitySystem.NPC
     public class KamikazeAttack : AbilityBase
     {
         public float timeBeforeExplode;
-        public float explosionRange;
+        [FormerlySerializedAs("explosionRange")] public float explosionRadius;
         public GameObject particle;
 
         private GameObject _particle;
         private Enemy _enemy;
+        private float _circleScale;
 
         public override void OnCreate(GameObject owner)
         {
@@ -27,10 +29,11 @@ namespace AbilitySystem.NPC
             _enemy.agentController.speed = 0;
             _enemy.castingAbility = true;
             _enemy.animator.SetBool(AnimationParameters.Attack, true);
+            _circleScale = explosionRadius / 3.5f;
             var pos = _enemy.transform.position;
 
             _particle = Instantiate(particle);
-            _particle.transform.localScale = new Vector3(explosionRange / 3, explosionRange / 3, explosionRange / 3);
+            _particle.transform.localScale = Vector3.one * _circleScale;
             _particle.transform.position = pos;
 
             StartExploding();
@@ -46,7 +49,7 @@ namespace AbilitySystem.NPC
 
         private void DealDamage()
         {
-            Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, explosionRange, _enemy.playerMask);
+            Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, explosionRadius, _enemy.playerMask);
             if (colliders.Length > 0)
             {
                 colliders[0].GetComponent<IDamageable>().TakeDamage(_enemy.enemyStats.damage.Value);

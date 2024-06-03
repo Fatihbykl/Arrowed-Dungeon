@@ -112,7 +112,8 @@ namespace UI.Joystick.Joysticks
             }
             else
             {
-                abilityHolder.ActivateAbility(_lastDirection);
+                var direction = new Vector3(_lastDirection.x, 0, _lastDirection.y);
+                abilityHolder.ActivateAbility(direction);
             }
             
             if (_indicator != null) { _indicator.SetActive(false); }

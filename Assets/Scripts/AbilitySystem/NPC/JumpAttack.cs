@@ -5,6 +5,7 @@ using FSM;
 using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AbilitySystem.NPC
 {
@@ -12,7 +13,7 @@ namespace AbilitySystem.NPC
     public class JumpAttack : AbilityBase
     {
         public GameObject indicator;
-        public float damageRange;
+        public float damageRadius;
         public int abilityDamage;
         public GameObject particle;
 
@@ -20,9 +21,9 @@ namespace AbilitySystem.NPC
         private Enemy _enemy;
         private AnimationClip _clip;
         private AnimationEvent _event;
-        private float _distanceToTarget;
         private Vector3 _targetPos;
         private GameObject _indicator;
+        private float _circleScale;
         
         public override void OnCreate(GameObject owner)
         {
@@ -34,12 +35,12 @@ namespace AbilitySystem.NPC
         public override void Activate(GameObject target)
         {
             _targetPos = _enemy.player.transform.position;
-            _distanceToTarget = Vector3.Distance(_enemy.transform.position, _targetPos);
             _enemy.transform.DOLookAt(_targetPos, 0.5f);
+            _circleScale = damageRadius / 3.5f;
             
             _indicator = Instantiate(indicator);
             _indicator.transform.position = _targetPos;
-            _indicator.transform.localScale = new Vector3(damageRange / 2.4f, damageRange / 2.4f, damageRange / 2.4f);
+            _indicator.transform.localScale = Vector3.one * _circleScale;
             
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 1f;
@@ -61,7 +62,7 @@ namespace AbilitySystem.NPC
             
             _particle = Instantiate(particle);
             _particle.transform.position = _targetPos;
-            _particle.transform.localScale = new Vector3(damageRange / 2.4f, damageRange / 2.4f, damageRange / 2.4f);
+            _particle.transform.localScale = Vector3.one * _circleScale;
             
             DealDamage();
             DestroyObjects();
@@ -70,7 +71,7 @@ namespace AbilitySystem.NPC
 
         private void DealDamage()
         {
-            Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, damageRange, _enemy.playerMask);
+            Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, damageRadius, _enemy.playerMask);
             if (colliders.Length > 0)
             {
                 colliders[0].GetComponent<IDamageable>().TakeDamage(abilityDamage);
