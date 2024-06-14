@@ -30,8 +30,8 @@ namespace AbilitySystem.NPC
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 0f;
             _targetPosition = _enemy.player.transform.position;
-            _targetPosition.y = 1f;
             _enemy.transform.DOLookAt(_targetPosition, .4f);
+            _targetPosition.y = 1f;
             _enemy.animator.SetTrigger(AnimationParameters.Attack);
         }
 

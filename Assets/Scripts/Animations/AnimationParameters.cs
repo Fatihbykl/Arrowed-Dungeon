@@ -31,5 +31,6 @@ namespace FSM
         // dungeon parameters
         public static readonly int Open = Animator.StringToHash("Open");
         public static readonly int Close = Animator.StringToHash("Close");
+        public static readonly int OpenChest = Animator.StringToHash("OpenChest");
     }
 }
