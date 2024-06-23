@@ -17,7 +17,7 @@ namespace FSM.Enemy.States
             base.OnEnter();
             
             _enemy.agentController.speed = 0;
-            AIManager.Instance.RemoveUnit(_enemy);
+            //AIManager.Instance.RemoveUnit(_enemy);
             _enemy.agentController.agent.ResetPath();
             Die();
         }

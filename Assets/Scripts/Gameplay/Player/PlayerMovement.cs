@@ -71,6 +71,7 @@ namespace Gameplay.Player
                 y = 0.0f,
                 z = input.z
             };
+            moveDirection = moveDirection.normalized;
         }
         
         private float GetAngleBetween(Vector3 a, Vector3 b, Vector3 n){

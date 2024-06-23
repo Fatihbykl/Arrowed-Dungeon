@@ -23,7 +23,7 @@ namespace FSM.Enemy.States
         {
             base.OnEnter();
             
-            AIManager.Instance.Units.Add(_enemy);
+            //AIManager.Instance.Units.Add(_enemy);
             _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
             _enemy.agentController.stoppingDistance = _enemy.stoppingDistance;
         }
@@ -33,6 +33,8 @@ namespace FSM.Enemy.States
             base.OnLogic();
 
             //if (!_enemy.castingAbility) { _enemy.transform.DOLookAt(_enemy.player.transform.position, 0.5f); }
+            if (!_enemy.castingAbility) {_enemy.agentController.agent.SetDestination(_enemy.player.transform.position);}
+            
             var ability = GetAbility();
             if (ability)
             {

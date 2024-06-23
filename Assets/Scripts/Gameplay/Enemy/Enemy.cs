@@ -12,6 +12,7 @@ using UnityHFSM;
 using Microlight.MicroBar;
 using NaughtyAttributes;
 using DG.Tweening;
+using ECM.Common;
 using ECM.Controllers;
 using FSM;
 using Gameplay.DamageDealers;
@@ -105,7 +106,7 @@ namespace Gameplay.Enemy
             playerDetected = false;
             waypointReached = false;
             canMoveNextWaypoint = true;
-            letAIManagerSetDestination = true;
+            letAIManagerSetDestination = false;
             currentWaypoint = 0;
             damageDealer = GetComponentInChildren<WeaponDamageDealer>();
             
@@ -167,7 +168,7 @@ namespace Gameplay.Enemy
 
         private void FixedUpdate()
         {
-            animator.SetFloat(AnimationParameters.Speed, rb.velocity.magnitude);
+            animator.SetFloat(AnimationParameters.Speed, rb.velocity.onlyXZ().magnitude);
         }
 
         private void Update()

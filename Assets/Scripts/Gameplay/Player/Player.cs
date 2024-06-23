@@ -9,6 +9,7 @@ using Microlight.MicroBar;
 using StatSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Gameplay.Player
 {
@@ -67,10 +68,20 @@ namespace Gameplay.Player
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
             _playerStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
+            CreateDamageText(damage);
             
             if (_playerStats.health.Value <= 0) { Die(); }
 
             hpBar.UpdateHealthBar(_playerStats.health.Value);
+        }
+        
+        private void CreateDamageText(int damage)
+        {
+            var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
+            textPos.x += (Random.value - 0.5f) / 3f;
+            textPos.y += Random.value;
+            textPos.z += (Random.value - 0.5f) / 3f;
+            DynamicTextManager.CreateText(textPos, damage.ToString(), DynamicTextManager.defaultData);
         }
 
         public void AttachBow()
