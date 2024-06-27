@@ -524,7 +524,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &7460359449174822558
 CapsuleCollider:
@@ -593,17 +593,18 @@ MonoBehaviour:
       upperBound: 0
       lowerBound: 0
   abilities:
-  - {fileID: 11400000, guid: 341fa1a89f3e68e44a43aafbf5d12d8b, type: 2}
+  - {fileID: 11400000, guid: 650f183da5de38f428f394fbb053e6ea, type: 2}
   waypoints:
   - {fileID: 0}
   isRanged: 0
   projectileSpawnPosition: {fileID: 0}
-  healVFXPrefab: {fileID: 0}
+  healVFXPrefab: {fileID: 2486035236481326651, guid: 3143db565f4a5fc41ad870af2284fb53,
+    type: 3}
   hpBar: {fileID: 8678034653446051626}
   sphereRadius: 3
   waypointWaitTime: 2
   patrolSpeed: 2
-  stoppingDistance: 0.1
+  stoppingDistance: 2
   blinkIntensity: 5
   blinkDuration: 0.2
   player: {fileID: 0}

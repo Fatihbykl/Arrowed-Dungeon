@@ -1,8 +1,10 @@
+using AbilitySystem;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Gameplay.Managers;
 using UnityEngine;
 
-namespace AbilitySystem.Player
+namespace Gameplay.AbilitySystem.Player
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/Player/Multiple Arrow Ability")]
     public class SendMultipleArrowsAbility : AbilityBase
@@ -19,6 +21,7 @@ namespace AbilitySystem.Player
         {
             _player.castingAbility = true;
 
+            CinemachineShaker.Instance.ShakeCamera(1f, 0.5f);
             CreateProjectiles(direction);
         }
 

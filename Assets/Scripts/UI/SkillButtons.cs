@@ -1,40 +1,40 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class SkillButtons : MonoBehaviour
+namespace UI
 {
-    [SerializeField]
-    private PlayerSkills player;
-    private Button immortal, freeze, destroyer;
-
-    private void OnEnable()
+    public class SkillButtons : MonoBehaviour
     {
-        UIDocument skillsDocument = GetComponent<UIDocument>();
+        [SerializeField]
+        private PlayerSkills player;
+        private Button immortal, freeze, destroyer;
 
-        immortal = skillsDocument.rootVisualElement.Q<Button>("immortalSkill");
-        freeze = skillsDocument.rootVisualElement.Q<Button>("freezeSkill");
-        destroyer = skillsDocument.rootVisualElement.Q<Button>("destroyerSkill");
+        private void OnEnable()
+        {
+            UIDocument skillsDocument = GetComponent<UIDocument>();
 
-        immortal.RegisterCallback<ClickEvent>(onImmortalClicked);
-        freeze.RegisterCallback<ClickEvent>(onFreezeClicked);
-        destroyer.RegisterCallback<ClickEvent>(onDestroyerClicked);
-    }
+            immortal = skillsDocument.rootVisualElement.Q<Button>("immortalSkill");
+            freeze = skillsDocument.rootVisualElement.Q<Button>("freezeSkill");
+            destroyer = skillsDocument.rootVisualElement.Q<Button>("destroyerSkill");
 
-    private void onDestroyerClicked(ClickEvent evt)
-    {
-        player.ActivateDestroyerSkill();
-    }
+            immortal.RegisterCallback<ClickEvent>(onImmortalClicked);
+            freeze.RegisterCallback<ClickEvent>(onFreezeClicked);
+            destroyer.RegisterCallback<ClickEvent>(onDestroyerClicked);
+        }
 
-    private void onFreezeClicked(ClickEvent evt)
-    {
-        player.ActivateFreezeSkill();
-    }
+        private void onDestroyerClicked(ClickEvent evt)
+        {
+            player.ActivateDestroyerSkill();
+        }
 
-    private void onImmortalClicked(ClickEvent evt)
-    {
-        player.ActivateImmortalSkill();
+        private void onFreezeClicked(ClickEvent evt)
+        {
+            player.ActivateFreezeSkill();
+        }
+
+        private void onImmortalClicked(ClickEvent evt)
+        {
+            player.ActivateImmortalSkill();
+        }
     }
 }

@@ -1,11 +1,12 @@
+using AbilitySystem;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using FSM;
 using Gameplay.Interfaces;
-using Gameplay.Player;
+using Gameplay.Managers;
 using UnityEngine;
 
-namespace AbilitySystem.Player
+namespace Gameplay.AbilitySystem.Player
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/Player/Arrow Fly Ability")]
     public class ArrowFlyAbility : AbilityBase
@@ -33,7 +34,8 @@ namespace AbilitySystem.Player
             var muzzle = _player.visualEffects.transform.GetChild(arrowFlyParticleIndex);
             muzzle.transform.position = _player.handSlot.transform.position;
             muzzle.gameObject.SetActive(true);
-            
+
+            position.y = 0.1f;
             AoEAttack(position);
         }
 
@@ -46,6 +48,8 @@ namespace AbilitySystem.Player
             vfx.transform.position = position;
             
             await UniTask.WaitForSeconds(0.1f);
+            
+            CinemachineShaker.Instance.ShakeCamera(1.5f, 1f);
 
             DealDamage(position);
         }

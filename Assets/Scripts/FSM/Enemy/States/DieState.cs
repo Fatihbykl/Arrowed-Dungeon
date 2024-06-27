@@ -1,6 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
+using Gameplay.Managers;
 using Managers;
 using UnityEngine;
 using UnityHFSM;
@@ -17,7 +17,7 @@ namespace FSM.Enemy.States
             base.OnEnter();
             
             _enemy.agentController.speed = 0;
-            //AIManager.Instance.RemoveUnit(_enemy);
+            AIManager.Instance.units.Remove(_enemy);
             _enemy.agentController.agent.ResetPath();
             Die();
         }
@@ -28,7 +28,6 @@ namespace FSM.Enemy.States
             _enemy.capsuleCollider.enabled = false;
             _enemy.hpBar.gameObject.SetActive(false);
             _enemy.GetComponentInChildren<ParticleSystem>().Play();
-            AudioManager.instance.PlayArrowCoinsDropSFX();
             
             // play animation
             _enemy.animator.SetTrigger(AnimationParameters.Die);

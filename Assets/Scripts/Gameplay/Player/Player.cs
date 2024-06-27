@@ -1,12 +1,13 @@
 using System;
-using System.Linq;
 using AbilitySystem;
 using FSM;
 using Gameplay.Interfaces;
+using Gameplay.Managers;
 using InventorySystem;
 using Managers;
 using Microlight.MicroBar;
 using StatSystem;
+using UI.Dynamic_Floating_Text.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -19,10 +20,12 @@ namespace Gameplay.Player
         public MicroBar hpBar;
         public GameObject bow;
         public GameObject arrow;
-        public GameObject bowPlacement;
         public GameObject handSlot;
         public Projectile arrowPrefab;
         public GameObject visualEffects;
+
+        [Header("Sound Effects")] 
+        public SoundClip[] arrowReleaseSoundEffects;
 
         [HideInInspector] public GameObject currentTarget;
         [HideInInspector] public Animator animator;
@@ -68,20 +71,20 @@ namespace Gameplay.Player
         {
             animator.SetTrigger(AnimationParameters.TakeDamage);
             _playerStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
-            CreateDamageText(damage);
+            CreateDamageText(damage, DynamicTextManager.playerDamage);
             
             if (_playerStats.health.Value <= 0) { Die(); }
 
             hpBar.UpdateHealthBar(_playerStats.health.Value);
         }
         
-        private void CreateDamageText(int damage)
+        private void CreateDamageText(int damage, DynamicTextData data)
         {
             var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
             textPos.x += (Random.value - 0.5f) / 3f;
             textPos.y += Random.value;
             textPos.z += (Random.value - 0.5f) / 3f;
-            DynamicTextManager.CreateText(textPos, damage.ToString(), DynamicTextManager.defaultData);
+            DynamicTextManager.CreateText(textPos, damage.ToString(), data);
         }
 
         public void AttachBow()
@@ -116,7 +119,8 @@ namespace Gameplay.Player
             projectile.transform.LookAt(targetPos);
             projectile.target = currentTarget;
             
-            AudioManager.instance.PlayArrowWooshSFX();
+            AudioManager.Instance.PlayRandomSoundFXClip(arrowReleaseSoundEffects, bow.transform);
+            CinemachineShaker.Instance.ShakeCamera(1f, 0.5f);
 
             OnReleaseBowString();
         }

@@ -175,7 +175,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &4061729978139195831
 CapsuleCollider:
@@ -214,13 +214,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStats:
     damage:
-      baseValue: 0
+      baseValue: 20
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     maxHealth:
-      baseValue: 0
+      baseValue: 100
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
@@ -232,28 +232,30 @@ MonoBehaviour:
       upperBound: 0
       lowerBound: 0
     armor:
-      baseValue: 0
+      baseValue: 12
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     chaseSpeed:
-      baseValue: 0
+      baseValue: 3
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: ba096f1d7eb67264b98be622efa6c73c, type: 2}
   waypoints:
   - {fileID: 0}
-  isRanged: 0
+  isRanged: 1
   projectileSpawnPosition: {fileID: 4686515799329647579}
-  healVFXPrefab: {fileID: 0}
+  healVFXPrefab: {fileID: 2486035236481326651, guid: 3143db565f4a5fc41ad870af2284fb53,
+    type: 3}
   hpBar: {fileID: 6275833767700134289}
-  sphereRadius: 0
-  waypointWaitTime: 0
-  patrolSpeed: 0
-  stoppingDistance: 0
+  sphereRadius: 5
+  waypointWaitTime: 2
+  patrolSpeed: 2
+  stoppingDistance: 5
   blinkIntensity: 5
   blinkDuration: 0.2
   player: {fileID: 0}

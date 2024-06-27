@@ -18,6 +18,7 @@ using FSM;
 using Gameplay.DamageDealers;
 using Managers;
 using StatSystem;
+using UI.Dynamic_Floating_Text.Scripts;
 using Random = UnityEngine.Random;
 
 namespace Gameplay.Enemy
@@ -186,17 +187,17 @@ namespace Gameplay.Enemy
         {
             enemyStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
             playerDetected = true;
-            CreateDamageText(damage);
+            CreateFloatingText(damage, DynamicTextManager.defaultData);
             if (enemyStats.health.Value > 0) { StartTakeDamageAnim(); }
         }
 
-        private void CreateDamageText(int damage)
+        private void CreateFloatingText(int damage, DynamicTextData data)
         {
             var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
             textPos.x += (Random.value - 0.5f) / 3f;
             textPos.y += Random.value;
             textPos.z += (Random.value - 0.5f) / 3f;
-            DynamicTextManager.CreateText(textPos, damage.ToString(), DynamicTextManager.defaultData);
+            DynamicTextManager.CreateText(textPos, damage.ToString(), data);
         }
 
         private async void StartTakeDamageAnim()
@@ -204,6 +205,14 @@ namespace Gameplay.Enemy
             //gameObject.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.1f);
             await meshRenderer.material.DOColor(Color.white * blinkIntensity, blinkDuration / 2).ToUniTask();
             await meshRenderer.material.DOColor(Color.white, blinkDuration / 2).ToUniTask();
+        }
+
+        public void Heal(int healthAmount)
+        {
+            var particle = Instantiate(healVFXPrefab, transform);
+            Destroy(particle, 1f);
+            CreateFloatingText(healthAmount, DynamicTextManager.enemyHeal);
+            enemyStats.health.AddModifier(new StatModifier(healthAmount, StatModType.Flat));
         }
 
         public void StartDealDamage()
@@ -235,7 +244,7 @@ namespace Gameplay.Enemy
         {
             JumpAttackJumpEvent?.Invoke(gameObject);
         }
-        
+
         public void JumpAttackLand()
         {
             JumpAttackLandEvent?.Invoke(gameObject);
@@ -249,13 +258,6 @@ namespace Gameplay.Enemy
         private void OnHealthChanged()
         {
             hpBar.UpdateHealthBar(enemyStats.health.Value);
-        }
-
-        public void Heal(int healthAmount)
-        {
-            var particle = Instantiate(healVFXPrefab, transform);
-            Destroy(particle, 1f);
-            enemyStats.health.AddModifier(new StatModifier(healthAmount, StatModType.Flat));
         }
 
         private void OnDrawGizmos()

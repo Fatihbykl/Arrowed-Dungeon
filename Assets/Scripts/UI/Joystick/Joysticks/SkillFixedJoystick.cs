@@ -22,23 +22,27 @@ namespace UI.Joystick.Joysticks
         private Vector2 _lastDirection;
         private TextMeshProUGUI _cooldownText;
         private Vector3 _vector3;
+        private Vector3 _indicatorResetPos;
 
         protected override void Start()
         {
             base.Start();
 
-            _vector3 = new Vector3(0, 0, 0);
+            _indicatorResetPos = new Vector3(0, 0.1f, 0);
+            _vector3 = new Vector3(0, 0.1f, 0);
             _cooldownText = cooldownImage.GetComponentInChildren<TextMeshProUGUI>();
             
             if (skillType == SkillType.Directional)
             {
-                _indicator = Instantiate(directionalIndicator, GameManager.instance.playerObject.transform);
+                _indicator = Instantiate(directionalIndicator, GameManager.instance.playerObject.transform, false);
+                _indicator.transform.localPosition = _indicatorResetPos;
                 _indicator.SetActive(false);
             }
 
             if (skillType == SkillType.Regional)
             {
                 _indicator = Instantiate(regionalIndicator, GameManager.instance.playerObject.transform);
+                _indicator.transform.localPosition = _indicatorResetPos;
                 _indicator.SetActive(false);
             }
         }
@@ -100,7 +104,6 @@ namespace UI.Joystick.Joysticks
             base.OnPointerUp(eventData);
 
             _skillPressed = false;
-            Debug.Log(_lastDirection);
 
             if (skillType == SkillType.NonTargetable)
             {
@@ -109,11 +112,13 @@ namespace UI.Joystick.Joysticks
             else if (skillType == SkillType.Regional)
             {
                 abilityHolder.ActivateAbility(_indicator.transform.position);
+                _indicator.transform.localPosition = _indicatorResetPos;
             }
             else
             {
                 var direction = new Vector3(_lastDirection.x, 0, _lastDirection.y);
                 abilityHolder.ActivateAbility(direction);
+                _indicator.transform.localPosition = _indicatorResetPos;
             }
             
             if (_indicator != null) { _indicator.SetActive(false); }

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
 using AbilitySystem;
-using DG.Tweening;
-using Managers;
+using Gameplay.Managers;
 using UnityEngine;
 using UnityHFSM;
-using Vector2 = System.Numerics.Vector2;
 
 namespace FSM.Enemy.States
 {
@@ -23,7 +21,7 @@ namespace FSM.Enemy.States
         {
             base.OnEnter();
             
-            //AIManager.Instance.Units.Add(_enemy);
+            AIManager.Instance.units.Add(_enemy);
             _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
             _enemy.agentController.stoppingDistance = _enemy.stoppingDistance;
         }

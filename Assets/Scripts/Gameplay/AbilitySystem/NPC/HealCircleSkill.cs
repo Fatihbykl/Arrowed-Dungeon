@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using FSM;
 using Gameplay.Enemy;
 using Gameplay.Interfaces;
+using Gameplay.Managers;
 using Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -77,7 +78,7 @@ namespace AbilitySystem.NPC
 
         public override bool IsReady()
         {
-            _lowHpEnemy = AIManager.Instance.Units
+            _lowHpEnemy = AIManager.Instance.units
                 .Where(enemy => enemy.enemyStats.health.Value != enemy.enemyStats.health.BaseValue)
                 .OrderBy(enemy => enemy.enemyStats.health.Value)
                 .FirstOrDefault();

@@ -1,31 +1,14 @@
-using System;
 using System.Collections.Generic;
-using Gameplay.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Managers
+namespace Gameplay.Managers
 {
     public class AIManager : MonoBehaviour
     {
-        private static AIManager _instance;
-        private NavMeshAgent _navMeshAgent;
-        public static AIManager Instance
-        {
-            get
-            {
-                return _instance;
-            }
-            private set
-            {
-                _instance = value;
-            }
-        }
-
-        public Transform Target;
-        public float RadiusAroundTarget = 0.5f;
-        public List<Enemy> Units = new List<Enemy>();
-
+        public List<Enemy.Enemy> units = new();
+        public static AIManager Instance { get; private set; }
+        
         private void Awake()
         {
             if (Instance == null)
@@ -35,33 +18,6 @@ namespace Managers
             }
 
             Destroy(gameObject);
-        }
-
-        private void Update()
-        {
-            if (Units.Count == 0) { return; }
-            
-            MakeAgentsCircleTarget();
-        }
-
-        public void RemoveUnit(Enemy unit)
-        {
-            Units.Remove(unit);
-        }
-
-        private void MakeAgentsCircleTarget()
-        {
-            for (int i = 0; i < Units.Count; i++)
-            {
-                _navMeshAgent = Units[i].agentController.agent;
-                if (!_navMeshAgent.isOnNavMesh || !Units[i].letAIManagerSetDestination) { continue; }
-
-                _navMeshAgent.SetDestination(new Vector3(
-                    Target.position.x + RadiusAroundTarget * Mathf.Cos(2 * Mathf.PI * i / Units.Count),
-                    Target.position.y,
-                    Target.position.z + RadiusAroundTarget * Mathf.Sin(2 * Mathf.PI * i / Units.Count)
-                ));
-            }
         }
     }
 }

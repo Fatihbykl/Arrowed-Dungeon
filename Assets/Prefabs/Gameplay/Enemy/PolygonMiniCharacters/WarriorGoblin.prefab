@@ -533,7 +533,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &3362143661151686215
 CapsuleCollider:
@@ -578,7 +578,7 @@ MonoBehaviour:
       upperBound: 0
       lowerBound: 0
     maxHealth:
-      baseValue: 100
+      baseValue: 1000
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
@@ -608,12 +608,13 @@ MonoBehaviour:
   - {fileID: 0}
   isRanged: 0
   projectileSpawnPosition: {fileID: 0}
-  healVFXPrefab: {fileID: 0}
+  healVFXPrefab: {fileID: 2486035236481326651, guid: 3143db565f4a5fc41ad870af2284fb53,
+    type: 3}
   hpBar: {fileID: 8458112113040388690}
   sphereRadius: 3
   waypointWaitTime: 2
   patrolSpeed: 2
-  stoppingDistance: 0.1
+  stoppingDistance: 1.5
   blinkIntensity: 5
   blinkDuration: 0.2
   player: {fileID: 0}
@@ -665,8 +666,8 @@ MonoBehaviour:
   _maxMidAirJumps: 1
   _useRootMotion: 0
   _rootMotionRotation: 0
-  _autoBraking: 0
-  _brakingDistance: 0.5
+  _autoBraking: 1
+  _brakingDistance: 2
   _stoppingDistance: 1
   groundMask:
     serializedVersion: 2

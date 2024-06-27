@@ -8,16 +8,25 @@ public class DynamicTextManager : MonoBehaviour
 {
 
     public static DynamicTextData defaultData;
+    public static DynamicTextData enemyHeal;
+    public static DynamicTextData playerHeal;
+    public static DynamicTextData playerDamage;
     public static GameObject canvasPrefab;
     public static Transform mainCamera;
 
     [SerializeField] private DynamicTextData _defaultData;
+    [SerializeField] private DynamicTextData _enemyHeal;
+    [SerializeField] private DynamicTextData _playerHeal;
+    [SerializeField] private DynamicTextData _playerDamage;
     [SerializeField] private GameObject _canvasPrefab;
     [SerializeField] private Transform _mainCamera;
 
     private void Awake()
     {
         defaultData = _defaultData;
+        enemyHeal = _enemyHeal;
+        playerHeal = _playerHeal;
+        playerDamage = _playerDamage;
         mainCamera = _mainCamera;
         canvasPrefab = _canvasPrefab;
     }

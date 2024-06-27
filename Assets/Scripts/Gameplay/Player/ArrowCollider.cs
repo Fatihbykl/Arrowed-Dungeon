@@ -1,5 +1,6 @@
 using System;
 using Gameplay.Interfaces;
+using Gameplay.Managers;
 using Gameplay.Player.DamageDealers;
 using Managers;
 using UnityEngine;
@@ -26,8 +27,6 @@ namespace Gameplay.Player
                 {
                     particle = Instantiate(arrowSO.hitParticlePrefab, transform.position, transform.rotation);
                 }
-                
-                AudioManager.instance.PlayArrowImpactSFX();
             }
 
             gameObject.GetComponent<MeshRenderer>().enabled = false;

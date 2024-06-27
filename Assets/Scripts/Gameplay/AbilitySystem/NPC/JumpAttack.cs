@@ -1,9 +1,11 @@
 using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using ECM.Common;
 using FSM;
 using Gameplay.Enemy;
 using Gameplay.Interfaces;
+using Gameplay.Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,6 +24,7 @@ namespace AbilitySystem.NPC
         private AnimationClip _clip;
         private AnimationEvent _event;
         private Vector3 _targetPos;
+        private Vector3 _targetVelocity;
         private GameObject _indicator;
         private float _circleScale;
         
@@ -35,8 +38,10 @@ namespace AbilitySystem.NPC
         public override void Activate(GameObject target)
         {
             _targetPos = _enemy.player.transform.position;
+            _targetVelocity = _enemy.player.GetComponent<Rigidbody>().velocity.onlyXZ();
             _enemy.transform.DOLookAt(_targetPos, 0.5f);
             _circleScale = damageRadius / 3.5f;
+            _targetPos += _targetVelocity * 1.5f;
             
             _indicator = Instantiate(indicator);
             _indicator.transform.position = _targetPos;
@@ -59,6 +64,8 @@ namespace AbilitySystem.NPC
         private void OnAnimationLand(GameObject sender)
         {
             if (sender != _enemy.gameObject) { return; }
+            
+            CinemachineShaker.Instance.ShakeCamera(1.5f, 1f);
             
             _particle = Instantiate(particle);
             _particle.transform.position = _targetPos;

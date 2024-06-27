@@ -1,9 +1,7 @@
-using System;
-using Gameplay.Loot;
 using Gameplay.Player;
 using UnityEngine;
 
-namespace Loot
+namespace Gameplay.Loot
 {
     public class CoinLoot : LootDrop
     {
@@ -13,6 +11,7 @@ namespace Loot
         {
             if (other.collider.CompareTag("Player"))
             {
+                Debug.Log(other.collider.gameObject.name);
                 Coin.Instance.AddCoin(1, coinType);
                 Destroy(gameObject);
             }

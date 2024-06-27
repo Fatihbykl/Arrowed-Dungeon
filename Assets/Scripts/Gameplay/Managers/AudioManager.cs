@@ -1,47 +1,48 @@
 using System;
 using UnityEngine;
 
-namespace Managers
+namespace Gameplay.Managers
 {
     public class AudioManager : MonoBehaviour
     {
-        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioSource audioObject;
         
-        [Header("Gameplay Sounds")]
-        [SerializeField] private SoundClip playerFootstep;
-        [SerializeField] private SoundClip arrowWhoosh;
-        [SerializeField] private SoundClip arrowImpact;
-        [SerializeField] private SoundClip coinsDrop;
-        
-        public static AudioManager instance { get; private set; }
+        public static AudioManager Instance { get; private set; }
 
         private void Awake()
         {
-            if (instance != null)
+            if (Instance != null)
             {
                 Debug.LogError("Found more than one Audio Manager in the scene.");
             }
-            instance = this;
+            Instance = this;
         }
 
-        public void PlayFootstepSFX()
+        public void PlaySoundFXClip(SoundClip clip, Transform spawnTransform)
         {
-            audioSource.PlayOneShot(playerFootstep.audioClip, playerFootstep.volume);
+            AudioSource audioSource = Instantiate(audioObject, spawnTransform.position, Quaternion.identity);
+
+            audioSource.clip = clip.audioClip;
+            audioSource.volume = clip.volume;
+            audioSource.Play();
+
+            float clipLength = audioSource.clip.length;
+            Destroy(audioSource.gameObject, clipLength);
         }
         
-        public void PlayArrowWooshSFX()
+        public void PlayRandomSoundFXClip(SoundClip[] clips, Transform spawnTransform)
         {
-            audioSource.PlayOneShot(arrowWhoosh.audioClip, arrowWhoosh.volume);
-        }
-        
-        public void PlayArrowImpactSFX()
-        {
-            audioSource.PlayOneShot(arrowImpact.audioClip, arrowImpact.volume);
-        }
-        
-        public void PlayArrowCoinsDropSFX()
-        {
-            audioSource.PlayOneShot(coinsDrop.audioClip, coinsDrop.volume);
+            int rand = UnityEngine.Random.Range(0, clips.Length);
+            var clip = clips[rand];
+            
+            AudioSource audioSource = Instantiate(audioObject, spawnTransform.position, Quaternion.identity);
+
+            audioSource.clip = clip.audioClip;
+            audioSource.volume = clip.volume;
+            audioSource.Play();
+
+            float clipLength = audioSource.clip.length;
+            Destroy(audioSource.gameObject, clipLength);
         }
     }
     

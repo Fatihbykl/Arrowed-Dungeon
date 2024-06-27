@@ -55,7 +55,7 @@ namespace Gameplay
             }
         }
         
-        public Vector3 GetTargetPositionLockedY(float y)
+        private Vector3 GetTargetPositionLockedY(float y)
         {
             _position = target.transform.position;
             _position.y = y;
