@@ -1,10 +1,9 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace InventorySystem.UI
+namespace Gameplay.InventorySystem.UI
 {
     public enum SlotType
     {

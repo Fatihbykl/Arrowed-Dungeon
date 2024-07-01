@@ -28,7 +28,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Tiny
+namespace VFX.SimpleTrail
 {
 	public class Trail : MonoBehaviour
 	{

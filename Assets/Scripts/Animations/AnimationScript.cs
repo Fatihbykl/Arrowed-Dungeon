@@ -1,85 +1,87 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class AnimationScript : MonoBehaviour
+namespace Animations
 {
-    public bool isAnimated = false;
-
-    public bool isRotating = false;
-    public bool isFloating = false;
-    public bool isScaling = false;
-
-    public Vector3 rotationAngle;
-    public float rotationSpeed;
-
-    public float floatSpeed;
-    private bool goingUp = true;
-    public float floatRate;
-    private float floatTimer;
-
-    public Vector3 startScale;
-    public Vector3 endScale;
-
-    private bool scalingUp = true;
-    public float scaleSpeed;
-    public float scaleRate;
-    private float scaleTimer;
-    
-    void Update()
+    public class AnimationScript : MonoBehaviour
     {
-        if (isAnimated)
+        public bool isAnimated = false;
+
+        public bool isRotating = false;
+        public bool isFloating = false;
+        public bool isScaling = false;
+
+        public Vector3 rotationAngle;
+        public float rotationSpeed;
+
+        public float floatSpeed;
+        private bool goingUp = true;
+        public float floatRate;
+        private float floatTimer;
+
+        public Vector3 startScale;
+        public Vector3 endScale;
+
+        private bool scalingUp = true;
+        public float scaleSpeed;
+        public float scaleRate;
+        private float scaleTimer;
+    
+        void Update()
         {
-            if (isRotating)
+            if (isAnimated)
             {
-                transform.Rotate(rotationAngle * rotationSpeed * Time.deltaTime);
-            }
-
-            if (isFloating)
-            {
-                floatTimer += Time.deltaTime;
-                Vector3 moveDir = new Vector3(0.0f, 0.0f, floatSpeed);
-                transform.Translate(moveDir);
-
-                if (goingUp && floatTimer >= floatRate)
+                if (isRotating)
                 {
-                    goingUp = false;
-                    floatTimer = 0;
-                    floatSpeed = -floatSpeed;
+                    transform.Rotate(rotationAngle * rotationSpeed * Time.deltaTime);
                 }
 
-                else if (!goingUp && floatTimer >= floatRate)
+                if (isFloating)
                 {
-                    goingUp = true;
-                    floatTimer = 0;
-                    floatSpeed = +floatSpeed;
-                }
-            }
+                    floatTimer += Time.deltaTime;
+                    Vector3 moveDir = new Vector3(0.0f, 0.0f, floatSpeed);
+                    transform.Translate(moveDir);
 
-            if (isScaling)
-            {
-                scaleTimer += Time.deltaTime;
+                    if (goingUp && floatTimer >= floatRate)
+                    {
+                        goingUp = false;
+                        floatTimer = 0;
+                        floatSpeed = -floatSpeed;
+                    }
 
-                if (scalingUp)
-                {
-                    transform.localScale = Vector3.Lerp(transform.localScale, endScale, scaleSpeed * Time.deltaTime);
-                }
-                else if (!scalingUp)
-                {
-                    transform.localScale = Vector3.Lerp(transform.localScale, startScale, scaleSpeed * Time.deltaTime);
+                    else if (!goingUp && floatTimer >= floatRate)
+                    {
+                        goingUp = true;
+                        floatTimer = 0;
+                        floatSpeed = +floatSpeed;
+                    }
                 }
 
-                if (scaleTimer >= scaleRate)
+                if (isScaling)
                 {
+                    scaleTimer += Time.deltaTime;
+
                     if (scalingUp)
                     {
-                        scalingUp = false;
+                        transform.localScale = Vector3.Lerp(transform.localScale, endScale, scaleSpeed * Time.deltaTime);
                     }
                     else if (!scalingUp)
                     {
-                        scalingUp = true;
+                        transform.localScale = Vector3.Lerp(transform.localScale, startScale, scaleSpeed * Time.deltaTime);
                     }
 
-                    scaleTimer = 0;
+                    if (scaleTimer >= scaleRate)
+                    {
+                        if (scalingUp)
+                        {
+                            scalingUp = false;
+                        }
+                        else if (!scalingUp)
+                        {
+                            scalingUp = true;
+                        }
+
+                        scaleTimer = 0;
+                    }
                 }
             }
         }

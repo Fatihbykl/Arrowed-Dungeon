@@ -1,6 +1,6 @@
 ﻿using System;
-using AbilitySystem;
-using Managers;
+using Gameplay.AbilitySystem;
+using Gameplay.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

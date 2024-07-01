@@ -1,9 +1,8 @@
+using Animations;
 using Cysharp.Threading.Tasks;
-using FSM;
-using Gameplay.Enemy;
 using UnityEngine;
 
-namespace AbilitySystem.NPC
+namespace Gameplay.AbilitySystem.NPC
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Melee Spin Attack")]
     public class MeleeSpinAttack : AbilityBase
@@ -11,11 +10,11 @@ namespace AbilitySystem.NPC
         public float focusTimeBeforeSpin;
         public float spinLength;
         
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
 
         public override void OnCreate(GameObject owner)
         {
-            _enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy.Enemy>();
         }
 
         public override void Activate(GameObject target)

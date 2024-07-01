@@ -1,39 +1,40 @@
 using System.Collections.Generic;
 using Gameplay.Interfaces;
-using Gameplay.Player.DamageDealers;
+using Gameplay.Managers;
 using UnityEngine;
 
 namespace Gameplay.DamageDealers
 {
     public class WeaponDamageDealer : MonoBehaviour
     {
-        private bool canDealDamage;
-        private List<IDamageable> hasDealtDamage;
-
         [SerializeField] private TransformTypes transformTypes;
         [SerializeField] private float weaponLength;
         [SerializeField] private LayerMask damageTo;
+        [SerializeField] private SoundClip[] hitSounds;
 
-        private int weaponDamage;
+        private List<IDamageable> _hasDealtDamage;
+        private bool _canDealDamage;
+        private int _weaponDamage;
 
         private void Start()
         {
-            canDealDamage = false;
-            hasDealtDamage = new List<IDamageable>();
+            _canDealDamage = false;
+            _hasDealtDamage = new List<IDamageable>();
         }
 
         private void Update()
         {
-            if (canDealDamage)
+            if (_canDealDamage)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, GetTransformVector(), out hit, weaponLength, damageTo))
                 {
                     IDamageable hitObject = hit.transform.gameObject.GetComponent<IDamageable>();
-                    if (hitObject != null && !hasDealtDamage.Contains(hitObject))
+                    if (hitObject != null && !_hasDealtDamage.Contains(hitObject))
                     {
-                        hasDealtDamage.Add(hitObject);
-                        hitObject.TakeDamage(weaponDamage);
+                        _hasDealtDamage.Add(hitObject);
+                        hitObject.TakeDamage(_weaponDamage);
+                        AudioManager.Instance.PlayRandomSoundFXClip(hitSounds, transform);
                     }
                 }
             }
@@ -65,14 +66,14 @@ namespace Gameplay.DamageDealers
 
         public void OnStartDealDamage(int damage)
         {
-            weaponDamage = damage;
-            canDealDamage = true;
-            hasDealtDamage.Clear();
+            _weaponDamage = damage;
+            _canDealDamage = true;
+            _hasDealtDamage.Clear();
         }
     
         public void OnEndDealDamage()
         {
-            canDealDamage = false;
+            _canDealDamage = false;
         }
 
         private void OnDrawGizmos()

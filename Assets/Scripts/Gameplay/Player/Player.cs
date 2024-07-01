@@ -1,13 +1,13 @@
 using System;
-using AbilitySystem;
+using Animations;
 using FSM;
+using Gameplay.AbilitySystem;
 using Gameplay.Interfaces;
+using Gameplay.InventorySystem;
 using Gameplay.Managers;
-using InventorySystem;
-using Managers;
-using Microlight.MicroBar;
-using StatSystem;
+using Gameplay.StatSystem;
 using UI.Dynamic_Floating_Text.Scripts;
+using UI.MicroBar;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -24,8 +24,8 @@ namespace Gameplay.Player
         public Projectile arrowPrefab;
         public GameObject visualEffects;
 
-        [Header("Sound Effects")] 
-        public SoundClip[] arrowReleaseSoundEffects;
+        [Header("Sound Effects")]
+        public SoundClip[] footstepSounds;
 
         [HideInInspector] public GameObject currentTarget;
         [HideInInspector] public Animator animator;
@@ -34,6 +34,7 @@ namespace Gameplay.Player
 
         private CapsuleCollider _capsuleCollider;
         private InputAction _attackAction;
+        private AudioSource _audioSource;
         private PlayerStats _playerStats;
         private float _lastAttackTime;
         private GameObject _arrow;
@@ -47,6 +48,7 @@ namespace Gameplay.Player
             _attackAction = GetComponent<PlayerInput>().actions["Attack"];
             _capsuleCollider = GetComponent<CapsuleCollider>();
             _playerStats = GetComponent<PlayerStats>();
+            _audioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
             _fov = GetComponent<FieldOfView>();
 
@@ -119,7 +121,6 @@ namespace Gameplay.Player
             projectile.transform.LookAt(targetPos);
             projectile.target = currentTarget;
             
-            AudioManager.Instance.PlayRandomSoundFXClip(arrowReleaseSoundEffects, bow.transform);
             CinemachineShaker.Instance.ShakeCamera(1f, 0.5f);
 
             OnReleaseBowString();
@@ -135,6 +136,11 @@ namespace Gameplay.Player
         {
             arrow.SetActive(true);
             HoldBowString?.Invoke();
+        }
+
+        public void Footsteps()
+        {
+            AudioManager.Instance.PlayRandomSoundFXWithSource(_audioSource, footstepSounds);
         }
 
         private void Die()

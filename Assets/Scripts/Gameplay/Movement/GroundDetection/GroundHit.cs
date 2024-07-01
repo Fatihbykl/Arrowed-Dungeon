@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ECM.Components
+namespace Gameplay.Movement.GroundDetection
 {
     public struct GroundHit
     {

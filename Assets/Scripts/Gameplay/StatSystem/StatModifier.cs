@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace StatSystem
+namespace Gameplay.StatSystem
 {
 	public enum StatModType
 	{

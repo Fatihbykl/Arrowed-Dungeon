@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FSM
+namespace Animations
 {
     public static class AnimationParameters
     {

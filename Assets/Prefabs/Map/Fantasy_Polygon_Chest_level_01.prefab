@@ -352,7 +352,7 @@ Transform:
   - {fileID: 3832049044669091399}
   - {fileID: 8590505909517102194}
   m_Father: {fileID: 2912170761022759802}
-  m_LocalEulerAnglesHint: {x: -21.056917, y: 180, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4835677150904891638
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +711,7 @@ GameObject:
   - component: {fileID: 2785472371509426277}
   - component: {fileID: 3049585352295219088}
   - component: {fileID: 6516349145555966043}
+  - component: {fileID: 6969534361064243183}
   - component: {fileID: 4565817163525343645}
   m_Layer: 0
   m_Name: Fantasy_Polygon_Chest_level_01
@@ -771,12 +772,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loots:
-  - {fileID: 565315404657279301, guid: a3b186d97c3b162489f65ab57cf175a6, type: 3}
-  - {fileID: 565315404657279301, guid: a3b186d97c3b162489f65ab57cf175a6, type: 3}
-  - {fileID: 565315404657279301, guid: a3b186d97c3b162489f65ab57cf175a6, type: 3}
-  - {fileID: 565315404657279301, guid: a3b186d97c3b162489f65ab57cf175a6, type: 3}
+  - lootsWithWeight:
+    - prefab: {fileID: 4543749832274054588, guid: f125eefc0d9f78b43bbe6190f0d64690,
+        type: 3}
+      weight: 20
+      count: 5
+  - lootsWithWeight:
+    - prefab: {fileID: 4543749832274054588, guid: f125eefc0d9f78b43bbe6190f0d64690,
+        type: 3}
+      weight: 20
+      count: 1
   spawnPosition: {fileID: 2912170761022759802}
   delayAfterEveryItem: 0.2
+--- !u!114 &6969534361064243183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7056306788243686916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef43c2829fa9abd42844e5fb885dc8f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chestOpenSound:
+    audioClip: {fileID: 8300000, guid: bef67d13262e0354b966296b2f605343, type: 3}
+    volume: 1
 --- !u!65 &4565817163525343645
 BoxCollider:
   m_ObjectHideFlags: 0

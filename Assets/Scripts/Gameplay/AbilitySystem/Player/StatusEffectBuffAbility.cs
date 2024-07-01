@@ -1,7 +1,7 @@
-using StatusEffectSystem;
+using Gameplay.StatusEffectSystem;
 using UnityEngine;
 
-namespace AbilitySystem.Player
+namespace Gameplay.AbilitySystem.Player
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/Player/Status Effect Buff Ability")]
     public class StatusEffectBuffAbility : AbilityBase

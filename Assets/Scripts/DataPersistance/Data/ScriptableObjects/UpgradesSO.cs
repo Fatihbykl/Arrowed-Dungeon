@@ -1,55 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
+using Events;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Upgradeable Item", menuName = "Shop Items/Upgradeable")]
-public class UpgradesSO : ShopBaseSO
+namespace DataPersistance.Data.ScriptableObjects
 {
-    public int currentLevel;
-    public float currentStat;
-    public UpgradesSO nextLevel;
-
-    public override void BuyItem()
+    [CreateAssetMenu(fileName = "New Upgradeable Item", menuName = "Shop Items/Upgradeable")]
+    public class UpgradesSO : ShopBaseSO
     {
-        UpgradesSO next = this.nextLevel;
-        if (next != null)
-        {
-            this.cost = next.cost;
-            this.currentLevel = next.currentLevel;
-            this.nextLevel = next.nextLevel;
-            this.currentStat = next.currentStat;
-            ShopEvents.ItemUpgraded.Invoke(this);
-        }
-    }
+        public int currentLevel;
+        public float currentStat;
+        public UpgradesSO nextLevel;
 
-    public override string GetCost()
-    {
-        var next = nextLevel;
-        if (next != null ) 
-        { 
-            return next.cost.ToString();
-        }
-        else 
+        public override void BuyItem()
         {
-            return "MAX";
+            UpgradesSO next = this.nextLevel;
+            if (next != null)
+            {
+                this.cost = next.cost;
+                this.currentLevel = next.currentLevel;
+                this.nextLevel = next.nextLevel;
+                this.currentStat = next.currentStat;
+                ShopEvents.ItemUpgraded.Invoke(this);
+            }
         }
-    }
 
-    public override float GetCurrentStat()
-    {
-        return currentStat;
-    }
+        public override string GetCost()
+        {
+            var next = nextLevel;
+            if (next != null ) 
+            { 
+                return next.cost.ToString();
+            }
+            else 
+            {
+                return "MAX";
+            }
+        }
 
-    public override string GetTitleInfoText()
-    {
-        if (nextLevel != null) 
+        public override float GetCurrentStat()
         {
-            return $"{currentLevel} -> {currentLevel + 1}";
+            return currentStat;
         }
-        else
+
+        public override string GetTitleInfoText()
         {
-            return "Max Lv.";
-        }
+            if (nextLevel != null) 
+            {
+                return $"{currentLevel} -> {currentLevel + 1}";
+            }
+            else
+            {
+                return "Max Lv.";
+            }
         
+        }
     }
 }

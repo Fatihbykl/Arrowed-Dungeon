@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 // ****************************************************************************************************
 // Controller for health bar. Handles animating health bar and healthbar appearance.
@@ -15,7 +13,7 @@ using UnityEditor;
 // Health bar uses width parameter to display HP amount in SpriteRenderers
 // and fillAmount parameter to display HP amount in Images
 // ****************************************************************************************************
-namespace Microlight.MicroBar {
+namespace UI.MicroBar {
     enum HealthBarType { SpriteRenderer, Image }
 
     [ExecuteInEditMode]

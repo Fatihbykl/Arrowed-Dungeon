@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace AbilitySystem
+namespace Gameplay.AbilitySystem
 {
     public class AbilityHolder : MonoBehaviour
     {

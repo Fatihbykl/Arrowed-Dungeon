@@ -1,8 +1,7 @@
-using Gameplay.Loot;
-using InventorySystem;
+using Gameplay.InventorySystem;
 using UnityEngine;
 
-namespace Loot
+namespace Gameplay.Loot
 {
     public class ItemLoot : LootDrop
     {

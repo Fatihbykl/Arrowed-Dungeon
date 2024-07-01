@@ -1,8 +1,8 @@
+using Gameplay.StatSystem;
 using NaughtyAttributes;
-using StatSystem;
 using UnityEngine;
 
-namespace InventorySystem
+namespace Gameplay.InventorySystem
 {
     public enum ItemType
     {

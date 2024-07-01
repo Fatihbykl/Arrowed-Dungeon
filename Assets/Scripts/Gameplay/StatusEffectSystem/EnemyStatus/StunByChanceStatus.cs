@@ -1,10 +1,10 @@
+using Animations;
 using Cysharp.Threading.Tasks;
-using FSM;
-using Gameplay.Enemy;
-using StatSystem;
+using Gameplay.Managers;
+using Gameplay.StatSystem;
 using UnityEngine;
 
-namespace StatusEffectSystem.EnemyStatus
+namespace Gameplay.StatusEffectSystem.EnemyStatus
 {
     [CreateAssetMenu(menuName = "Custom/Status Effect/Enemy/Stun by Chance Status")]
     public class StunByChanceStatus : StatusEffectBase
@@ -15,11 +15,12 @@ namespace StatusEffectSystem.EnemyStatus
         private GameObject _particle;
         private StatModifier _modifier;
         
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         public override void ApplyStatus(GameObject target)
         {
-            _enemy = target.GetComponent<Enemy>();
+            _enemy = target.GetComponent<Enemy.Enemy>();
 
+            AudioManager.Instance.PlayRandomSoundFXClip(soundClips, _enemy.transform);
             if (!_enemy.isInStatusEffect && Random.Range(0f, 1f) < stunProbability)
             {
                 StunEnemy();

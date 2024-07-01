@@ -1,9 +1,10 @@
-﻿using ECM.Common;
-using System;
+﻿using System;
 using System.Collections;
+using Gameplay.Movement.Common;
+using Gameplay.Movement.GroundDetection;
 using UnityEngine;
 
-namespace ECM.Components
+namespace Gameplay.Movement
 {
     /// <summary>
     /// Character Movement.

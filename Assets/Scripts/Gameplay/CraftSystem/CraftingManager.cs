@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Gameplay.InventorySystem;
 using Gameplay.Player;
-using InventorySystem;
-using InventorySystem.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CraftSystem
+namespace Gameplay.CraftSystem
 {
     public class CraftingManager : MonoBehaviour
     {

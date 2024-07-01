@@ -1,3 +1,4 @@
+using Gameplay.Player;
 using UnityEngine;
 using UnityEngine.UIElements;
 

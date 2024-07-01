@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AbilitySystem;
+using Gameplay.AbilitySystem;
 using UnityEngine;
 
-namespace InventorySystem
+namespace Gameplay.InventorySystem
 {
     public class Inventory : MonoBehaviour
     {

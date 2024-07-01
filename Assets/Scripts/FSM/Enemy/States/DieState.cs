@@ -1,7 +1,8 @@
 ﻿using System;
+using Animations;
 using Cysharp.Threading.Tasks;
+using Gameplay.Loot;
 using Gameplay.Managers;
-using Managers;
 using UnityEngine;
 using UnityHFSM;
 
@@ -15,10 +16,11 @@ namespace FSM.Enemy.States
         public override void OnEnter()
         {
             base.OnEnter();
-            
-            _enemy.agentController.speed = 0;
+
             AIManager.Instance.units.Remove(_enemy);
+            _enemy.agentController.speed = 0;
             _enemy.agentController.agent.ResetPath();
+            _enemy.GetComponent<LootSpawner>().SpawnItems();
             Die();
         }
 

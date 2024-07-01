@@ -1,8 +1,7 @@
 using System;
+using DataPersistance.Data.ScriptableObjects;
 using Gameplay.Interfaces;
 using Gameplay.Managers;
-using Gameplay.Player.DamageDealers;
-using Managers;
 using UnityEngine;
 
 namespace Gameplay.Player

@@ -1,9 +1,9 @@
 using Cysharp.Threading.Tasks;
-using Gameplay.Enemy;
-using StatSystem;
+using Gameplay.Managers;
+using Gameplay.StatSystem;
 using UnityEngine;
 
-namespace StatusEffectSystem.EnemyStatus
+namespace Gameplay.StatusEffectSystem.EnemyStatus
 {
     [CreateAssetMenu(menuName = "Custom/Status Effect/Enemy/Poison Debuff Status")]
     public class PoisonDebuffStatus : StatusEffectBase
@@ -13,14 +13,16 @@ namespace StatusEffectSystem.EnemyStatus
         [Range(0, 1f)]
         public int attackDamageDebuff;
         
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         private GameObject _particle;
         private StatModifier _armorModifier;
         private StatModifier _damageModifier;
         
         public override void ApplyStatus(GameObject target)
         {
-            _enemy = target.GetComponent<Enemy>();
+            _enemy = target.GetComponent<Enemy.Enemy>();
+            
+            AudioManager.Instance.PlayRandomSoundFXClip(soundClips, _enemy.transform);
             if (!_enemy.isInStatusEffect)
             {
                 _enemy.isInStatusEffect = true;

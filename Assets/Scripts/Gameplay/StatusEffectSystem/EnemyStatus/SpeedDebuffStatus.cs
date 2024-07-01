@@ -1,9 +1,9 @@
 using Cysharp.Threading.Tasks;
-using Gameplay.Enemy;
-using StatSystem;
+using Gameplay.Managers;
+using Gameplay.StatSystem;
 using UnityEngine;
 
-namespace StatusEffectSystem.EnemyStatus
+namespace Gameplay.StatusEffectSystem.EnemyStatus
 {
     [CreateAssetMenu(menuName = "Custom/Status Effect/Enemy/Speed Debuff Status")]
     public class SpeedDebuffStatus : StatusEffectBase
@@ -11,13 +11,15 @@ namespace StatusEffectSystem.EnemyStatus
         [Range(0, 1)]
         public float slowPercent;
         
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         private GameObject _particle;
         private StatModifier _modifier;
 
         public override void ApplyStatus(GameObject target)
         {
-            _enemy = target.GetComponent<Enemy>();
+            _enemy = target.GetComponent<Enemy.Enemy>();
+            
+            AudioManager.Instance.PlayRandomSoundFXClip(soundClips, _enemy.transform);
             if (!_enemy.isInStatusEffect)
             {
                 _enemy.isInStatusEffect = true;

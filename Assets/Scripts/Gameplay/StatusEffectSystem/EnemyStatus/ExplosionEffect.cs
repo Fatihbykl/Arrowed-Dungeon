@@ -1,8 +1,8 @@
-using Gameplay.Enemy;
 using Gameplay.Interfaces;
+using Gameplay.Managers;
 using UnityEngine;
 
-namespace StatusEffectSystem.EnemyStatus
+namespace Gameplay.StatusEffectSystem.EnemyStatus
 {
     [CreateAssetMenu(menuName = "Custom/Status Effect/Enemy/Explosion Effect")]
     public class ExplosionEffect : StatusEffectBase
@@ -11,13 +11,14 @@ namespace StatusEffectSystem.EnemyStatus
         public int explosionDamage;
         public LayerMask enemyMask;
         
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         
         public override void ApplyStatus(GameObject target)
         {
-            _enemy = target.GetComponent<Enemy>();
+            _enemy = target.GetComponent<Enemy.Enemy>();
             
             Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, explosionRange, enemyMask);
+            AudioManager.Instance.PlayRandomSoundFXClip(soundClips, _enemy.transform);
             if (colliders.Length > 0)
             {
                 for (int i = 0; i < colliders.Length; i++)

@@ -1,8 +1,6 @@
 using System;
-using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace InventorySystem
+namespace Gameplay.InventorySystem
 {
     [Serializable]
     public class InventorySlot

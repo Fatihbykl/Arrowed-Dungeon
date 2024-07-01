@@ -1,6 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Managers;
+using Gameplay.Managers;
 using UnityEngine;
 
 namespace Animations

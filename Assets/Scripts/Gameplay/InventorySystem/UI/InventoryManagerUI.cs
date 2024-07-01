@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace InventorySystem.UI
+namespace Gameplay.InventorySystem.UI
 {
     public class InventoryManagerUI : MonoBehaviour
     {

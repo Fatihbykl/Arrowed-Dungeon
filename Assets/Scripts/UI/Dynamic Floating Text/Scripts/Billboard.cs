@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Billboard : MonoBehaviour
+namespace UI.Dynamic_Floating_Text.Scripts
 {
-
-    // Standard Billboard script which makes canvas objects always look
-    // at the camera
-    
-    void LateUpdate()
+    public class Billboard : MonoBehaviour
     {
-        transform.LookAt(transform.position + DynamicTextManager.mainCamera.forward);
+
+        // Standard Billboard script which makes canvas objects always look
+        // at the camera
+    
+        void LateUpdate()
+        {
+            transform.LookAt(transform.position + DynamicTextManager.mainCamera.forward);
+        }
     }
 }

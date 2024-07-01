@@ -1,38 +1,40 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Gameplay.Managers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class LevelButtons : MonoBehaviour
+namespace UI
 {
-    [SerializeField]
-    private ManageScenes manageScenes;
-    private List<Button> buttons;
-
-    private void OnEnable()
+    public class LevelButtons : MonoBehaviour
     {
-        UIDocument document = GetComponent<UIDocument>();
+        [SerializeField]
+        private ManageScenes manageScenes;
+        private List<Button> buttons;
 
-        buttons = document.rootVisualElement.Query<Button>(className: "level-button").ToList();
-
-        foreach (Button button in buttons)
+        private void OnEnable()
         {
-            button.RegisterCallback<ClickEvent>(OnLevelButtonClicked);
-        }
-    }
+            UIDocument document = GetComponent<UIDocument>();
 
-    private void OnDisable()
-    {
-        foreach (Button button in buttons)
+            buttons = document.rootVisualElement.Query<Button>(className: "level-button").ToList();
+
+            foreach (Button button in buttons)
+            {
+                button.RegisterCallback<ClickEvent>(OnLevelButtonClicked);
+            }
+        }
+
+        private void OnDisable()
         {
-            button.UnregisterCallback<ClickEvent>(OnLevelButtonClicked);
+            foreach (Button button in buttons)
+            {
+                button.UnregisterCallback<ClickEvent>(OnLevelButtonClicked);
+            }
         }
-    }
 
-    private void OnLevelButtonClicked(ClickEvent evt)
-    {
-        var targetButton = evt.target as Button;
-        manageScenes.LoadScene($"Level_{targetButton.text}");
+        private void OnLevelButtonClicked(ClickEvent evt)
+        {
+            var targetButton = evt.target as Button;
+            manageScenes.LoadScene($"Level_{targetButton.text}");
+        }
     }
 }

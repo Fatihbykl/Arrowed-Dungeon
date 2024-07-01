@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using AbilitySystem;
+using Gameplay.AbilitySystem;
 using Gameplay.Managers;
 using UnityEngine;
 using UnityHFSM;

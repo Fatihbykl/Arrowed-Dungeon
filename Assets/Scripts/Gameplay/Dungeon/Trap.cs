@@ -1,8 +1,8 @@
 using System;
+using Animations;
 using Cysharp.Threading.Tasks;
 using FSM;
 using Gameplay.Interfaces;
-using Gameplay.Player.DamageDealers;
 using UnityEngine;
 
 namespace Gameplay.Dungeon

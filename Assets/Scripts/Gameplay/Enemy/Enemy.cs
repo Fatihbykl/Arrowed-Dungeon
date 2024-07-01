@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AbilitySystem;
-using AbilitySystem.NPC;
+using Animations;
 using Cysharp.Threading.Tasks;
 using FSM.Enemy;
 using FSM.Enemy.States;
 using Gameplay.Interfaces;
 using UnityEngine;
 using UnityHFSM;
-using Microlight.MicroBar;
 using NaughtyAttributes;
 using DG.Tweening;
-using ECM.Common;
-using ECM.Controllers;
 using FSM;
+using Gameplay.AbilitySystem;
 using Gameplay.DamageDealers;
-using Managers;
-using StatSystem;
+using Gameplay.Managers;
+using Gameplay.Movement.Common;
+using Gameplay.Movement.Controllers;
+using Gameplay.StatSystem;
 using UI.Dynamic_Floating_Text.Scripts;
+using UI.MicroBar;
 using Random = UnityEngine.Random;
 
 namespace Gameplay.Enemy
@@ -43,13 +43,13 @@ namespace Gameplay.Enemy
     {
         [Header("Stats")]
         [HorizontalLine(color: EColor.White, height: 1f)]
-        [Space(10)]
+        [Space(5)]
         public EnemyStats enemyStats;
         
         
         [Header("References")]
         [HorizontalLine(color: EColor.White, height: 1f)]
-        [Space(10)]
+        [Space(5)]
         public AbilityBase[] abilities;
         public Transform[] waypoints;
         public bool isRanged;
@@ -61,7 +61,7 @@ namespace Gameplay.Enemy
 
         [Header("Agent Settings")]
         [HorizontalLine(color: EColor.White, height: 1f)]
-        [Space(10)]
+        [Space(5)]
         [InfoBox("Awareness size of the enemy.")]
         public float sphereRadius;
         public float waypointWaitTime;
@@ -70,9 +70,13 @@ namespace Gameplay.Enemy
         
         [Header("Take Damage Blink Settings")]
         [HorizontalLine(color: EColor.White, height: 1f)]
-        [Space(10)]
+        [Space(5)]
         public float blinkIntensity = 5f;
         public float blinkDuration = 0.2f;
+
+        [Header("Sound Effects")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(5)]
+        public SoundClip[] footsteps;
+        public SoundClip healSoundEffect;
         
         [HideInInspector] public Player.Player player;
         [HideInInspector] public List<AbilityHolder> abilityHolders;
@@ -92,6 +96,7 @@ namespace Gameplay.Enemy
 
         private StateMachine<EnemyState> EnemyFSM;
         private WeaponDamageDealer damageDealer;
+        private AudioSource _audioSource;
         
         // Events
         public event Action<GameObject> RangedAutoAttackEvent;
@@ -103,24 +108,26 @@ namespace Gameplay.Enemy
         {
             // variables
             playerMask = LayerMask.GetMask("Player");
-            rb = GetComponent<Rigidbody>();
+            
             playerDetected = false;
             waypointReached = false;
             canMoveNextWaypoint = true;
             letAIManagerSetDestination = false;
             currentWaypoint = 0;
-            damageDealer = GetComponentInChildren<WeaponDamageDealer>();
             
             // event
             enemyStats.chaseSpeed.StatChanged += OnSpeedStatChanged;
             enemyStats.health.StatChanged += OnHealthChanged;
             
             // components
-            agentController = GetComponent<BaseAgentController>();
-            animator = GetComponent<Animator>();
-            capsuleCollider = GetComponent<CapsuleCollider>();
             meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-            
+            damageDealer = GetComponentInChildren<WeaponDamageDealer>();
+            agentController = GetComponent<BaseAgentController>();
+            capsuleCollider = GetComponent<CapsuleCollider>();
+            _audioSource = GetComponent<AudioSource>();
+            animator = GetComponent<Animator>();
+            rb = GetComponent<Rigidbody>();
+
             // hp bar initialization
             enemyStats.InitHealth();
             hpBar.Initialize(enemyStats.health.BaseValue);
@@ -213,6 +220,7 @@ namespace Gameplay.Enemy
             Destroy(particle, 1f);
             CreateFloatingText(healthAmount, DynamicTextManager.enemyHeal);
             enemyStats.health.AddModifier(new StatModifier(healthAmount, StatModType.Flat));
+            AudioManager.Instance.PlaySoundFXClip(healSoundEffect, transform);
         }
 
         public void StartDealDamage()
@@ -250,6 +258,11 @@ namespace Gameplay.Enemy
             JumpAttackLandEvent?.Invoke(gameObject);
         }
 
+        public void Footsteps()
+        {
+            AudioManager.Instance.PlayRandomSoundFXWithSource(_audioSource, footsteps);
+        }
+
         private void OnSpeedStatChanged()
         {
             agentController.speed = enemyStats.chaseSpeed.Value;
@@ -258,11 +271,6 @@ namespace Gameplay.Enemy
         private void OnHealthChanged()
         {
             hpBar.UpdateHealthBar(enemyStats.health.Value);
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(transform.position, 5/2f);
         }
     }
 }

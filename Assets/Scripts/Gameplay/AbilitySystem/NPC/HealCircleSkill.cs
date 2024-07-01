@@ -1,14 +1,12 @@
 using System.Linq;
+using Animations;
 using Cysharp.Threading.Tasks;
-using FSM;
-using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using Gameplay.Managers;
-using Managers;
+using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace AbilitySystem.NPC
+namespace Gameplay.AbilitySystem.NPC
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Heal Circle")]
     public class HealCircleSkill : AbilityBase
@@ -20,15 +18,19 @@ namespace AbilitySystem.NPC
         public float healDuration;
         public int healAmountEveryInterval;
 
-        private Enemy _enemy;
-        private Enemy _lowHpEnemy;
+        private Enemy.Enemy _enemy;
+        private Enemy.Enemy _lowHpEnemy;
         private Vector3 _healCirclePosition;
         private GameObject _particle;
         private float _circleScale;
 
+        [Header("Sound Effects")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(5)]
+        public SoundClip castingSound;
+        
+
         public override void OnCreate(GameObject owner)
         {
-            _enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy.Enemy>();
         }
 
         public override void Activate(GameObject target)
@@ -38,6 +40,7 @@ namespace AbilitySystem.NPC
             _circleScale = circleRadius / 4; // adjustment for match visual effect with overlap sphere
             _enemy.animator.SetTrigger(AnimationParameters.HealSkill);
 
+            AudioManager.Instance.PlaySoundFXClip(castingSound, _enemy.transform);
             CreateHealCircle();
             HealInterval();
         }

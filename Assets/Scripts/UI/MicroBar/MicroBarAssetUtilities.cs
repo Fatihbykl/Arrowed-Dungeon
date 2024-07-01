@@ -5,7 +5,7 @@ using UnityEngine;
 // ****************************************************************************************************
 // Utility functions for managing assets (search assets...)
 // ****************************************************************************************************
-namespace Microlight.MicroBar {
+namespace UI.MicroBar {
     public static class MicroBarAssetUtilities {
         /// <summary>
         /// Returns GameObject from Assets folder with specified name

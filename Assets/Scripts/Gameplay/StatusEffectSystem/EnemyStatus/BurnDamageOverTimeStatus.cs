@@ -1,8 +1,8 @@
 using Cysharp.Threading.Tasks;
-using Gameplay.Enemy;
+using Gameplay.Managers;
 using UnityEngine;
 
-namespace StatusEffectSystem.EnemyStatus
+namespace Gameplay.StatusEffectSystem.EnemyStatus
 {
     [CreateAssetMenu(menuName = "Custom/Status Effect/Enemy/Burn Damage Over Time Status")]
     public class BurnDamageOverTimeStatus : StatusEffectBase
@@ -10,12 +10,14 @@ namespace StatusEffectSystem.EnemyStatus
         public float interval;
         public int damageEveryInterval;
         
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         private GameObject _particle;
         
         public override void ApplyStatus(GameObject target)
         {
-            _enemy = target.GetComponent<Enemy>();
+            _enemy = target.GetComponent<Enemy.Enemy>();
+            
+            AudioManager.Instance.PlayRandomSoundFXClip(soundClips, _enemy.transform);
             if (!_enemy.isInStatusEffect)
             {
                 _enemy.isInStatusEffect = true;

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using Gameplay.InventorySystem;
 using Gameplay.Player;
-using InventorySystem;
 using UnityEngine;
 
-namespace CraftSystem
+namespace Gameplay.CraftSystem
 {
     [CreateAssetMenu(menuName = "Custom/Crafting/Recipe")]
     public class CraftingRecipe : ScriptableObject

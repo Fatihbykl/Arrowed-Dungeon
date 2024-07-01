@@ -1,3 +1,4 @@
+using Gameplay.Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -5,20 +6,17 @@ namespace Gameplay.Loot
 {
     public class LootDrop : MonoBehaviour
     {
+        public SoundClip lootCollectSound;
+        
         private Vector3 _velocity = Vector3.up;
         private Rigidbody _rb;
 
         private void Start()
         {
-            _velocity *= Random.Range(4f, 6f);
-            _velocity += new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+            _velocity *= Random.Range(3f, 5f);
+            _velocity += new Vector3(Random.Range(-1f, 1f), 0, Random.Range(0f, -3f));
             _rb = GetComponent<Rigidbody>();
-            _rb.velocity = _velocity;
-        }
-
-        private void Update()
-        {
-            //_rb.position += _velocity * Time.deltaTime;
+            _rb.AddForce(_velocity, ForceMode.Impulse);
         }
     }
 }

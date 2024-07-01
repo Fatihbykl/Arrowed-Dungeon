@@ -1,10 +1,9 @@
+using Animations;
 using Cysharp.Threading.Tasks;
-using FSM;
-using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using UnityEngine;
 
-namespace AbilitySystem.NPC
+namespace Gameplay.AbilitySystem.NPC
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Mage AoE")]
     public class MageAoeSkill : AbilityBase
@@ -14,14 +13,14 @@ namespace AbilitySystem.NPC
         public float circleRadius;
         public float waitBeforeExplosion;
         
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         private float _circleScale;
         private GameObject _particle;
         private Vector3 _explosionPosition;
 
         public override void OnCreate(GameObject owner)
         {
-            _enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy.Enemy>();
         }
 
         public override void Activate(GameObject target)

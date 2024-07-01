@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CraftSystem
+namespace Gameplay.CraftSystem
 {
     public class CraftingSlotUI : MonoBehaviour
     {

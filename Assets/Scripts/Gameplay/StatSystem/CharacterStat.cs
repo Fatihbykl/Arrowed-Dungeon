@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace StatSystem
+namespace Gameplay.StatSystem
 {
 	public enum StatID
 	{

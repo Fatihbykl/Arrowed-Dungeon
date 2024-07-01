@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using InventorySystem;
-using StatSystem;
+using Gameplay.InventorySystem;
+using Gameplay.StatSystem;
 using UnityEngine;
 
 namespace Gameplay.Player

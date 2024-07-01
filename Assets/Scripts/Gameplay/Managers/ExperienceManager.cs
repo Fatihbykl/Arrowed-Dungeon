@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Managers
+namespace Gameplay.Managers
 {
     public class ExperienceManager : MonoBehaviour
     {

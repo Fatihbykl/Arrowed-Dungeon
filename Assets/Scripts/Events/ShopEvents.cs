@@ -1,11 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using DataPersistance.Data.ScriptableObjects;
 
-public static class ShopEvents
+namespace Events
 {
-    public static Action<ShopBaseSO> ItemUpgraded;
-    public static Action<ShopBaseSO> SkillBought;
-    public static Action PurchaseFailed;
+    public static class ShopEvents
+    {
+        public static Action<ShopBaseSO> ItemUpgraded;
+        public static Action<ShopBaseSO> SkillBought;
+        public static Action PurchaseFailed;
+    }
 }

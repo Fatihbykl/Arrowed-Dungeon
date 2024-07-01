@@ -1,9 +1,9 @@
+using Animations;
 using Cysharp.Threading.Tasks;
-using FSM;
 using Gameplay.Player;
 using UnityEngine;
 
-namespace AbilitySystem.Player
+namespace Gameplay.AbilitySystem.Player
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/Player/Dash Ability")]
     public class DashAbility : AbilityBase

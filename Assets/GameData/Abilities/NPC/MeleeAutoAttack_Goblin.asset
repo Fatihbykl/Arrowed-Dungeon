@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cde63aef6ba2c24392c4ea258b3b71f, type: 3}
+  m_Name: MeleeAutoAttack_Goblin
+  m_EditorClassIdentifier: 
+  cooldown: 2
+  castTime: 1
+  castRange: 2.01
+  skillType: 0
+  icon: {fileID: 0}
+  soundEffect:
+  - audioClip: {fileID: 8300000, guid: b2340a62300a92947a962f3090eeb51c, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: 2a4e4e66d461cb544ba268017169f358, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: bb9cb24d8c134ee42a974ff02e20397d, type: 3}
+    volume: 1

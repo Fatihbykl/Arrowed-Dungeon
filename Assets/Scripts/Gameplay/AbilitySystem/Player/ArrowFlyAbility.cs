@@ -1,4 +1,4 @@
-using AbilitySystem;
+using Animations;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using FSM;
@@ -15,6 +15,10 @@ namespace Gameplay.AbilitySystem.Player
         public float secondsBeforeArrowFall;
         public float damageRadius;
         public GameObject aoePrefab;
+
+        [Header("Sound Effects")]
+        public SoundClip flySound;
+        public SoundClip arrowHitSound;
 
         private Gameplay.Player.Player _player;
         private float _circleScale;
@@ -34,6 +38,8 @@ namespace Gameplay.AbilitySystem.Player
             var muzzle = _player.visualEffects.transform.GetChild(arrowFlyParticleIndex);
             muzzle.transform.position = _player.handSlot.transform.position;
             muzzle.gameObject.SetActive(true);
+            
+            AudioManager.Instance.PlaySoundFXClip(flySound, _player.transform);
 
             position.y = 0.1f;
             AoEAttack(position);
@@ -50,6 +56,7 @@ namespace Gameplay.AbilitySystem.Player
             await UniTask.WaitForSeconds(0.1f);
             
             CinemachineShaker.Instance.ShakeCamera(1.5f, 1f);
+            AudioManager.Instance.PlaySoundFXClip(arrowHitSound, _player.transform);
 
             DealDamage(position);
         }

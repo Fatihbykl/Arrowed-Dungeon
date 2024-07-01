@@ -1,15 +1,12 @@
-using System;
-using Cysharp.Threading.Tasks;
+using Animations;
 using DG.Tweening;
-using ECM.Common;
-using FSM;
-using Gameplay.Enemy;
 using Gameplay.Interfaces;
 using Gameplay.Managers;
+using Gameplay.Movement.Common;
+using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace AbilitySystem.NPC
+namespace Gameplay.AbilitySystem.NPC
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Jump Attack")]
     public class JumpAttack : AbilityBase
@@ -19,8 +16,11 @@ namespace AbilitySystem.NPC
         public int abilityDamage;
         public GameObject particle;
 
+        [Header("Sound Effects")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(5)]
+        public SoundClip smashSoundEffect;
+
         private GameObject _particle;
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         private AnimationClip _clip;
         private AnimationEvent _event;
         private Vector3 _targetPos;
@@ -30,7 +30,7 @@ namespace AbilitySystem.NPC
         
         public override void OnCreate(GameObject owner)
         {
-            _enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy.Enemy>();
             _enemy.JumpAttackJumpEvent += OnAnimationJump;
             _enemy.JumpAttackLandEvent += OnAnimationLand;
         }
@@ -66,6 +66,7 @@ namespace AbilitySystem.NPC
             if (sender != _enemy.gameObject) { return; }
             
             CinemachineShaker.Instance.ShakeCamera(1.5f, 1f);
+            AudioManager.Instance.PlaySoundFXClip(smashSoundEffect, _enemy.transform);
             
             _particle = Instantiate(particle);
             _particle.transform.position = _targetPos;

@@ -1,8 +1,7 @@
 using System;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace AbilitySystem
+namespace Gameplay.AbilitySystem
 {
     [Serializable]
     public enum SkillType

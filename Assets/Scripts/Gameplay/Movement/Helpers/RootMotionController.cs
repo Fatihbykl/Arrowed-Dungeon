@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ECM.Helpers
+namespace Gameplay.Movement.Helpers
 {
     /// <summary>
     ///

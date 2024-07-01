@@ -1,27 +1,30 @@
+using Animations;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using FSM;
-using Gameplay.Enemy;
 using Gameplay.Interfaces;
+using Gameplay.Managers;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace AbilitySystem.NPC
+namespace Gameplay.AbilitySystem.NPC
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Kamikaze Attack")]
     public class KamikazeAttack : AbilityBase
     {
         public float timeBeforeExplode;
-        [FormerlySerializedAs("explosionRange")] public float explosionRadius;
+        public float explosionRadius;
         public GameObject particle;
 
+        [Header("Sound Effects")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(5)]
+        public SoundClip explosionSound;
+        
         private GameObject _particle;
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         private float _circleScale;
 
         public override void OnCreate(GameObject owner)
         {
-            _enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy.Enemy>();
         }
 
         public override void Activate(GameObject target)
@@ -42,6 +45,10 @@ namespace AbilitySystem.NPC
         private async void StartExploding()
         {
             await UniTask.WaitForSeconds(timeBeforeExplode);
+            
+            CinemachineShaker.Instance.ShakeCamera(2f, 1f);
+            AudioManager.Instance.PlaySoundFXClip(explosionSound, _enemy.transform);
+            
             _enemy.TriggerDie();
             DealDamage();
             DestroyObjects();

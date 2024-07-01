@@ -1,6 +1,6 @@
 using System;
 
-namespace StatSystem
+namespace Gameplay.StatSystem
 {
     [Serializable]
     public class IntegerStat : CharacterStat<int>

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Gameplay.Player.DamageDealers
+﻿namespace Gameplay.DamageDealers
 {
     public enum TransformTypes
     {

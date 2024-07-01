@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+using Events;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Skill Item", menuName = "Shop Items/Skill")]
-public class SkillsSO : ShopBaseSO
+namespace DataPersistance.Data.ScriptableObjects
 {
-    public override void BuyItem()
+    [CreateAssetMenu(fileName = "New Skill Item", menuName = "Shop Items/Skill")]
+    public class SkillsSO : ShopBaseSO
     {
-        ShopEvents.SkillBought.Invoke(this);
-    }
+        public override void BuyItem()
+        {
+            ShopEvents.SkillBought.Invoke(this);
+        }
 
-    public override string GetCost()
-    {
-        return this.cost.ToString();
-    }
+        public override string GetCost()
+        {
+            return this.cost.ToString();
+        }
 
-    public override float GetCurrentStat()
-    {
-        return 0;
-    }
+        public override float GetCurrentStat()
+        {
+            return 0;
+        }
 
-    public override string GetTitleInfoText()
-    {
-        return "";
+        public override string GetTitleInfoText()
+        {
+            return "";
+        }
     }
 }

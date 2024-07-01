@@ -1,7 +1,10 @@
-﻿using Events;
+﻿using DataPersistance;
+using DataPersistance.Data;
+using DataPersistance.Data.ScriptableObjects;
+using Events;
 using UnityEngine;
 
-namespace Managers
+namespace Gameplay.Managers
 {
     public class GameManager : MonoBehaviour, IDataPersistence
     {

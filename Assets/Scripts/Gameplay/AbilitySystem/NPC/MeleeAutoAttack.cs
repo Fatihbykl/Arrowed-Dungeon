@@ -1,18 +1,20 @@
+using Animations;
 using DG.Tweening;
-using FSM;
-using Gameplay.Enemy;
+using Gameplay.Managers;
 using UnityEngine;
 
-namespace AbilitySystem.NPC
+namespace Gameplay.AbilitySystem.NPC
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Melee Auto Attack")]
     public class MeleeAutoAttack : AbilityBase
     {
-        private Enemy _enemy;
+        public SoundClip[] soundEffect;
+        
+        private Enemy.Enemy _enemy;
 
         public override void OnCreate(GameObject owner)
         {
-            _enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy.Enemy>();
         }
 
         public override void Activate(GameObject target)
@@ -22,6 +24,8 @@ namespace AbilitySystem.NPC
             _enemy.agentController.agent.ResetPath();
             _enemy.transform.DOLookAt(_enemy.player.transform.position, .4f);
             _enemy.animator.SetTrigger(AnimationParameters.Attack);
+            
+            AudioManager.Instance.PlayRandomSoundFXClip(soundEffect, _enemy.transform);
         }
 
         public override void BeginCooldown()

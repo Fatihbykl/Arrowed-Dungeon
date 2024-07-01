@@ -1,9 +1,9 @@
 using Cysharp.Threading.Tasks;
 using Gameplay.Player;
-using StatSystem;
+using Gameplay.StatSystem;
 using UnityEngine;
 
-namespace StatusEffectSystem.PlayerStatus
+namespace Gameplay.StatusEffectSystem.PlayerStatus
 {
     [CreateAssetMenu(menuName = "Custom/Status Effect/Player/Attack Speed Buff Status")]
     public class AttackSpeedBuffStatus : StatusEffectBase
@@ -11,13 +11,13 @@ namespace StatusEffectSystem.PlayerStatus
         [Range(0, 1f)]
         public float attackSpeedPercentage;
 
-        private Player _player;
+        private Player.Player _player;
         private PlayerStats _playerStats;
         private StatModifier _attackSpeedModifier;
         
         public override void ApplyStatus(GameObject target)
         {
-            _player = target.GetComponent<Player>();
+            _player = target.GetComponent<Player.Player>();
             _playerStats = _player.GetComponent<PlayerStats>();
 
             BuffPlayer();

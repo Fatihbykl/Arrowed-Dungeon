@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cde63aef6ba2c24392c4ea258b3b71f, type: 3}
+  m_Name: MeleeAutoAttack_IntermediateSkeleton
+  m_EditorClassIdentifier: 
+  cooldown: 2
+  castTime: 1
+  castRange: 2.01
+  skillType: 0
+  icon: {fileID: 0}
+  soundEffect:
+  - audioClip: {fileID: 8300000, guid: fe3befe451e385249b20dc4b17ff4f60, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: 334f55b9b50ce694ea33d7697bfd4716, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: 59d96185c4debfc498b4d427c7fcbf2e, type: 3}
+    volume: 1

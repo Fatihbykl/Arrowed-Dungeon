@@ -20,6 +20,8 @@ namespace Gameplay.Managers
 
         public void PlaySoundFXClip(SoundClip clip, Transform spawnTransform)
         {
+            if (clip == null) { return; }
+            
             AudioSource audioSource = Instantiate(audioObject, spawnTransform.position, Quaternion.identity);
 
             audioSource.clip = clip.audioClip;
@@ -32,6 +34,8 @@ namespace Gameplay.Managers
         
         public void PlayRandomSoundFXClip(SoundClip[] clips, Transform spawnTransform)
         {
+            if (clips.Length == 0) { return; }
+            
             int rand = UnityEngine.Random.Range(0, clips.Length);
             var clip = clips[rand];
             
@@ -43,6 +47,18 @@ namespace Gameplay.Managers
 
             float clipLength = audioSource.clip.length;
             Destroy(audioSource.gameObject, clipLength);
+        }
+        
+        public void PlayRandomSoundFXWithSource(AudioSource audioSource, SoundClip[] clips)
+        {
+            if (clips.Length == 0 || audioSource == null) { return; }
+            
+            int rand = UnityEngine.Random.Range(0, clips.Length);
+            var clip = clips[rand];
+
+            audioSource.clip = clip.audioClip;
+            audioSource.volume = clip.volume;
+            audioSource.Play();
         }
     }
     

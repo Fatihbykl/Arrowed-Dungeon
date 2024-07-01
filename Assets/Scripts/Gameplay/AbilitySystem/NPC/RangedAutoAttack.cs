@@ -1,11 +1,8 @@
-using System;
+using Animations;
 using DG.Tweening;
-using FSM;
-using Gameplay;
-using Gameplay.Enemy;
 using UnityEngine;
 
-namespace AbilitySystem.NPC
+namespace Gameplay.AbilitySystem.NPC
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Ranged Auto Attack")]
     public class RangedAutoAttack : AbilityBase
@@ -13,7 +10,7 @@ namespace AbilitySystem.NPC
         [Header("Projectile Settings")]
         public Projectile projectilePrefab;
         
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         private Vector3 _targetPosition;
         private Animator _animator;
         private AnimationEvent _animationEvent;
@@ -21,7 +18,7 @@ namespace AbilitySystem.NPC
 
         public override void OnCreate(GameObject owner)
         {
-            _enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy.Enemy>();
             _enemy.RangedAutoAttackEvent += OnSendProjectile;
         }
 

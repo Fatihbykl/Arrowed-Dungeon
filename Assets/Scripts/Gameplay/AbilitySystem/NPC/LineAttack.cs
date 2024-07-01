@@ -1,13 +1,10 @@
-using System;
+using Animations;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using FSM;
 using Gameplay.DamageDealers;
-using Gameplay.Enemy;
-using Gameplay.Interfaces;
 using UnityEngine;
 
-namespace AbilitySystem.NPC
+namespace Gameplay.AbilitySystem.NPC
 {
     [CreateAssetMenu(menuName = "Custom/Abilities/NPC/Line Attack")]
     public class LineAttack : AbilityBase
@@ -15,7 +12,7 @@ namespace AbilitySystem.NPC
         public ParticleSystem slashCharge;
         public GameObject slashImpact;
 
-        private Enemy _enemy;
+        private Enemy.Enemy _enemy;
         private GameObject _indicator;
         private Vector3 _targetDirection;
         private ParticleSystem _slashCharge;
@@ -24,7 +21,7 @@ namespace AbilitySystem.NPC
 
         public override void OnCreate(GameObject owner)
         {
-            _enemy = owner.GetComponent<Enemy>();
+            _enemy = owner.GetComponent<Enemy.Enemy>();
             _enemy.LineAttackHitEvent += OnHitGround;
         }
 

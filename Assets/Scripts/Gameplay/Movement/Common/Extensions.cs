@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ECM.Common
+namespace Gameplay.Movement.Common
 {
     public static class Extensions
     {

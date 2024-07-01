@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace ECM.Controllers
+namespace Gameplay.Movement.Controllers
 {
     /// <summary>
     /// Base Agent (NavMesh) Controller.

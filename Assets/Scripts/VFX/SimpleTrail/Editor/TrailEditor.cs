@@ -26,15 +26,13 @@
 
 #if UNITY_EDITOR
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace Tiny
+namespace VFX.SimpleTrail.Editor
 {
 	[CustomEditor(typeof(Trail), true)]
-	public class TrailEditor : Editor
+	public class TrailEditor : UnityEditor.Editor
 	{
 		public enum Edition
 		{

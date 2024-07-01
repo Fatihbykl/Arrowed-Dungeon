@@ -1,6 +1,7 @@
 using System;
 using Gameplay.Interfaces;
-using StatusEffectSystem;
+using Gameplay.Managers;
+using Gameplay.StatusEffectSystem;
 using UnityEngine;
 
 namespace Gameplay
@@ -14,6 +15,10 @@ namespace Gameplay
         public float rotateSpeed = 200f;
         public GameObject muzzlePrefab;
         public GameObject hitPrefab;
+
+        [Header("Sound Effects")]
+        public SoundClip[] arrowHitSoundEffects;
+        public SoundClip[] arrowReleaseSoundEffects;
         
         [Header("PREDICTION")] 
         public float maxDistancePredict = 100;
@@ -38,6 +43,7 @@ namespace Gameplay
                 _targetRb = target.GetComponent<Rigidbody>();
             }
             
+            AudioManager.Instance.PlayRandomSoundFXClip(arrowReleaseSoundEffects, transform);
             InstantiateMuzzleParticle();
         }
 
@@ -68,6 +74,7 @@ namespace Gameplay
             if (other.gameObject.TryGetComponent(out IDamageable damageable))
             {
                 damageable.TakeDamage(10);
+                AudioManager.Instance.PlayRandomSoundFXClip(arrowHitSoundEffects, other.gameObject.transform);
             }
             if (statusEffect)
             {

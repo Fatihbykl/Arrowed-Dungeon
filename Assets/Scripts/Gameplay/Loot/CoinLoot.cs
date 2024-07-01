@@ -1,3 +1,4 @@
+using Gameplay.Managers;
 using Gameplay.Player;
 using UnityEngine;
 
@@ -11,8 +12,8 @@ namespace Gameplay.Loot
         {
             if (other.collider.CompareTag("Player"))
             {
-                Debug.Log(other.collider.gameObject.name);
                 Coin.Instance.AddCoin(1, coinType);
+                AudioManager.Instance.PlaySoundFXClip(lootCollectSound, transform);
                 Destroy(gameObject);
             }
         }

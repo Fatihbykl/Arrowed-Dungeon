@@ -2,7 +2,6 @@ using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Gameplay.Interfaces;
-using Gameplay.Player.DamageDealers;
 using UnityEngine;
 
 namespace Gameplay.Dungeon

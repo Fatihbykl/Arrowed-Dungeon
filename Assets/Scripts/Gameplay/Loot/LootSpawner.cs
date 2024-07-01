@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Animations;
 using Cysharp.Threading.Tasks;
 using FSM;
 using NaughtyAttributes;
@@ -22,6 +23,7 @@ namespace Gameplay.Loot
     {
         public ChestLootWithWeights[] lootsWithWeight;
     }
+    
     public class LootSpawner : MonoBehaviour
     {
         [InfoBox("Each element has their own weighted list. It means if you create one element and fill " +
@@ -31,19 +33,16 @@ namespace Gameplay.Loot
         public Transform spawnPosition;
         public float delayAfterEveryItem;
         
-        private bool _hasBeenCollected;
         private WeightedList<ChestLootWithWeights>[] _weightedLists;
 
         private void Awake()
         {
             _weightedLists = new WeightedList<ChestLootWithWeights>[loots.Count];
-            Debug.Log(loots.Count);
+
             for (int iteration = 0; iteration < loots.Count; iteration++)
             {
                 for (int lootIndex = 0; lootIndex < loots[iteration].lootsWithWeight.Length; lootIndex++)
                 {
-                    Debug.Log(iteration);
-                    Debug.Log(_weightedLists.Length);
                     _weightedLists[iteration] = new WeightedList<ChestLootWithWeights>();
                     
                     var lootObject = loots[iteration].lootsWithWeight[lootIndex];
@@ -52,27 +51,7 @@ namespace Gameplay.Loot
             }
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            OpenChest();
-        }
-
-        public void OpenChest()
-        {
-            if (_hasBeenCollected) { return; }
-            
-            GetComponent<Animator>().SetTrigger(AnimationParameters.OpenChest);
-        }
-
-        public void Loot()
-        {
-            if (_hasBeenCollected) { return; }
-
-            _hasBeenCollected = true;
-            SpawnItems();
-        }
-
-        private async void SpawnItems()
+        public async void SpawnItems()
         {
             for (int i = 0; i < _weightedLists.Length; i++)
             {

@@ -1,12 +1,10 @@
-using System;
 using System.Linq;
-using AbilitySystem;
-using InventorySystem;
+using Gameplay.AbilitySystem;
 using UI.Joystick.Joysticks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Managers
+namespace Gameplay.Managers
 {
     public class InGameUIManager : MonoBehaviour
     {
