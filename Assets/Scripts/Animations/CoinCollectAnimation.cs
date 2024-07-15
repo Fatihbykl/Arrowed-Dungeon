@@ -18,7 +18,7 @@ namespace Animations
 
         private void Start()
         {
-            player = GameManager.instance.playerObject.transform;
+            player = GameManager.Instance.playerObject.transform;
             particlesSystem = GetComponent<ParticleSystem>();
             particles = new ParticleSystem.Particle[100];
             canMoveStart = false;

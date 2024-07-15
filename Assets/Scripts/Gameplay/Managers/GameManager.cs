@@ -1,4 +1,5 @@
-﻿using DataPersistance;
+﻿using Animations;
+using DataPersistance;
 using DataPersistance.Data;
 using DataPersistance.Data.ScriptableObjects;
 using Events;
@@ -6,87 +7,31 @@ using UnityEngine;
 
 namespace Gameplay.Managers
 {
-    public class GameManager : MonoBehaviour, IDataPersistence
+    public class GameManager : MonoBehaviour
     {
         public GameObject playerObject;
         
-        public GameObject keysObject;
         public GameObject gate;
-        public int currentLevelCoin = 0;
-        public int currentLevelBrokenArrows = 0;
-        public int collectedKeyCount = 0;
-        public int totalKeyCount = 0;
-        public int currentLevel = 0;
+        public SoundClip gateSound;
 
-        public int playerBaseHealth { get; private set; } = 1;
-        public float playerSpeed { get; private set; } = 4;
-        public int playerShield { get; private set; } = 1;
-
-        public static GameManager instance { get; private set; }
+        public static GameManager Instance { get; private set; }
 
         private void Awake()
         {
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = 300;
             
-            if (instance != null)
+            if (Instance != null)
             {
                 Debug.LogError("Found more than one Game Manager in the scene.");
             }
-            instance = this;
+            Instance = this;
         }
 
-        private void OnEnable()
+        public void PuzzleCompleted()
         {
-            if (keysObject != null) { totalKeyCount = keysObject.transform.childCount; }
-
-            GameplayEvents.ArrowDead += onArrowDead;
-            ShopEvents.ItemUpgraded += OnItemUpgraded;
-        }
-
-        private void OnDisable()
-        {
-            GameplayEvents.ArrowDead -= onArrowDead;
-            ShopEvents.ItemUpgraded -= OnItemUpgraded;
-        }
-
-        public void CollectedKey()
-        {
-            collectedKeyCount++;
-            if (collectedKeyCount >= totalKeyCount)
-            {
-                gate.GetComponent<Animator>().Play("Open");
-            }
-        }
-
-        public void onArrowDead(string arrowType, int coinReward)
-        {
-            currentLevelCoin += coinReward;
-            currentLevelBrokenArrows++;
-        }
-
-        private void OnItemUpgraded(ShopBaseSO item)
-        {
-            if (item.title == ItemTitle.Health) { playerBaseHealth = (int)item.GetCurrentStat(); }
-            else if (item.title == ItemTitle.Shield) { playerShield = (int)item.GetCurrentStat(); }
-            else if (item.title == ItemTitle.Speed) { playerSpeed = item.GetCurrentStat(); }
-        }
-
-        public void LoadData(GameData data)
-        {
-            currentLevel = data.currentLevel;
-            playerBaseHealth = data.health;
-            playerSpeed = data.speed;
-            playerShield = data.shield;
-        }
-
-        public void SaveData(GameData data)
-        {
-            data.currentLevel = currentLevel;
-            data.coins += currentLevelCoin;
-            data.health = playerBaseHealth;
-            data.speed = playerSpeed;
-            data.shield = playerShield;
+            gate.GetComponent<Animator>().SetTrigger(AnimationParameters.OpenGate);
+            //AudioManager.Instance.PlaySoundFXClip(gateSound, gate.transform);
         }
     }
 }

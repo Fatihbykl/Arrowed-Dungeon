@@ -13,12 +13,6 @@ namespace Gameplay.TangramGame.Controllers
 
         private bool shouldDrag;
         private Vector3 touch;
-        
-        private void OnPreRoundOver()
-        {
-            current = null;
-            shouldDrag = false;
-        }
 
         private void Update()
         {
@@ -42,13 +36,9 @@ namespace Gameplay.TangramGame.Controllers
                 
                 var worldPos = cam.ScreenToWorldPoint(screenPos);
                 var ray = cam.ScreenPointToRay(screenPos);
-                //var hits = Physics2D.RaycastAll(transform.position, (transform.position - worldPos).normalized, 10f);
                 var hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity);
-                //var hits = Physics.Raycast(ray);
                 RaycastHit2D hit = new RaycastHit2D();
                 
-                Debug.Log(hits.Length);
-
                 foreach (var h in hits)
                 {
                     if (hit.collider == null) hit = h;

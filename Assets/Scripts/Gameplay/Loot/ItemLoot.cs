@@ -7,9 +7,9 @@ namespace Gameplay.Loot
     {
         public Item item;
         
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
-            if (other.collider.CompareTag("Player"))
+            if (other.CompareTag("Player"))
             {
                 Inventory.Instance.AddItem(item, 1);
                 Destroy(gameObject);

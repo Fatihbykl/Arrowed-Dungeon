@@ -12,7 +12,7 @@ namespace Gameplay.Managers
 
         private void Start()
         {
-            var abilityHolders = GameManager.instance.playerObject.GetComponents<AbilityHolder>().ToList();
+            var abilityHolders = GameManager.Instance.playerObject.GetComponents<AbilityHolder>().ToList();
             for (var i = 0; i < abilityHolders.Count; i++)
             {
                 var abilityHolder = abilityHolders[i];

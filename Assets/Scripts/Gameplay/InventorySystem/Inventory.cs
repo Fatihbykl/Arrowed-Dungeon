@@ -101,5 +101,10 @@ namespace Gameplay.InventorySystem
         {
             return inventorySlots.FirstOrDefault(slot => slot.item.id == item.id);
         }
+
+        public bool HasId(string id)
+        {
+            return inventorySlots.Any(slot => slot.item.id == id);
+        }
     }
 }

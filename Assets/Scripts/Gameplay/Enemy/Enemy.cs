@@ -154,7 +154,7 @@ namespace Gameplay.Enemy
         {
             EnemyFSM.Init();
 
-            player = GameManager.instance.playerObject.GetComponent<Player.Player>();
+            player = GameManager.Instance.playerObject.GetComponent<Player.Player>();
             PrepareAbilities();
 
             hpBar.transform.LookAt(hpBar.transform.position + Camera.main.transform.rotation * Vector3.back, Camera.main.transform.rotation * Vector3.back);

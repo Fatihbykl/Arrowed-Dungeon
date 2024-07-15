@@ -7,15 +7,15 @@ namespace Gameplay.TangramGame.GridSystem
     [Serializable]
     public class TileContent : IEquatable<TileContent>
     {
-        public Guid id;
+        public string id;
         
         public Color color;
         
         private HashSet<Vector2Int> offsetPieces;
 
-        public TileContent(HashSet<Vector2Int> offsetPieces, Color color)
+        public TileContent(string id, HashSet<Vector2Int> offsetPieces, Color color)
         {
-            id = Guid.NewGuid();
+            this.id = id;
             this.color = color;
             this.offsetPieces = offsetPieces;
         }

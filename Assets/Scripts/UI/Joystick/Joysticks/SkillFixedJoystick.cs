@@ -34,14 +34,14 @@ namespace UI.Joystick.Joysticks
             
             if (skillType == SkillType.Directional)
             {
-                _indicator = Instantiate(directionalIndicator, GameManager.instance.playerObject.transform, false);
+                _indicator = Instantiate(directionalIndicator, GameManager.Instance.playerObject.transform, false);
                 _indicator.transform.localPosition = _indicatorResetPos;
                 _indicator.SetActive(false);
             }
 
             if (skillType == SkillType.Regional)
             {
-                _indicator = Instantiate(regionalIndicator, GameManager.instance.playerObject.transform);
+                _indicator = Instantiate(regionalIndicator, GameManager.Instance.playerObject.transform);
                 _indicator.transform.localPosition = _indicatorResetPos;
                 _indicator.SetActive(false);
             }

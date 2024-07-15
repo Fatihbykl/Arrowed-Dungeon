@@ -22,5 +22,6 @@ namespace UI.Joystick.Joysticks
             background.gameObject.SetActive(false);
             base.OnPointerUp(eventData);
         }
+        
     }
 }

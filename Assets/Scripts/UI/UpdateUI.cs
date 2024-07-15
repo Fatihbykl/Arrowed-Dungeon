@@ -57,9 +57,7 @@ namespace UI
 
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
-            keyText.text = $"{0}/{GameManager.instance.totalKeyCount}";
-            coinText.text = GameManager.instance.collectedKeyCount.ToString();
-            healthText.text = GameManager.instance.playerBaseHealth.ToString();
+            
         }
 
         private void OnDisable()
@@ -106,7 +104,7 @@ namespace UI
 
         private void OnKeyAnimationFinished()
         {
-            keyText.text = $"{GameManager.instance.collectedKeyCount.ToString()}/{GameManager.instance.totalKeyCount.ToString()}";
+            //keyText.text = $"{GameManager.Instance.collectedKeyCount.ToString()}/{GameManager.Instance.totalKeyCount.ToString()}";
         
             DotweenAnimations.DoPunchAnimation(keyText, new Vector3(0.3f, 0.3f, 0.3f), 0.2f, Ease.InOutElastic);
             DotweenAnimations.DoPunchAnimation(keyIcon, new Vector3(0.3f, 0.3f, 0.3f), 0.2f, Ease.InOutElastic);
@@ -115,11 +113,7 @@ namespace UI
 
         public void onArrowDead(string arrowType, int arrowReward)
         {
-            var coins = GameManager.instance.currentLevelCoin.ToString();
-            var brokenArrows = GameManager.instance.currentLevelBrokenArrows.ToString();
-
-            coinText.text = coins;
-            brokenArrowText.text = brokenArrows;
+ 
         }
     }
 }

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Gameplay.TangramGame.GridSystem;
 using UnityEngine;
 
-namespace TangramGame.Scripts.GridSystem
+namespace Gameplay.TangramGame.GridSystem
 {
     public static class GridUtility
     {
@@ -28,7 +27,7 @@ namespace TangramGame.Scripts.GridSystem
                 tiles.RemoveAt(randomIndex);
                 generatedTiles.Add(randomOriginTile);
 
-                var newContent = new TileContent(new HashSet<Vector2Int>(), Random.ColorHSV(0, 1, 0.6f, 0.8f, 0.7f, 1f, 1f, 1f));
+                var newContent = new TileContent("",new HashSet<Vector2Int>(), Random.ColorHSV(0, 1, 0.6f, 0.8f, 0.7f, 1f, 1f, 1f));
                 var pivots = new List<Vector2Int>();
                 pivots.Add(randomOriginTile);
                 

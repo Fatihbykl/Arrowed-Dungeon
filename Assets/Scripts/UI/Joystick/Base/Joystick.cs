@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace UI.Joystick.Base
@@ -130,6 +131,12 @@ namespace UI.Joystick.Base
         }
 
         public virtual void OnPointerUp(PointerEventData eventData)
+        {
+            input = Vector2.zero;
+            handle.anchoredPosition = Vector2.zero;
+        }
+
+        private void OnDisable()
         {
             input = Vector2.zero;
             handle.anchoredPosition = Vector2.zero;

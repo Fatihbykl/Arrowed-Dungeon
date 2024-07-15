@@ -1,8 +1,10 @@
 using System;
 using Cinemachine;
 using Gameplay.Managers;
+using Gameplay.TangramGame.Controllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Gameplay.TangramGame
 {
@@ -10,31 +12,46 @@ namespace Gameplay.TangramGame
     {
         public CinemachineVirtualCamera mainCam;
         public CinemachineVirtualCamera tangramCam;
+        public Camera realCamera;
+        public LayerMask cullingMaskInTangram;
         public GameObject mainUI;
+        public GameObject tangramUI;
+        [FormerlySerializedAs("gameController")] public TangramGameController tangramGameController;
 
         private bool _isOpen;
-        
+        private LayerMask _defaultMask;
+
         private void Start()
         {
-            GameManager.instance.playerObject.GetComponent<PlayerInput>().actions["OpenTangram"].performed +=
-                x => OnOpenTangram();
+            _defaultMask = realCamera.cullingMask;
         }
 
-        private void OnOpenTangram()
+        private void OnTriggerEnter(Collider other)
         {
-            if (_isOpen)
-            {
-                tangramCam.Priority = 9;
-                mainUI.SetActive(true);
-                _isOpen = false;
-            }
-            else
-            {
-                tangramCam.Priority = 11;
-                mainUI.SetActive(false);
-                _isOpen = true;
-            }
+            OpenTangram();
+        }
+
+        public void OpenTangram()
+        {
+            if (_isOpen) { return; }
             
+            tangramCam.Priority = 11;
+            mainUI.SetActive(false);
+            tangramUI.SetActive(true);
+            _isOpen = true;
+            tangramGameController.ShowFoundPieces();
+            realCamera.cullingMask = cullingMaskInTangram;
+        }
+
+        public void CloseTangram()
+        {
+            if (!_isOpen) { return; }
+            
+            tangramCam.Priority = 9;
+            mainUI.SetActive(true);
+            tangramUI.SetActive(false);
+            _isOpen = false;
+            realCamera.cullingMask = _defaultMask;
         }
     }
 }
