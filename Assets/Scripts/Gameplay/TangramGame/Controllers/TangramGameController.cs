@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Events;
 using Gameplay.InventorySystem;
 using Gameplay.Managers;
 using Gameplay.TangramGame.GridObjects;
@@ -56,9 +57,7 @@ namespace Gameplay.TangramGame.Controllers
             
             var patterns = CreateContents();
             var placementOffset = Mathf.Max(w, h);
-
-            float delay = 0f;
-        
+            
             foreach (var pattern in patterns)
             {
                 var circle = Random.insideUnitCircle.normalized * cellScale;
@@ -109,7 +108,7 @@ namespace Gameplay.TangramGame.Controllers
 
         private void EndRound()
         {
-            GameManager.Instance.PuzzleCompleted();
+            EventManager.EmitEvent(EventStrings.PuzzleCompleted);
         }
 
         private void OnContentPicked(TileContentObject obj)

@@ -1,5 +1,6 @@
 using System;
 using Animations;
+using Events;
 using FSM;
 using Gameplay.AbilitySystem;
 using Gameplay.Interfaces;
@@ -152,6 +153,8 @@ namespace Gameplay.Player
             animator.SetLayerWeight(1, 0);
             animator.SetTrigger(AnimationParameters.Die);
             this.enabled = false;
+            
+            EventManager.EmitEvent(EventStrings.LevelLost, 2.5f);
         }
 
         private void ToggleAttackMode()

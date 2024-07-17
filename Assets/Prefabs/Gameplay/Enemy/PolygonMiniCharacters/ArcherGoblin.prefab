@@ -82,6 +82,8 @@ GameObject:
   - component: {fileID: 83459896771790022}
   - component: {fileID: 7749776343179292459}
   - component: {fileID: 7102875530383112137}
+  - component: {fileID: 8585498799458956165}
+  - component: {fileID: 5835739024808818221}
   m_Layer: 6
   m_Name: SK_Dungeon_GoblinWarriorFemale_01
   m_TagString: Untagged
@@ -258,6 +260,17 @@ MonoBehaviour:
   stoppingDistance: 5
   blinkIntensity: 5
   blinkDuration: 0.2
+  footsteps:
+  - audioClip: {fileID: 8300000, guid: 2babaf302bf2f0e4ea67923450d20901, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: 5af856329ec1a3d4aaaddb00f5fbde93, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: 235826dafd0a392419f057ba1160f22b, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: d942c19b65d418444af22089f602aaf9, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: 92e3568f1450b744d8ab907389478956, type: 3}
+    volume: 1
   healSoundEffect:
     audioClip: {fileID: 8300000, guid: 618c7927a6f34234a8075342e046245a, type: 3}
     volume: 0.1
@@ -358,6 +371,123 @@ MonoBehaviour:
   _ledgeOffset: 0
   _castDistance: 0.5
   _triggerInteraction: 1
+--- !u!82 &8585498799458956165
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465531431957803155}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -2111638783384233300, guid: d7537045e00029d4fabd860bfc6e2fc1,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 5
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &5835739024808818221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465531431957803155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0d8e53fbe5995418d75b6d95280311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loots:
+  - lootsWithWeight:
+    - prefab: {fileID: 4543749832274054588, guid: f125eefc0d9f78b43bbe6190f0d64690,
+        type: 3}
+      weight: 2
+      count: 7
+  spawnPosition: {fileID: 6200654748024555758}
+  delayAfterEveryItem: 0.1
 --- !u!1 &672077294795545000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,7 +1148,7 @@ Transform:
   m_GameObject: {fileID: 4158512726720801528}
   serializedVersion: 2
   m_LocalRotation: {x: -0.002434893, y: 0.00046205416, z: 0.21694499, w: 0.97618073}
-  m_LocalPosition: {x: -0.013484001, y: 0.53399175, z: -0.012390614}
+  m_LocalPosition: {x: -0.013484001, y: 0.53399175, z: -0.012390137}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
