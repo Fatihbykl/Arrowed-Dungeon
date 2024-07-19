@@ -12,6 +12,8 @@ namespace Gameplay.AbilitySystem
     }
     public abstract class AbilityBase : ScriptableObject
     {
+        public string title;
+        public string description;
         public float cooldown;
         public float castTime;
         public float castRange;

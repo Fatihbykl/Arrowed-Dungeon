@@ -27,7 +27,7 @@ namespace Gameplay.Player
             {
                 
                 if (slot.item.clothIndex < 0) { continue; }
-                Debug.Log(slot.item.clothIndex);
+
                 wearables.transform.GetChild(slot.item.clothIndex).gameObject.SetActive(true);
             }
         }
