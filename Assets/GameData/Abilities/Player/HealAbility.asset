@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5606be7017058a946a80611cb08a540e, type: 3}
+  m_Name: HealAbility
+  m_EditorClassIdentifier: 
+  title: 
+  description: 
+  cooldown: 0
+  castTime: 0.5
+  castRange: 0
+  skillType: 0
+  icon: {fileID: 21300000, guid: 1c0f43a2fd5a248218b1d998892f0a31, type: 3}
+  circleParticle: {fileID: 6723124339965644368, guid: bc134a95d94ff644cbbc0a9612766507,
+    type: 3}
+  healParticleIndex: 6
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  circleRadius: 3
+  healInterval: 1
+  healDuration: 4
+  healAmountEveryInterval: 20

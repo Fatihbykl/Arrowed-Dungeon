@@ -10,7 +10,7 @@ namespace Gameplay.Player
     {
         public IntegerStat maxHealth;
         public IntegerStat damage;
-        public IntegerStat armor;
+        public FloatStat armor;
         public FloatStat missChance; // stability
         public FloatStat runningSpeed;
         public FloatStat walkingSpeed;

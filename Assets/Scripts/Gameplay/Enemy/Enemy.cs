@@ -29,7 +29,7 @@ namespace Gameplay.Enemy
         public IntegerStat damage;
         public IntegerStat maxHealth;
         [HideInInspector] public VitalStat health;
-        public IntegerStat armor;
+        public FloatStat armor;
         public FloatStat chaseSpeed;
 
         public void InitHealth()
@@ -192,19 +192,23 @@ namespace Gameplay.Enemy
 
         public void TakeDamage(int damage)
         {
-            enemyStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
             playerDetected = true;
-            CreateFloatingText(damage, DynamicTextManager.defaultData);
+            damage = Mathf.RoundToInt(damage * (1 - enemyStats.armor.Value / 100f));
+            
+            enemyStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
+            CreateFloatingText(damage.ToString(), DynamicTextManager.defaultData);
             if (enemyStats.health.Value > 0) { StartTakeDamageAnim(); }
         }
 
-        private void CreateFloatingText(int damage, DynamicTextData data)
+        private void CreateFloatingText(string damage, DynamicTextData data)
         {
+            if (damage == "0") { damage = "MISS!"; }
+            
             var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
             textPos.x += (Random.value - 0.5f) / 3f;
             textPos.y += Random.value;
             textPos.z += (Random.value - 0.5f) / 3f;
-            DynamicTextManager.CreateText(textPos, damage.ToString(), data);
+            DynamicTextManager.CreateText(textPos, damage, data);
         }
 
         private async void StartTakeDamageAnim()
@@ -218,7 +222,7 @@ namespace Gameplay.Enemy
         {
             var particle = Instantiate(healVFXPrefab, transform);
             Destroy(particle, 1f);
-            CreateFloatingText(healthAmount, DynamicTextManager.enemyHeal);
+            CreateFloatingText(healthAmount.ToString(), DynamicTextManager.enemyHeal);
             enemyStats.health.AddModifier(new StatModifier(healthAmount, StatModType.Flat));
             AudioManager.Instance.PlaySoundFXClip(healSoundEffect, transform);
         }

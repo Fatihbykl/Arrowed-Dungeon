@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DungeonMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 9665439ac7e1b83489c673e35dcefd05,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: 0b4002bddac1f2e4585ed70d2f0d218b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -25,7 +24,23 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - MainTex_:
-        m_Texture: {fileID: 2800000, guid: 83aa404d4631efd44a53cbc98427bf1c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 09d8be9ae7d78634d92961972a3b6b51, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_7FCC054E:
+        m_Texture: {fileID: 2800000, guid: 09d8be9ae7d78634d92961972a3b6b51, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_B24C83B0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_E43982E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_E5130C32:
+        m_Texture: {fileID: 2800000, guid: d42ca6613525ad44da9904930260cdc5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -57,7 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap:
-        m_Texture: {fileID: 2800000, guid: 08f995fc44e29da4d9327759f69a63df, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7d8493307988fb64d810a1d2d47d2c70, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -90,8 +105,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - AlphaClip_: 0
+    - AlphaClip_: 0.01
+    - Vector1_8B5B67D: 20
+    - Vector1_8F22EE36: 0.01
     - Vector1_AE769210: 20
+    - Vector1_C1728026: 0.5
+    - Vector1_D1034171: 0.11
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
@@ -125,6 +144,14 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_: {r: 1, g: 1, b: 1, a: 1}
+    - Color_34BEEA07: {r: 1, g: 1, b: 1, a: 1}
+    - Color_DB555ADA: {r: 1, g: 1, b: 1, a: 1}
+    - Vector2_781FB8A4: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_892CE00: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_8E0A3991: {r: -0.2, g: 0, b: 0, a: 0}
+    - Vector2_C3A961A0: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_D6AA7B7D: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_E10066FE: {r: -0.1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 0.24056596, b: 0.24056596, a: 1}
     - _EmissionColor: {r: 0.256, g: 0.256, b: 0.256, a: 1}

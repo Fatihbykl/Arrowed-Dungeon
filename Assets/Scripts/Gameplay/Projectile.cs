@@ -15,6 +15,7 @@ namespace Gameplay
         public float rotateSpeed = 200f;
         public GameObject muzzlePrefab;
         public GameObject hitPrefab;
+        public int damage;
 
         [Header("Sound Effects")]
         public SoundClip[] arrowHitSoundEffects;
@@ -73,7 +74,7 @@ namespace Gameplay
             InstantiateHitParticle(other);
             if (other.gameObject.TryGetComponent(out IDamageable damageable))
             {
-                damageable.TakeDamage(10);
+                damageable.TakeDamage(damage);
                 AudioManager.Instance.PlayRandomSoundFXClip(arrowHitSoundEffects, other.gameObject.transform);
             }
             if (statusEffect)

@@ -16,7 +16,7 @@ using Random = UnityEngine.Random;
 namespace Gameplay.Player
 {
     [RequireComponent(typeof(PlayerStats))]
-    public class Player : MonoBehaviour, IDamageable
+    public class Player : MonoBehaviour, IDamageable, IHealable
     {
         public MicroBar hpBar;
         public GameObject bow;
@@ -32,6 +32,7 @@ namespace Gameplay.Player
         [HideInInspector] public Animator animator;
         [HideInInspector] public bool attackModeActive;
         [HideInInspector] public bool castingAbility;
+        [HideInInspector] public bool isInvulnerable;
 
         private CapsuleCollider _capsuleCollider;
         private InputAction _attackAction;
@@ -72,22 +73,30 @@ namespace Gameplay.Player
 
         public void TakeDamage(int damage)
         {
+            if (isInvulnerable)
+            {
+                CreateFloatingText("INVULNERABLE!", DynamicTextManager.playerDamage);
+                return;
+            }
+            
+            damage = Mathf.RoundToInt(damage * (1 - _playerStats.armor.Value / 100f));
+            
             animator.SetTrigger(AnimationParameters.TakeDamage);
             _playerStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
-            CreateDamageText(damage, DynamicTextManager.playerDamage);
+            CreateFloatingText(damage.ToString(), DynamicTextManager.playerDamage);
             
             if (_playerStats.health.Value <= 0) { Die(); }
 
             hpBar.UpdateHealthBar(_playerStats.health.Value);
         }
         
-        private void CreateDamageText(int damage, DynamicTextData data)
+        private void CreateFloatingText(string damage, DynamicTextData data)
         {
             var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
             textPos.x += (Random.value - 0.5f) / 3f;
             textPos.y += Random.value;
             textPos.z += (Random.value - 0.5f) / 3f;
-            DynamicTextManager.CreateText(textPos, damage.ToString(), data);
+            DynamicTextManager.CreateText(textPos, damage, data);
         }
 
         public void AttachBow()
@@ -121,6 +130,8 @@ namespace Gameplay.Player
             projectile.transform.position = bow.transform.position;
             projectile.transform.LookAt(targetPos);
             projectile.target = currentTarget;
+
+            projectile.damage = Random.Range(0, 100) <= _playerStats.missChance.Value ? 0 : _playerStats.damage.Value;
             
             CinemachineShaker.Instance.ShakeCamera(1f, 0.5f);
 
@@ -175,6 +186,12 @@ namespace Gameplay.Player
                 holder.ability = Instantiate(ability);
                 holder.ability.OnCreate(gameObject);
             }
+        }
+
+        public void Heal(int healthAmount)
+        {
+            CreateFloatingText(healthAmount.ToString(), DynamicTextManager.enemyHeal);
+            _playerStats.health.AddModifier(new StatModifier(healthAmount, StatModType.Flat));
         }
     }
 }

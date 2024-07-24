@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d829d70926e134b4392296cb13bc0de9, type: 3}
   m_Name: DashAbility
   m_EditorClassIdentifier: 
+  title: 
+  description: 
   cooldown: 1
   castTime: 0.5
   castRange: 0
   skillType: 0
   icon: {fileID: 21300000, guid: f793bd4e2d35c49a68f2bf855813da6e, type: 3}
   dashSpeed: 3000
+  dashDistance: 5
+  dashStartParticle: {fileID: 7696692091939541340, guid: 5c466db503833ac4ab2b3b64d8aeb155,
+    type: 3}
+  dashEndParticle: {fileID: 20571860298929323, guid: c7ecf1e1d3e679f4ba4f6c33c81ec848,
+    type: 3}
