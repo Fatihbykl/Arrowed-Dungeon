@@ -27,6 +27,7 @@ namespace Gameplay.InventorySystem
     [CreateAssetMenu(menuName = "Custom/Player Items/Item")]
     public class Item : ScriptableObject
     {
+        [ShowAssetPreview]
         public Sprite icon;
         public string id;
         public string title;
@@ -36,9 +37,6 @@ namespace Gameplay.InventorySystem
         public ItemRarity itemRarity;
         public int clothIndex;
         public StatModifier[] modifiers;
-        
-        [InfoBox("Prefab for instantiating in game.")]
-        public GameObject prefab;
 
         public Item GetCopy()
         {
