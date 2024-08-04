@@ -11,8 +11,6 @@ namespace Gameplay.Player
     public class Coin : MonoBehaviour
     {
         public int gold, gem;
-        public TextMeshProUGUI goldText, gemText;
-
         public static Coin Instance { get; private set; }
         
         private void Awake()
@@ -24,12 +22,7 @@ namespace Gameplay.Player
                 return;
             }
             Instance = this;
-        }
-
-        private void Start()
-        {
-            goldText.text = gold.ToString();
-            gemText.text = gem.ToString();
+            DontDestroyOnLoad(gameObject);
         }
 
         public void AddCoin(int amount, CoinType type)

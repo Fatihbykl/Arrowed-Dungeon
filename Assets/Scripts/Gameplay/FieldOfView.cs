@@ -34,7 +34,12 @@ namespace Gameplay
         {
             while (true)
             {
-                await UniTask.WaitForSeconds(0.2f);
+                var isCanceled = await UniTask.WaitForSeconds(
+                    duration: 0.2f,
+                    cancellationToken: this.GetCancellationTokenOnDestroy())
+                    .SuppressCancellationThrow();
+                if (isCanceled) { return; }
+                
                 FieldOfViewCheck();
             }
         }

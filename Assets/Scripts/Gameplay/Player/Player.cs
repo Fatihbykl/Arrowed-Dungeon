@@ -19,7 +19,6 @@ namespace Gameplay.Player
     public class Player : MonoBehaviour, IDamageable, IHealable
     {
         public MicroBar hpBar;
-        public GameObject bow;
         public GameObject arrow;
         public GameObject handSlot;
         public Projectile arrowPrefab;
@@ -27,6 +26,7 @@ namespace Gameplay.Player
 
         [Header("Sound Effects")]
         public SoundClip[] footstepSounds;
+
 
         [HideInInspector] public GameObject currentTarget;
         [HideInInspector] public Animator animator;
@@ -41,6 +41,8 @@ namespace Gameplay.Player
         private float _lastAttackTime;
         private GameObject _arrow;
         private FieldOfView _fov;
+        private GameObject _bow;
+        private int _bowIndex = 3;
 
         public event Action ReleaseBowString;
         public event Action HoldBowString;
@@ -48,6 +50,7 @@ namespace Gameplay.Player
         private void Awake()
         {
             _attackAction = GetComponent<PlayerInput>().actions["Attack"];
+            _bow = handSlot.transform.GetChild(_bowIndex).gameObject;
             _capsuleCollider = GetComponent<CapsuleCollider>();
             _playerStats = GetComponent<PlayerStats>();
             _audioSource = GetComponent<AudioSource>();
@@ -101,14 +104,14 @@ namespace Gameplay.Player
 
         public void AttachBow()
         {
-            bow.SetActive(true);
+            _bow.SetActive(true);
             arrow.SetActive(true);
             OnHoldBowString();
         }
 
         public void DisarmBow()
         {
-            bow.SetActive(false);
+            _bow.SetActive(false);
             arrow.SetActive(false);
             OnReleaseBowString();
         }
@@ -127,7 +130,7 @@ namespace Gameplay.Player
             var targetPos = currentTarget.transform.position;
             targetPos.y = 1f;
             Projectile projectile = Instantiate(arrowPrefab);
-            projectile.transform.position = bow.transform.position;
+            projectile.transform.position = _bow.transform.position;
             projectile.transform.LookAt(targetPos);
             projectile.target = currentTarget;
 

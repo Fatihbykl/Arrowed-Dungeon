@@ -145,5 +145,11 @@ namespace Gameplay.InventorySystem.UI
             Inventory.Instance.RemoveFromEquipment(_lastPopupSlot);
             equipPopupPanel.SetActive(false);
         }
+
+        private void OnDestroy()
+        {
+            Inventory.Instance.RefreshUI -= OnRefreshUI;
+            OpenEquipPopup -= OnOpenEquipPopup;
+        }
     }
 }

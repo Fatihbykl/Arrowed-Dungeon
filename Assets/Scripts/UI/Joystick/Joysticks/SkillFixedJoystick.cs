@@ -49,6 +49,8 @@ namespace UI.Joystick.Joysticks
 
         private void Update()
         {
+            if (!abilityHolder) { return; }
+            
             if (abilityHolder.currentState == AbilityHolder.AbilityState.Cooldown)
             {
                 cooldownImage.fillAmount = abilityHolder._cooldownTimer / abilityHolder.ability.cooldown;

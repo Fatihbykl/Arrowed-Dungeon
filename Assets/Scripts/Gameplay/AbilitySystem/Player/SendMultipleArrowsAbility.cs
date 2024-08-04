@@ -32,7 +32,7 @@ namespace Gameplay.AbilitySystem.Player
             var angleIncrease = 10;
             for (int i = 0; i < 5; i++)
             {
-                Instantiate(arrowPrefab, _player.bow.transform.position,
+                Instantiate(arrowPrefab, _player.handSlot.transform.position,
                     _player.transform.rotation * Quaternion.Euler(0, angle, 0));
                 angle += angleIncrease;
             }

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Events;
+using Gameplay.InventorySystem;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -23,11 +26,13 @@ namespace Gameplay.AbilitySystem
         public GameObject buyButton;
 
         private AbilityTreeNode _lastSender;
-        private AbilityBase[] _equippedAbilities = new AbilityBase[3];
+        private List<AbilityBase> _equippedAbilities;
 
         private void Start()
         {
             EventManager.StartListening(EventStrings.AbilityNodeClicked, OnAbilityNodeClicked);
+
+            _equippedAbilities = new List<AbilityBase>(3) { null, null, null };
         }
 
         private void OnDestroy()
@@ -60,11 +65,28 @@ namespace Gameplay.AbilitySystem
             _lastSender = sender;
         }
 
-        private void UpdateUI()
+        private void UpdateNodeUI()
         {
             foreach (var node in nodes)
             {
                 node.UnlockIfRequirementsMet();
+            }
+        }
+
+        private void UpdateEquippedSlotsUI()
+        {
+            for (int i = 0; i < _equippedAbilities.Count; i++)
+            {
+                if (_equippedAbilities[i] != null)
+                {
+                    equipSlots[i].sprite = _equippedAbilities[i].icon;
+                    equipSlots[i].color = Color.white;
+                }
+                else
+                {
+                    equipSlots[i].sprite = null;
+                    equipSlots[i].color = Color.clear;
+                }
             }
         }
         
@@ -72,14 +94,16 @@ namespace Gameplay.AbilitySystem
         {
             popupPanel.SetActive(false);
             
-            for (int i = 0; i < equipSlots.Length; i++)
+            for (int i = 0; i < _equippedAbilities.Count; i++)
             {
-                if (equipSlots[i].sprite == null)
+                if (_equippedAbilities[i] == null)
                 {
-                    equipSlots[i].sprite = _lastSender.ability.icon;
-                    equipSlots[i].color = Color.white;
                     _equippedAbilities[i] = _lastSender.ability;
                     _lastSender.EquipAbility();
+                    
+                    UpdateInventory();
+                    UpdateEquippedSlotsUI();
+                    
                     return;
                 }
             }
@@ -89,23 +113,31 @@ namespace Gameplay.AbilitySystem
         {
             popupPanel.SetActive(false);
             
-            for (int i = 0; i < equipSlots.Length; i++)
+            for (int i = 0; i < _equippedAbilities.Count; i++)
             {
                 if (_equippedAbilities[i] == _lastSender.ability)
                 {
-                    equipSlots[i].sprite = null;
-                    equipSlots[i].color = Color.clear;
                     _equippedAbilities[i] = null;
+                    _equippedAbilities = _equippedAbilities.OrderByDescending(q=>q).ToList();
                     _lastSender.UnEquipAbility();
+                    
+                    UpdateInventory();
+                    UpdateEquippedSlotsUI();
+                    
                     return;
                 }
             }
         }
 
+        private void UpdateInventory()
+        {
+            Inventory.Instance.skills = _equippedAbilities;
+        }
+
         public void BuyAbility()
         {
             _lastSender.BuyAbility();
-            UpdateUI();
+            UpdateNodeUI();
             ClosePopup();
         }
 

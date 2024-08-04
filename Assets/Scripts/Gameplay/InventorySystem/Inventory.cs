@@ -12,7 +12,7 @@ namespace Gameplay.InventorySystem
         // 0=Head, 1=Chest, 2=Shoes, 3=ShoulderPad, 4=Gloves, 5=Weapon
         public List<InventorySlot> equipmentSlots;
         public InventorySlot[] defaultSlots;
-        public AbilityBase[] skills;
+        public List<AbilityBase> skills;
         public static Inventory Instance { get; private set; }
         public Item[] testItems;
 
@@ -28,7 +28,8 @@ namespace Gameplay.InventorySystem
                 return;
             }
             Instance = this;
-
+            DontDestroyOnLoad(gameObject);
+            
             equipmentSlots = new List<InventorySlot>
             {
                 defaultSlots[0], defaultSlots[1], defaultSlots[2], defaultSlots[3], defaultSlots[4], defaultSlots[5]
@@ -36,7 +37,7 @@ namespace Gameplay.InventorySystem
 
             foreach (var testItem in testItems)
             {
-                AddItem(testItem, 2);
+                AddItem(testItem, 1);
             }
         }
 
@@ -45,7 +46,7 @@ namespace Gameplay.InventorySystem
             var slot = GetInventorySlot(item);
             if (slot == null)
             {
-                var newSlot = new InventorySlot(item.GetCopy(), count);
+                var newSlot = new InventorySlot(item, count);
                 inventorySlots.Add(newSlot);
             }
             else
@@ -63,7 +64,7 @@ namespace Gameplay.InventorySystem
             slot.DecreaseCount(count);
             if (slot.itemCount <= 0)
             {
-                slot.item.Destroy();
+                //slot.item.Destroy();
                 inventorySlots.Remove(slot);
             }
             

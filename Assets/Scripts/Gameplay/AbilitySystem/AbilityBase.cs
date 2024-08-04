@@ -10,7 +10,7 @@ namespace Gameplay.AbilitySystem
         Directional,
         Regional
     }
-    public abstract class AbilityBase : ScriptableObject
+    public abstract class AbilityBase : ScriptableObject, IComparable<AbilityBase>
     {
         public string title;
         public string description;
@@ -25,5 +25,9 @@ namespace Gameplay.AbilitySystem
         public virtual void Activate(GameObject target) { }
         public virtual void Activate(GameObject target, Vector3 direction) { }
         public virtual void BeginCooldown() { }
+        public int CompareTo(AbilityBase other)
+        {
+            return other == null ? 1 : 0;
+        }
     }
 }

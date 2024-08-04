@@ -14,8 +14,11 @@ namespace Gameplay.Managers
             if (Instance != null)
             {
                 Debug.LogError("Found more than one Audio Manager in the scene.");
+                Destroy(this);
+                return;
             }
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         public void PlaySoundFXClip(SoundClip clip, Transform spawnTransform)
