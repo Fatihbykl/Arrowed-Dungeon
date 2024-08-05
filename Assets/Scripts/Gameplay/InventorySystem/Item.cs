@@ -17,11 +17,12 @@ namespace Gameplay.InventorySystem
 
     public enum ItemRarity
     {
-        Common,
-        Rare,
-        Epic,
-        Legendary,
-        Mythic
+        Common = 0,
+        Rare = 1,
+        Epic = 2,
+        Legendary = 3,
+        Mythic = 4,
+        None = 5
     }
     
     [CreateAssetMenu(menuName = "Custom/Player Items/Item")]

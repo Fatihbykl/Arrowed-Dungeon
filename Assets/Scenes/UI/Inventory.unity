@@ -14030,7 +14030,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
+  m_CellSize: {x: 120, y: 120}
   m_Spacing: {x: 35, y: 22}
   m_Constraint: 0
   m_ConstraintCount: 6
@@ -16238,40 +16238,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1630048820}
     m_Modifications:
-    - target: {fileID: 1724363046122749100, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.1373846
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724363046122749100, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.27184612
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724363046122749100, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.41799998
-      objectReference: {fileID: 0}
     - target: {fileID: 3038923578016247092, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
         type: 3}
       propertyPath: m_Name
       value: EquipmentSlot
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190720340655751229, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.20784315
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190720340655751229, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.41176474
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190720340655751229, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.6156863
       objectReference: {fileID: 0}
     - target: {fileID: 5517284379578303274, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
         type: 3}
@@ -16381,7 +16351,7 @@ PrefabInstance:
     - target: {fileID: 5525341928015177049, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.23137257
+      value: 0.23137255
       objectReference: {fileID: 0}
     - target: {fileID: 5525341928015177049, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
         type: 3}
@@ -16391,11 +16361,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3038923578016247092, guid: d92f5f34c4bd7f340bc0905fac7a8c98,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8036683819551502987}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d92f5f34c4bd7f340bc0905fac7a8c98, type: 3}
 --- !u!1 &3103524055737557964
 GameObject:
@@ -23682,21 +23648,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3065044322896527760}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8036683819551502987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8036683819551502983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5019608}
-  m_EffectDistance: {x: -3, y: -6}
-  m_UseGraphicAlpha: 1
 --- !u!222 &8065973145283614083
 CanvasRenderer:
   m_ObjectHideFlags: 0
