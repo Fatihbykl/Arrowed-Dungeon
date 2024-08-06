@@ -2,6 +2,7 @@ using System;
 using Coffee.UIEffects;
 using NaughtyAttributes;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,11 +21,8 @@ namespace Gameplay.InventorySystem.UI
         public Image frameBackground;
         public Image icon;
         public GameObject countObject;
-        
-        [InfoBox("Place in order! 0=Common, 1=Rare, 2=Epic, 3=Legendary, 4=Mythic, 5=None")]
-        public Sprite[] rarityFrames;
-        public Sprite dummyFrame;
 
+        private RarityColorsFramesInfo _rarityInfo;
         private TextMeshProUGUI _countText;
         private UIEffect _effect;
 
@@ -34,11 +32,12 @@ namespace Gameplay.InventorySystem.UI
             _effect = GetComponentInChildren<UIEffect>();
         }
 
-        public void Init(InventorySlot inventorySlot)
+        public void Init(InventorySlot inventorySlot, RarityColorsFramesInfo info)
         {
             slot = inventorySlot;
+            _rarityInfo = info;
             icon.sprite = slot.item.icon;
-            frameBackground.sprite = rarityFrames[(int)slot.item.itemRarity];
+            frameBackground.sprite = _rarityInfo.rarityFrames[(int)slot.item.itemRarity];
             countObject.GetComponentInChildren<TextMeshProUGUI>().text = slot.itemCount.ToString();
             
             if (slotType == SlotType.EquipmentSlot)
@@ -50,7 +49,6 @@ namespace Gameplay.InventorySystem.UI
                     frameBackground.color = new Color(51 / 255f, 36 / 255f, 21 / 255f);
                     icon.color = new Color(51 / 255f, 36 / 255f, 21 / 255f);
                     _effect.enabled = true;
-                    frameBackground.sprite = dummyFrame;
                 }
                 else
                 {

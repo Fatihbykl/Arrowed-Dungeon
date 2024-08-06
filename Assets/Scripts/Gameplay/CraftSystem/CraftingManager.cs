@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Gameplay.InventorySystem;
 using Gameplay.Player;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ namespace Gameplay.CraftSystem
     {
         public CraftingRecipe[] recipes;
         public GameObject content;
+        public RarityColorsFramesInfo rarityInfo;
         
         [Header("Recipe Details")]
         public GameObject recipeSlotPrefab;
@@ -30,6 +32,7 @@ namespace Gameplay.CraftSystem
         private List<GameObject> _slots;
         private List<GameObject> _rows;
         private CraftingRecipe _lastClickedRecipe;
+        
 
         private void Start()
         {
@@ -49,7 +52,7 @@ namespace Gameplay.CraftSystem
                 var recipe = recipes[i].GetCopy();
 
                 slotUI.GetComponent<CraftingSlotUI>().recipe = recipe;
-                slotUI.GetComponent<CraftingSlotUI>().Init();
+                slotUI.GetComponent<CraftingSlotUI>().Init(rarityInfo);
                 
                 _slots.Add(slotUI);
             }
@@ -71,23 +74,14 @@ namespace Gameplay.CraftSystem
             craftButtonCostText.text = slot.recipe.craftCost.amount.ToString();
             for (int i = 0; i < slot.recipe.materials.Count; i++){
 
-                var countText = _rows[i].transform.Find("Count").GetComponent<TextMeshProUGUI>();
-                _rows[i].transform.Find("Title").GetComponent<TextMeshProUGUI>().text = slot.recipe.materials[i].item.title;
-                _rows[i].transform.Find("InventorySlot/Icon").GetComponent<Image>().sprite = slot.recipe.materials[i].item.icon;
-                
+                var title = slot.recipe.materials[i].item.title;
+                var icon = slot.recipe.materials[i].item.icon;
                 var material = slot.recipe.materials[i];
+                var frame = rarityInfo.rarityFrames[(int)material.item.itemRarity];
+                var color = rarityInfo.rarityColors[(int)material.item.itemRarity];
                 var inventoryItem = Inventory.Instance.GetInventorySlot(material.item);
                 
-                countText.text = material.itemCount + "x";
-                if (inventoryItem == null || inventoryItem.itemCount < material.itemCount)
-                {
-                    countText.color = Color.red;
-                }
-                else
-                {
-                    countText.color = Color.green;
-                }
-                
+                _rows[i].GetComponent<CraftInfoRowUI>().Init(title, color, icon, frame, material.itemCount, inventoryItem);
                 _rows[i].SetActive(true);
             }
         }
@@ -101,7 +95,7 @@ namespace Gameplay.CraftSystem
 
             if (bought)
             {
-                _lastClickedRecipe.Craft();
+                //_lastClickedRecipe.Craft();
                 OpenPopup();
             }
             else
@@ -114,6 +108,7 @@ namespace Gameplay.CraftSystem
         {
             popupImage.sprite = _lastClickedRecipe.result.item.icon;
             popupText.text = _lastClickedRecipe.result.item.title;
+            popupText.color = rarityInfo.rarityColors[(int)_lastClickedRecipe.result.item.itemRarity];
             popup.SetActive(true);
         }
 

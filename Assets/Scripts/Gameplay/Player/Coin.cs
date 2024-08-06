@@ -1,4 +1,5 @@
 using System;
+using Events;
 using TMPro;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ namespace Gameplay.Player
         {
             if (Instance != null && Instance != this)
             {
-                Debug.LogError("Found more than one Inventory in the scene.");
+                Debug.LogError("Found more than one Coin in the scene.");
                 Destroy(this);
                 return;
             }
@@ -27,6 +28,7 @@ namespace Gameplay.Player
 
         public void AddCoin(int amount, CoinType type)
         {
+            if (amount < 0) { Debug.LogError("Amount must be greater than zero!"); return; }
             switch (type)
             {
                 case CoinType.Gold:
@@ -36,10 +38,12 @@ namespace Gameplay.Player
                     gem += amount;
                     break;
             }
+            EventManager.EmitEvent(EventStrings.CurrencyUpdated);
         }
 
         public bool SpendCoin(int amount, CoinType type)
         {
+            if (amount < 0) { Debug.LogError("Amount must be greater than zero!"); return false; }
             switch (type)
             {
                 case CoinType.Gold:
@@ -56,6 +60,8 @@ namespace Gameplay.Player
             if (gold < amount) { return false; }
             
             gold -= amount;
+            EventManager.EmitEvent(EventStrings.CurrencyUpdated);
+            
             return true;
         }
         
@@ -64,6 +70,8 @@ namespace Gameplay.Player
             if (gem < amount) { return false; }
             
             gem -= amount;
+            EventManager.EmitEvent(EventStrings.CurrencyUpdated);
+            
             return true;
         }
     }

@@ -4,6 +4,7 @@ using System.Globalization;
 using Gameplay.Player;
 using NaughtyAttributes;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,8 @@ namespace Gameplay.InventorySystem.UI
 {
     public class InventoryManagerUI : MonoBehaviour
     {
+        public RarityColorsFramesInfo rarityInfo;
+        
         [Header("Slots")] [HorizontalLine(color: EColor.White, height: 1f)] [Space(10)]
         public int maxSlotCount;
         public GameObject inventorySlotPrefab;
@@ -83,12 +86,12 @@ namespace Gameplay.InventorySystem.UI
                 var slot = Inventory.Instance.inventorySlots[i];
                 if (slot.item.itemType == ItemType.Others)
                 {
-                    _othersInventorySlots[i].GetComponent<InventorySlotUI>().Init(slot);
+                    _othersInventorySlots[i].GetComponent<InventorySlotUI>().Init(slot, rarityInfo);
                     _othersInventorySlots[i].SetActive(true);
                 }
                 else
                 {
-                    _equipmentInventorySlots[i].GetComponent<InventorySlotUI>().Init(slot);
+                    _equipmentInventorySlots[i].GetComponent<InventorySlotUI>().Init(slot, rarityInfo);
                     _equipmentInventorySlots[i].SetActive(true);
                 }
             }
@@ -97,7 +100,7 @@ namespace Gameplay.InventorySystem.UI
             {
                 var slot = Inventory.Instance.equipmentSlots[i];
                 if (slot == null) { continue; }
-                equipments[i].GetComponent<InventorySlotUI>().Init(slot);
+                equipments[i].GetComponent<InventorySlotUI>().Init(slot, rarityInfo);
             }
 
             attack.text = stats.damage.Value.ToString();
@@ -114,6 +117,7 @@ namespace Gameplay.InventorySystem.UI
             _lastPopupSlot = slot;
             icon.sprite = slot.item.icon;
             titleText.text = slot.item.title;
+            titleText.color = rarityInfo.rarityColors[(int)slot.item.itemRarity];
             descriptionText.text = slot.item.description;
             equipPopupPanel.SetActive(true);
             if (slotType == SlotType.InventorySlot)

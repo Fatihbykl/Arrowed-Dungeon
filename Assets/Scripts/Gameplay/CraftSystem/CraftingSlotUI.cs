@@ -1,4 +1,5 @@
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,15 +10,14 @@ namespace Gameplay.CraftSystem
         public Image icon;
         public Image iconFrame;
         public TextMeshProUGUI itemName;
-        public GameObject infoScreen;
         
         [HideInInspector]
         public CraftingRecipe recipe;
 
-        public void Init()
+        public void Init(RarityColorsFramesInfo rarityInfo)
         {
             icon.sprite = recipe.result.item.icon;
-            // iconFrame
+            iconFrame.sprite = rarityInfo.rarityFrames[(int)recipe.result.item.itemRarity];
             itemName.text = recipe.result.item.title;
         }
 

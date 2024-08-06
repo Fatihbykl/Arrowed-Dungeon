@@ -849,6 +849,7 @@ GameObject:
   - component: {fileID: 3251627951048449503}
   - component: {fileID: 3251627951048449441}
   - component: {fileID: 3251627951048449502}
+  - component: {fileID: 4628717880960574426}
   m_Layer: 5
   m_Name: Group_Status02
   m_TagString: Untagged
@@ -917,6 +918,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &4628717880960574426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251627951048449500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31b3002860b7924a9e6ef7ffe7bc871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinText: {fileID: 3251627950781451187}
+  gemText: {fileID: 3251627950005505499}
 --- !u!1 &3251627951087642203
 GameObject:
   m_ObjectHideFlags: 0

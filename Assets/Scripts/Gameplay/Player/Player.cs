@@ -134,7 +134,7 @@ namespace Gameplay.Player
             projectile.transform.LookAt(targetPos);
             projectile.target = currentTarget;
 
-            projectile.damage = Random.Range(0, 100) <= _playerStats.missChance.Value ? 0 : _playerStats.damage.Value;
+            projectile.damage = Random.Range(0, 1000) <= _playerStats.missChance.Value * 10 ? 0 : _playerStats.damage.Value;
             
             CinemachineShaker.Instance.ShakeCamera(1f, 0.5f);
 

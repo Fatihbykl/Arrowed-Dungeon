@@ -5,27 +5,51 @@ using UnityEngine;
 
 namespace Gameplay.CraftSystem
 {
+    public enum CraftStates
+    {
+        Success,
+        NotEnoughMaterial,
+        Failure
+    }
+    
     [CreateAssetMenu(menuName = "Custom/Crafting/Recipe")]
     public class CraftingRecipe : ScriptableObject
     {
         public List<InventorySlot> materials;
         public InventorySlot result;
         public Cost craftCost;
+        [Range(0, 100)]
+        public int craftChance;
 
-        public bool CanCraft()
+        public CraftStates Craft(int extraLuck)
         {
-            return HasMaterials();
+            var state = CanCraft(extraLuck);
+            if (state != CraftStates.Success) return state;
+            
+            RemoveMaterials();
+            AddResults();
+            
+            return CraftStates.Success;
         }
 
-        public void Craft()
+        private CraftStates CanCraft(int extraLuck)
         {
-            if (CanCraft())
+            if (HasMaterials())
             {
-                RemoveMaterials();
-                AddResults();
+                return IsCraftSuccessful(extraLuck) ? CraftStates.Success : CraftStates.Failure;
             }
+
+            return CraftStates.NotEnoughMaterial;
         }
-        
+
+        private bool IsCraftSuccessful(int extraLuck)
+        {
+            var totalChance = craftChance + extraLuck;
+            if (totalChance >= 100) { return true; }
+
+            return Random.Range(0, 100) <= totalChance;
+        }
+
         private bool HasMaterials()
         {
             foreach (InventorySlot slot in materials)
