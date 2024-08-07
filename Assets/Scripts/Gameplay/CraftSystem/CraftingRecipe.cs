@@ -21,9 +21,9 @@ namespace Gameplay.CraftSystem
         [Range(0, 100)]
         public int craftChance;
 
-        public CraftStates Craft(int extraLuck)
+        public CraftStates Craft(int extraLuck, Item chanceItem, int addedChances)
         {
-            var state = CanCraft(extraLuck);
+            var state = CanCraft(extraLuck, chanceItem, addedChances);
             if (state != CraftStates.Success) return state;
             
             RemoveMaterials();
@@ -32,11 +32,16 @@ namespace Gameplay.CraftSystem
             return CraftStates.Success;
         }
 
-        private CraftStates CanCraft(int extraLuck)
+        private CraftStates CanCraft(int extraLuck, Item chanceItem, int addedChances)
         {
             if (HasMaterials())
             {
-                return IsCraftSuccessful(extraLuck) ? CraftStates.Success : CraftStates.Failure;
+                if (IsCraftSuccessful(extraLuck)) { return CraftStates.Success; }
+                
+                RemoveMaterials();
+                Inventory.Instance.RemoveItem(chanceItem, addedChances);
+                
+                return CraftStates.Failure;
             }
 
             return CraftStates.NotEnoughMaterial;

@@ -5,6 +5,7 @@ using Gameplay.Player;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Gameplay.CraftSystem
@@ -21,9 +22,15 @@ namespace Gameplay.CraftSystem
         public GameObject recipeInfoPrefab;
         public int recipeInfoRowCount;
         public TextMeshProUGUI craftButtonCostText;
+        public TextMeshProUGUI craftChanceText;
 
-        [Header("After Craft Popup")] 
-        public GameObject popup;
+        [Header("Upgrade Craft Chance")] 
+        public Item chanceItem;
+        public int addedChancePercent = 5;
+
+        [Header("After Craft Popup")]
+        public GameObject successPopup;
+        public GameObject failurePopup;
         public Image popupImage;
         public TextMeshProUGUI popupText;
         
@@ -32,12 +39,13 @@ namespace Gameplay.CraftSystem
         private List<GameObject> _slots;
         private List<GameObject> _rows;
         private CraftingRecipe _lastClickedRecipe;
-        
+        private int _addedChance;
 
         private void Start()
         {
             RecipeClicked += OnRecipeClicked;
-            
+
+            _addedChance = 0;
             _slots = new List<GameObject>();
             _rows = new List<GameObject>();
             
@@ -70,8 +78,9 @@ namespace Gameplay.CraftSystem
         {
             _lastClickedRecipe = slot.recipe;
             ClearRecipeInfo();
-
+            UpdateCraftChance();
             craftButtonCostText.text = slot.recipe.craftCost.amount.ToString();
+            
             for (int i = 0; i < slot.recipe.materials.Count; i++){
 
                 var title = slot.recipe.materials[i].item.title;
@@ -95,8 +104,17 @@ namespace Gameplay.CraftSystem
 
             if (bought)
             {
-                //_lastClickedRecipe.Craft();
-                OpenPopup();
+                var extraLuck = _addedChance * addedChancePercent;
+                var craftResult = _lastClickedRecipe.Craft(extraLuck, chanceItem, _addedChance);
+                
+                if (craftResult == CraftStates.Success)
+                {
+                    OpenPopup();    
+                }
+                else if (craftResult == CraftStates.Failure)
+                {
+                    failurePopup.SetActive(false);
+                }
             }
             else
             {
@@ -104,21 +122,40 @@ namespace Gameplay.CraftSystem
             }
         }
 
+        public void AddChance()
+        {
+            var item = Inventory.Instance.GetInventorySlot(chanceItem);
+            if (item == null || _addedChance >= item.itemCount) { return; }
+
+            _addedChance++;
+            UpdateCraftChance();
+        }
+
+        private void UpdateCraftChance()
+        {
+            var currentChance = _lastClickedRecipe.craftChance + _addedChance * addedChancePercent;
+            var colorLerp = Color.Lerp(Color.red, Color.green, currentChance / 100f);
+            craftChanceText.text = $"Craft Chance: {currentChance.ToString()}%";
+            craftChanceText.color = colorLerp;
+        }
+
         private void OpenPopup()
         {
             popupImage.sprite = _lastClickedRecipe.result.item.icon;
             popupText.text = _lastClickedRecipe.result.item.title;
             popupText.color = rarityInfo.rarityColors[(int)_lastClickedRecipe.result.item.itemRarity];
-            popup.SetActive(true);
+            successPopup.SetActive(true);
         }
 
         public void ClosePopup()
         {
-            popup.SetActive(false);
+            successPopup.SetActive(false);
+            failurePopup.SetActive(false);
         }
 
         private void ClearRecipeInfo()
         {
+            _addedChance = 0;
             for (int i = 0; i < _rows.Count; i++)
             {
                 _rows[i].SetActive(false);
