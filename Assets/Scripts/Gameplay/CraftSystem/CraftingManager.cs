@@ -107,13 +107,14 @@ namespace Gameplay.CraftSystem
                 var extraLuck = _addedChance * addedChancePercent;
                 var craftResult = _lastClickedRecipe.Craft(extraLuck, chanceItem, _addedChance);
                 
-                if (craftResult == CraftStates.Success)
+                switch (craftResult)
                 {
-                    OpenPopup();    
-                }
-                else if (craftResult == CraftStates.Failure)
-                {
-                    failurePopup.SetActive(false);
+                    case CraftStates.Success:
+                        OpenPopup();
+                        break;
+                    case CraftStates.Failure:
+                        failurePopup.SetActive(true);
+                        break;
                 }
             }
             else
