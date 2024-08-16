@@ -11,7 +11,8 @@ namespace Gameplay.Player
     
     public class Coin : MonoBehaviour
     {
-        public int gold, gem;
+        public int Gold { get; private set; }
+        public int Gem { get; private set; }
         public static Coin Instance { get; private set; }
         
         private void Awake()
@@ -24,6 +25,8 @@ namespace Gameplay.Player
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Gold = 200;
+            Gem = 200;
         }
 
         public void AddCoin(int amount, CoinType type)
@@ -32,10 +35,10 @@ namespace Gameplay.Player
             switch (type)
             {
                 case CoinType.Gold:
-                    gold += amount;
+                    Gold += amount;
                     break;
                 case CoinType.Gem:
-                    gem += amount;
+                    Gem += amount;
                     break;
             }
             EventManager.EmitEvent(EventStrings.CurrencyUpdated);
@@ -44,22 +47,30 @@ namespace Gameplay.Player
         public bool SpendCoin(int amount, CoinType type)
         {
             if (amount < 0) { Debug.LogError("Amount must be greater than zero!"); return false; }
-            switch (type)
+
+            return type switch
             {
-                case CoinType.Gold:
-                    return SpendGold(amount);
-                case CoinType.Gem:
-                    return SpendGem(amount);
-                default:
-                    return false;
-            }
+                CoinType.Gold => SpendGold(amount),
+                CoinType.Gem => SpendGem(amount),
+                _ => false
+            };
+        }
+
+        public int GetCoin(CoinType type)
+        {
+            return type switch
+            {
+                CoinType.Gem => Gem,
+                CoinType.Gold => Gold,
+                _ => 0
+            };
         }
 
         private bool SpendGold(int amount)
         {
-            if (gold < amount) { return false; }
+            if (Gold < amount) { return false; }
             
-            gold -= amount;
+            Gold -= amount;
             EventManager.EmitEvent(EventStrings.CurrencyUpdated);
             
             return true;
@@ -67,9 +78,9 @@ namespace Gameplay.Player
         
         private bool SpendGem(int amount)
         {
-            if (gem < amount) { return false; }
+            if (Gem < amount) { return false; }
             
-            gem -= amount;
+            Gem -= amount;
             EventManager.EmitEvent(EventStrings.CurrencyUpdated);
             
             return true;

@@ -1,3 +1,4 @@
+using Gameplay.Player;
 using Gameplay.StatSystem;
 using NaughtyAttributes;
 using UnityEngine;
@@ -34,6 +35,7 @@ namespace Gameplay.InventorySystem
         public string title;
         [TextArea]
         public string description;
+        public Cost cost;
         public ItemType itemType;
         public ItemRarity itemRarity;
         public int clothIndex;

@@ -10,6 +10,7 @@ namespace Events
         public static readonly string LevelLost = "LevelLost";
         
         public static readonly string AbilityNodeClicked = "AbilityNodeClicked";
+        public static readonly string ShopBuyButtonClicked = "ShopBuyButtonClicked";
         public static readonly string CurrencyUpdated = "CurrencyUpdated";
     }
 }

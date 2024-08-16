@@ -2,7 +2,6 @@
 using Animations;
 using DataPersistance;
 using DataPersistance.Data;
-using DataPersistance.Data.ScriptableObjects;
 using Events;
 using UnityEngine;
 

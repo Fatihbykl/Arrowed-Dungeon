@@ -20,8 +20,8 @@ namespace UI
 
         private void OnCurrencyUpdated()
         {
-            coinText.text = Coin.Instance.gold.ToString();
-            gemText.text = Coin.Instance.gem.ToString();
+            coinText.text = Coin.Instance.Gold.ToString();
+            gemText.text = Coin.Instance.Gem.ToString();
         }
 
         private void OnDestroy()

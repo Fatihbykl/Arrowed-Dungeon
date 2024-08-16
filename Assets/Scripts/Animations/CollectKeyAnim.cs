@@ -26,12 +26,12 @@ namespace Animations
 
         private void OnEnable()
         {
-            GameplayEvents.KeyCollected += OnKeyCollected;
+            //GameplayEvents.KeyCollected += OnKeyCollected;
         }
 
         private void OnDisable()
         {
-            GameplayEvents.KeyCollected -= OnKeyCollected;
+            //GameplayEvents.KeyCollected -= OnKeyCollected;
         }
 
         private async void OnKeyCollected(int arg1, int arg2, GameObject collectedKey, GameObject target)
@@ -66,7 +66,7 @@ namespace Animations
                 {
                     DOTween.KillAll();
                     Destroy(keyTransform.gameObject);
-                    GameplayEvents.KeyAnimationFinished.Invoke();
+                    //GameplayEvents.KeyAnimationFinished.Invoke();
                 }
             });
         }
