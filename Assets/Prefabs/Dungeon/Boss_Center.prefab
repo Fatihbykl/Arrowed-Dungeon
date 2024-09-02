@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 2693356334086351635}
   - component: {fileID: 8100083199473021673}
   - component: {fileID: 6609172050859171297}
-  - component: {fileID: 2595084640923028584}
+  - component: {fileID: 3413227072921955625}
   m_Layer: 0
   m_Name: Column_Circle_Fat (8)
   m_TagString: Untagged
@@ -202,8 +202,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2595084640923028584
-MeshCollider:
+--- !u!65 &3413227072921955625
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -220,10 +220,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5396493466163160439, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.7610837, y: 9.317723, z: 1.6693164}
+  m_Center: {x: 0, y: 4.6558595, z: -0.000000059604645}
 --- !u!1 &459443102167500419
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +234,7 @@ GameObject:
   - component: {fileID: 7709350620116490674}
   - component: {fileID: 880345361562342634}
   - component: {fileID: 2955844968153083725}
-  - component: {fileID: 5264471663124501914}
+  - component: {fileID: 1168084716866661031}
   m_Layer: 0
   m_Name: lamp_Golden.001_Lit
   m_TagString: Untagged
@@ -311,8 +310,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5264471663124501914
-MeshCollider:
+--- !u!65 &1168084716866661031
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -329,10 +328,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8047265696704464464, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.0185916, y: 2.2329807, z: 1.0084586}
+  m_Center: {x: 0, y: 1.1124475, z: 0.0016666353}
 --- !u!1 &502408764352171547
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +342,6 @@ GameObject:
   - component: {fileID: 5491364542618779767}
   - component: {fileID: 4584177890196497854}
   - component: {fileID: 3025258277250234735}
-  - component: {fileID: 2607746375322481646}
   m_Layer: 0
   m_Name: Rock_A (4)
   m_TagString: Untagged
@@ -417,28 +414,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2607746375322481646
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502408764352171547}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2649995349246831342, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
 --- !u!1 &676331129212894040
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +425,7 @@ GameObject:
   - component: {fileID: 7543190484496592933}
   - component: {fileID: 3028626142523586125}
   - component: {fileID: 4105718990502754569}
-  - component: {fileID: 3230740987772327942}
+  - component: {fileID: 2053135939660043832}
   m_Layer: 0
   m_Name: Column_Circle_Fat (4)
   m_TagString: Untagged
@@ -523,8 +498,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3230740987772327942
-MeshCollider:
+--- !u!65 &2053135939660043832
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -541,10 +516,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5396493466163160439, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.7610837, y: 9.317723, z: 1.6693164}
+  m_Center: {x: 0, y: 4.6558614, z: -0.000000059604645}
 --- !u!1 &823729966781779766
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +860,7 @@ GameObject:
   - component: {fileID: 155408494750352583}
   - component: {fileID: 1496444388183222296}
   - component: {fileID: 6150505687080108101}
-  - component: {fileID: 6673446886718780021}
+  - component: {fileID: 5573412323601850041}
   m_Layer: 0
   m_Name: Column_Circle_Fat (9)
   m_TagString: Untagged
@@ -959,8 +933,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6673446886718780021
-MeshCollider:
+--- !u!65 &5573412323601850041
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -977,10 +951,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5396493466163160439, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.7610837, y: 9.317723, z: 1.6693164}
+  m_Center: {x: 0, y: 4.6558614, z: -0.000000059604645}
 --- !u!1 &1291626610184668581
 GameObject:
   m_ObjectHideFlags: 0
@@ -6005,7 +5978,7 @@ GameObject:
   - component: {fileID: 2413058205350563643}
   - component: {fileID: 4948400745667531548}
   - component: {fileID: 7912006636780120136}
-  - component: {fileID: 8306622207021954020}
+  - component: {fileID: 3740766930274078192}
   m_Layer: 0
   m_Name: Column_Circle_Fat (5)
   m_TagString: Untagged
@@ -6078,8 +6051,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8306622207021954020
-MeshCollider:
+--- !u!65 &3740766930274078192
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6096,10 +6069,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5396493466163160439, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.7610837, y: 9.317723, z: 1.6693164}
+  m_Center: {x: 0, y: 4.6558595, z: -0.000000059604645}
 --- !u!1 &1857212175362012568
 GameObject:
   m_ObjectHideFlags: 0
@@ -6429,7 +6401,7 @@ GameObject:
   - component: {fileID: 8978245746455081279}
   - component: {fileID: 38484158973669262}
   - component: {fileID: 3792545454942443613}
-  - component: {fileID: 1862576360252889470}
+  - component: {fileID: 3935676606327381466}
   m_Layer: 0
   m_Name: lamp_Golden.001_Lit (3)
   m_TagString: Untagged
@@ -6505,8 +6477,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1862576360252889470
-MeshCollider:
+--- !u!65 &3935676606327381466
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6523,10 +6495,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8047265696704464464, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.0185916, y: 2.2329807, z: 1.0084586}
+  m_Center: {x: 0, y: 1.1124475, z: 0.0016666353}
 --- !u!1 &2285720702203692033
 GameObject:
   m_ObjectHideFlags: 0
@@ -6644,7 +6615,7 @@ GameObject:
   - component: {fileID: 7278548548658340128}
   - component: {fileID: 8465459027058348455}
   - component: {fileID: 7626348837814282727}
-  - component: {fileID: 911941454881081137}
+  - component: {fileID: 3093752026291471347}
   m_Layer: 0
   m_Name: Column_Circle_Fat (7)
   m_TagString: Untagged
@@ -6717,8 +6688,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &911941454881081137
-MeshCollider:
+--- !u!65 &3093752026291471347
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6735,10 +6706,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5396493466163160439, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.7610837, y: 9.317723, z: 1.6693164}
+  m_Center: {x: 0, y: 4.6558595, z: -0.000000059604645}
 --- !u!1 &2940448677384675087
 GameObject:
   m_ObjectHideFlags: 0
@@ -11810,7 +11780,7 @@ GameObject:
   - component: {fileID: 3663307425470545301}
   - component: {fileID: 7794258406373316677}
   - component: {fileID: 603284700127743222}
-  - component: {fileID: 3728926007157555632}
+  - component: {fileID: 8867140517765072797}
   m_Layer: 0
   m_Name: Column_Circle_Fat (6)
   m_TagString: Untagged
@@ -11883,8 +11853,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3728926007157555632
-MeshCollider:
+--- !u!65 &8867140517765072797
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -11901,10 +11871,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5396493466163160439, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.7610837, y: 9.317723, z: 1.6693164}
+  m_Center: {x: 0, y: 4.6558614, z: -0.000000059604645}
 --- !u!1 &3927385104471353963
 GameObject:
   m_ObjectHideFlags: 0
@@ -26848,7 +26817,7 @@ GameObject:
   - component: {fileID: 4807870286257558014}
   - component: {fileID: 7352805593191528631}
   - component: {fileID: 7599381523542181770}
-  - component: {fileID: 5338162375682921872}
+  - component: {fileID: 6626401264003518022}
   m_Layer: 0
   m_Name: lamp_Golden.001_Lit (1)
   m_TagString: Untagged
@@ -26924,8 +26893,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5338162375682921872
-MeshCollider:
+--- !u!65 &6626401264003518022
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -26942,10 +26911,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8047265696704464464, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.0185916, y: 2.2329807, z: 1.0084586}
+  m_Center: {x: 0, y: 1.1124494, z: 0.0016666353}
 --- !u!1 &5839362688185434502
 GameObject:
   m_ObjectHideFlags: 0
@@ -27406,7 +27374,7 @@ GameObject:
   - component: {fileID: 2860297869264657863}
   - component: {fileID: 5052992766388162686}
   - component: {fileID: 340500900859198262}
-  - component: {fileID: 5908703862747101242}
+  - component: {fileID: 22532153818706349}
   m_Layer: 0
   m_Name: lamp_Golden.001_Lit (2)
   m_TagString: Untagged
@@ -27482,8 +27450,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5908703862747101242
-MeshCollider:
+--- !u!65 &22532153818706349
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -27500,10 +27468,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8047265696704464464, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.0185916, y: 2.2329807, z: 1.0084586}
+  m_Center: {x: 0, y: 1.1124494, z: 0.0016590059}
 --- !u!1 &6377667660485201818
 GameObject:
   m_ObjectHideFlags: 0
@@ -32705,7 +32672,6 @@ GameObject:
   - component: {fileID: 2525386168004401311}
   - component: {fileID: 8000599256226479576}
   - component: {fileID: 981709899489040511}
-  - component: {fileID: 1649501549439256338}
   m_Layer: 0
   m_Name: Rock_B (4)
   m_TagString: Untagged
@@ -32778,28 +32744,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1649501549439256338
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7584016933395199319}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1617438343633297580, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
 --- !u!1 &7686059662859104062
 GameObject:
   m_ObjectHideFlags: 0
@@ -32929,7 +32873,7 @@ GameObject:
   - component: {fileID: 98948420884120994}
   - component: {fileID: 7233589086216756357}
   - component: {fileID: 2485311336714934214}
-  - component: {fileID: 5170918377615688983}
+  - component: {fileID: 2634929974604641308}
   m_Layer: 0
   m_Name: lamp_Golden.001_Lit (5)
   m_TagString: Untagged
@@ -33005,8 +32949,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5170918377615688983
-MeshCollider:
+--- !u!65 &2634929974604641308
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -33023,10 +32967,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8047265696704464464, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.0185916, y: 2.2329807, z: 1.0084586}
+  m_Center: {x: 0, y: 1.1124494, z: 0.0016590059}
 --- !u!1 &8345692231334289315
 GameObject:
   m_ObjectHideFlags: 0
@@ -33274,7 +33217,7 @@ GameObject:
   - component: {fileID: 3624859336107282713}
   - component: {fileID: 3657137717848617544}
   - component: {fileID: 374537654085312421}
-  - component: {fileID: 2786678539541298481}
+  - component: {fileID: 8674048593087529349}
   m_Layer: 0
   m_Name: lamp_Golden.001_Lit (4)
   m_TagString: Untagged
@@ -33350,8 +33293,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2786678539541298481
-MeshCollider:
+--- !u!65 &8674048593087529349
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -33368,10 +33311,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8047265696704464464, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.0185916, y: 2.2329807, z: 1.0084586}
+  m_Center: {x: 0, y: 1.1124475, z: 0.0016666353}
 --- !u!1 &8715857295981739625
 GameObject:
   m_ObjectHideFlags: 0
@@ -33595,7 +33537,6 @@ GameObject:
   - component: {fileID: 5331667260476153394}
   - component: {fileID: 4646820281789352477}
   - component: {fileID: 99230076532712554}
-  - component: {fileID: 3498491402299127051}
   m_Layer: 0
   m_Name: Rock_D (4)
   m_TagString: Untagged
@@ -33668,25 +33609,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3498491402299127051
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8928196066855213334}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7998580582834682927, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}

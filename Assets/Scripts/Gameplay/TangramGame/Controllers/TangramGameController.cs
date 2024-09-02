@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cinemachine;
 using DG.Tweening;
 using Events;
 using Gameplay.InventorySystem;
@@ -29,6 +30,8 @@ namespace Gameplay.TangramGame.Controllers
         [SerializeField] private TileContentObject contentPrefab;
         [SerializeField] private Transform parent;
         [SerializeField] private TileContentInput[] tileContents;
+        [SerializeField] private CinemachineVirtualCamera virtualCamera;
+        [SerializeField] private GameObject tangramParent;
 
         private List<TileContentObject> placedContents = new List<TileContentObject>();
         private List<TileContentObject> spawnedContents = new List<TileContentObject>();

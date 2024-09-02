@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 3420165057196320291}
   - component: {fileID: 5991547039265050146}
   - component: {fileID: 4318783495499013397}
-  - component: {fileID: 7984020900440583568}
   m_Layer: 0
   m_Name: Candle.006 (1)
   m_TagString: Untagged
@@ -118,28 +117,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7984020900440583568
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3911884837486441635}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6996728381314466728, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
 --- !u!1 &5600946328803850748
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +128,6 @@ GameObject:
   - component: {fileID: 6408954595614996547}
   - component: {fileID: 4388319653563961664}
   - component: {fileID: 3376231154748818144}
-  - component: {fileID: 7893625342716892941}
   m_Layer: 0
   m_Name: Book_Pack_D (3)
   m_TagString: Untagged
@@ -224,28 +200,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7893625342716892941
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5600946328803850748}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4152899769684325782, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
 --- !u!1 &8220265222249952648
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +211,7 @@ GameObject:
   - component: {fileID: 4212187348208024160}
   - component: {fileID: 3093959265554078639}
   - component: {fileID: 2565593880041765475}
-  - component: {fileID: 2659600284344424207}
+  - component: {fileID: 5243216399157747162}
   m_Layer: 0
   m_Name: Chair_Double (3)
   m_TagString: Untagged
@@ -330,8 +284,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2659600284344424207
-MeshCollider:
+--- !u!65 &5243216399157747162
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -348,7 +302,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5014589551634244554, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 2.2198231, y: 0.5354985, z: 0.5281601}
+  m_Center: {x: -0.0095642805, y: 0.267749, z: -0.005700022}

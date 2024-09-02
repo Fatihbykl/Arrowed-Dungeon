@@ -7,7 +7,6 @@ namespace Gameplay.TangramGame.Controllers
     public class InteractionController : MonoBehaviour
     {
         [SerializeField] private Camera cam;
-        [SerializeField] private Transform parentForLocalPos;
 
         private IInteractable current;
 

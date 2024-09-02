@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7072056033601174265}
   - component: {fileID: 2962664031105153432}
   - component: {fileID: 1104422806513738449}
-  - component: {fileID: 3076253735025227022}
+  - component: {fileID: 7818060062200950262}
   m_Layer: 0
   m_Name: Chair_Small.001 (3)
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3076253735025227022
-MeshCollider:
+--- !u!65 &7818060062200950262
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,10 +102,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7394552946779828004, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.53688794, y: 0.4758518, z: 0.53688794}
+  m_Center: {x: 0, y: 0.23792587, z: -0.0000010728836}
 --- !u!1 &3971061183147381474
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +151,7 @@ GameObject:
   - component: {fileID: 5247734824039932629}
   - component: {fileID: 9024556085338309368}
   - component: {fileID: 6859223207371068499}
-  - component: {fileID: 5050106754777900718}
+  - component: {fileID: 8416957731338735630}
   m_Layer: 0
   m_Name: Chair_Small.001 (4)
   m_TagString: Untagged
@@ -225,8 +224,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5050106754777900718
-MeshCollider:
+--- !u!65 &8416957731338735630
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -243,10 +242,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7394552946779828004, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.53688794, y: 0.4758518, z: 0.53688794}
+  m_Center: {x: -0.0000076293945, y: 0.23792587, z: -0.0000001192093}
 --- !u!1 &7306531315444844086
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +256,7 @@ GameObject:
   - component: {fileID: 7425905745379620023}
   - component: {fileID: 4417230813288358828}
   - component: {fileID: 8899362115681023674}
-  - component: {fileID: 6081385243469777291}
+  - component: {fileID: 2856545450817453484}
   m_Layer: 0
   m_Name: Chair_Small.001 (5)
   m_TagString: Untagged
@@ -331,8 +329,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6081385243469777291
-MeshCollider:
+--- !u!65 &2856545450817453484
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -349,10 +347,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7394552946779828004, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.53688794, y: 0.4758518, z: 0.53688794}
+  m_Center: {x: -0.0000038146973, y: 0.23792587, z: -0.0000010728836}
 --- !u!1 &8590729788355954369
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +361,7 @@ GameObject:
   - component: {fileID: 7716310792375572208}
   - component: {fileID: 6393613920365190372}
   - component: {fileID: 2247907476145837680}
-  - component: {fileID: 452224400461596834}
+  - component: {fileID: 8983350259922241228}
   m_Layer: 0
   m_Name: Table_Short (1)
   m_TagString: Untagged
@@ -437,8 +434,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &452224400461596834
-MeshCollider:
+--- !u!65 &8983350259922241228
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -455,7 +452,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8133064195013735881, guid: fa12668d72228bd4282e599204fdcb3b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.0518739, y: 0.84479165, z: 0.8937037}
+  m_Center: {x: 0.0198676, y: 0.41840786, z: 0.00006158651}

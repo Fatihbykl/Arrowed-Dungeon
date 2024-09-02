@@ -16,7 +16,7 @@ namespace Gameplay.TangramGame
         public LayerMask cullingMaskInTangram;
         public GameObject mainUI;
         public GameObject tangramUI;
-        [FormerlySerializedAs("gameController")] public TangramGameController tangramGameController;
+        public TangramGameController tangramGameController;
 
         private bool _isOpen;
         private LayerMask _defaultMask;
@@ -28,7 +28,10 @@ namespace Gameplay.TangramGame
 
         private void OnTriggerEnter(Collider other)
         {
-            OpenTangram();
+            if (other.gameObject.CompareTag("Player"))
+            {
+                OpenTangram();   
+            }
         }
 
         public void OpenTangram()
