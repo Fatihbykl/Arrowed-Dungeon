@@ -1,3 +1,4 @@
+using System;
 using Gameplay.InventorySystem;
 using UnityEngine;
 
@@ -6,7 +7,12 @@ namespace Gameplay.Loot
     public class ItemLoot : LootDrop
     {
         public Item item;
-        
+
+        private void Start()
+        {
+            ThrowLoot();
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))

@@ -62,7 +62,7 @@ namespace Gameplay.Loot
                     var loot = Instantiate(random.prefab);
                     loot.transform.position = spawnPosition.position;
                 }
-                //loot.GetComponent<Rigidbody>().AddForce(transform.forward * 3, ForceMode.Impulse);
+
                 await UniTask.WaitForSeconds(delayAfterEveryItem);
             }
         }

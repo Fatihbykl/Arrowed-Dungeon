@@ -26,7 +26,7 @@ namespace Gameplay
             if (targetObject == null) { return; }
 
             var pos = targetObject.transform.position;
-            pos.y = 0.05f;
+            pos.y += 0.05f;
             targetIndicator.transform.position = pos;
         }
 

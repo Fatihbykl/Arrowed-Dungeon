@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Gameplay.Interfaces;
+using Gameplay.Loot;
 using UnityEngine;
 
 namespace Gameplay.Dungeon
@@ -9,25 +10,36 @@ namespace Gameplay.Dungeon
     public class Breakable : MonoBehaviour, IDamageable
     {
         [SerializeField] private int health;
-        [SerializeField] private GameObject replacement;
         [SerializeField] private float shakeMultiplier = 6;
+        [SerializeField] private GameObject particle;
         [SerializeField] private bool broken = false;
+
+        private ParticleSystem _particle;
+        private LootSpawner _lootSpawner;
+        private MeshRenderer _meshRenderer;
+        private BoxCollider _boxCollider;
+
+        private void Start()
+        {
+            _particle = particle.GetComponent<ParticleSystem>();
+            _lootSpawner = GetComponent<LootSpawner>();
+            _meshRenderer = GetComponent<MeshRenderer>();
+            _boxCollider = GetComponent<BoxCollider>();
+        }
 
         public void TakeDamage(int damage)
         {
             if (broken) { return; }
 
+            _particle.Play();
             health -= damage;
             if (health <= 0)
             {
                 broken = true;
-                var replacementObject = Instantiate(replacement, transform.position, transform.rotation);
-                var rbs = replacementObject.GetComponentsInChildren<Rigidbody>();
-                foreach (var rb in rbs)
-                {
-                    AnimateDestroy(rb.gameObject);
-                }
-                Destroy(gameObject);
+                _lootSpawner.SpawnItems();
+                _meshRenderer.enabled = false;
+                _boxCollider.enabled = false;
+                Destroy(gameObject,1f);
             }
             else
             {

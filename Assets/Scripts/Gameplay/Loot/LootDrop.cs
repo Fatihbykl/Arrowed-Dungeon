@@ -11,7 +11,7 @@ namespace Gameplay.Loot
         private Vector3 _velocity = Vector3.up;
         private Rigidbody _rb;
 
-        private void Start()
+        public void ThrowLoot()
         {
             _velocity *= Random.Range(3f, 5f);
             _velocity += new Vector3(Random.Range(-1f, 1f), 0, Random.Range(0f, -3f));
