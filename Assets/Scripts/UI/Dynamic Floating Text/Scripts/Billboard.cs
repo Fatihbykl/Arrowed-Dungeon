@@ -10,7 +10,7 @@ namespace UI.Dynamic_Floating_Text.Scripts
     
         void LateUpdate()
         {
-            transform.LookAt(transform.position + DynamicTextManager.mainCamera.forward);
+            transform.LookAt(transform.position + DynamicTextManager.Instance.MainCamera.forward);
         }
     }
 }

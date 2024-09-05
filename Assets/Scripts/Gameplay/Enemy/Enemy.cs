@@ -196,7 +196,7 @@ namespace Gameplay.Enemy
             damage = Mathf.RoundToInt(damage * (1 - enemyStats.armor.Value / 100f));
             
             enemyStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
-            CreateFloatingText(damage.ToString(), DynamicTextManager.defaultData);
+            CreateFloatingText(damage.ToString(), DynamicTextManager.Instance.EnemyDamageData);
             if (enemyStats.health.Value > 0) { StartTakeDamageAnim(); }
         }
 
@@ -204,11 +204,7 @@ namespace Gameplay.Enemy
         {
             if (damage == "0") { damage = "MISS!"; }
             
-            var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
-            textPos.x += (Random.value - 0.5f) / 3f;
-            textPos.y += Random.value;
-            textPos.z += (Random.value - 0.5f) / 3f;
-            DynamicTextManager.CreateText(textPos, damage, data);
+            DynamicTextManager.Instance.CreateText(transform, damage, data);
         }
 
         private async void StartTakeDamageAnim()
@@ -222,7 +218,7 @@ namespace Gameplay.Enemy
         {
             var particle = Instantiate(healVFXPrefab, transform);
             Destroy(particle, 1f);
-            CreateFloatingText(healthAmount.ToString(), DynamicTextManager.enemyHeal);
+            CreateFloatingText(healthAmount.ToString(), DynamicTextManager.Instance.EnemyHealData);
             enemyStats.health.AddModifier(new StatModifier(healthAmount, StatModType.Flat));
             AudioManager.Instance.PlaySoundFXClip(healSoundEffect, transform);
         }

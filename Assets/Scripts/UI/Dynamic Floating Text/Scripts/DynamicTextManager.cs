@@ -1,45 +1,62 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI.Dynamic_Floating_Text.Scripts
 {
     public class DynamicTextManager : MonoBehaviour
     {
+        [SerializeField] private DynamicTextData defaultData;
+        [SerializeField] private DynamicTextData enemyDamageData;
+        [SerializeField] private DynamicTextData enemyHealData;
+        [SerializeField] private DynamicTextData playerHealData;
+        [SerializeField] private DynamicTextData playerDamageData;
+        [SerializeField] private DynamicTextData goldData;
+        [SerializeField] private DynamicTextData gemData;
+        [SerializeField] private Transform mainCamera;
+        [SerializeField] private GameObject canvasPrefab;
 
-        public static DynamicTextData defaultData;
-        public static DynamicTextData enemyHeal;
-        public static DynamicTextData playerHeal;
-        public static DynamicTextData playerDamage;
-        public static GameObject canvasPrefab;
-        public static Transform mainCamera;
-
-        [SerializeField] private DynamicTextData _defaultData;
-        [SerializeField] private DynamicTextData _enemyHeal;
-        [SerializeField] private DynamicTextData _playerHeal;
-        [SerializeField] private DynamicTextData _playerDamage;
-        [SerializeField] private GameObject _canvasPrefab;
-        [SerializeField] private Transform _mainCamera;
+        public DynamicTextData DefaultData => defaultData;
+        public DynamicTextData EnemyDamageData => enemyDamageData;
+        public DynamicTextData EnemyHealData => enemyHealData;
+        public DynamicTextData PlayerHealData => playerHealData;
+        public DynamicTextData PlayerDamageData => playerDamageData;
+        public DynamicTextData GoldData => goldData;
+        public DynamicTextData GemData => gemData;
+        public Transform MainCamera => mainCamera;
+        
+        public static DynamicTextManager Instance { get; private set; }
 
         private void Awake()
         {
-            defaultData = _defaultData;
-            enemyHeal = _enemyHeal;
-            playerHeal = _playerHeal;
-            playerDamage = _playerDamage;
-            mainCamera = _mainCamera;
-            canvasPrefab = _canvasPrefab;
+            if (Instance != null)
+            {
+                Debug.LogError("Found more than one Dynamic Text Manager in the scene.");
+                Destroy(this);
+                return;
+            }
+            Instance = this;
         }
 
-        public static void CreateText2D(Vector2 position, string text, DynamicTextData data)
+        public void CreateText2D(Vector2 position, string text, DynamicTextData data)
         {
             GameObject newText = Instantiate(canvasPrefab, position, Quaternion.identity);
             newText.transform.GetComponent<DynamicText2D>().Initialise(text, data);
         }
 
-        public static void CreateText(Vector3 position, string text, DynamicTextData data)
+        public void CreateText(Transform targetTransform, string text, DynamicTextData data)
         {
-            GameObject newText = Instantiate(canvasPrefab, position, Quaternion.identity);
+            GameObject newText = Instantiate(canvasPrefab, GetRandomTextPosition(targetTransform), Quaternion.identity);
             newText.transform.GetComponent<DynamicText>().Initialise(text, data);
         }
 
+        private Vector3 GetRandomTextPosition(Transform target)
+        {
+            var textPos = new Vector3(target.position.x, 2f, target.position.z);
+            textPos.x += (Random.value - 0.5f) / 3f;
+            textPos.y += Random.value;
+            textPos.z += (Random.value - 0.5f) / 3f;
+
+            return textPos;
+        }
     }
 }

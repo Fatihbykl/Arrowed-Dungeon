@@ -78,7 +78,7 @@ namespace Gameplay.Player
         {
             if (isInvulnerable)
             {
-                CreateFloatingText("INVULNERABLE!", DynamicTextManager.playerDamage);
+                CreateFloatingText("INVULNERABLE!", DynamicTextManager.Instance.PlayerDamageData);
                 return;
             }
             
@@ -86,7 +86,7 @@ namespace Gameplay.Player
             
             animator.SetTrigger(AnimationParameters.TakeDamage);
             _playerStats.health.AddModifier(new StatModifier(-damage, StatModType.Flat));
-            CreateFloatingText(damage.ToString(), DynamicTextManager.playerDamage);
+            CreateFloatingText(damage.ToString(), DynamicTextManager.Instance.PlayerDamageData);
             
             if (_playerStats.health.Value <= 0) { Die(); }
 
@@ -95,11 +95,7 @@ namespace Gameplay.Player
         
         private void CreateFloatingText(string damage, DynamicTextData data)
         {
-            var textPos = new Vector3(transform.position.x, 2f, transform.position.z);
-            textPos.x += (Random.value - 0.5f) / 3f;
-            textPos.y += Random.value;
-            textPos.z += (Random.value - 0.5f) / 3f;
-            DynamicTextManager.CreateText(textPos, damage, data);
+            DynamicTextManager.Instance.CreateText(transform, damage, data);
         }
 
         public void AttachBow()
@@ -193,7 +189,7 @@ namespace Gameplay.Player
 
         public void Heal(int healthAmount)
         {
-            CreateFloatingText(healthAmount.ToString(), DynamicTextManager.enemyHeal);
+            CreateFloatingText(healthAmount.ToString(), DynamicTextManager.Instance.PlayerHealData);
             _playerStats.health.AddModifier(new StatModifier(healthAmount, StatModType.Flat));
         }
     }

@@ -15,7 +15,7 @@ namespace UI
     public struct HintTarget
     {
         public TargetPositionType targetPositionType;
-        public RectTransform targetRect;
+        public GameObject targetObject;
         [TextArea]
         public string hintText;
     }
@@ -51,7 +51,7 @@ namespace UI
             var hint = hints[_nextHintIndex];
             var position = GetPositionOfTarget(hint);
             var popupPosition = GetPositionOfPopup(position);
-
+            
             Time.timeScale = 0;
             hintUI.transform.position = position;
             hintPopup.transform.localPosition = popupPosition;
@@ -68,7 +68,7 @@ namespace UI
 
         private Vector3 GetPositionOfTarget(HintTarget target)
         {
-            var pos = target.targetRect.position;
+            var pos = target.targetObject.transform.position;
             
             return target.targetPositionType switch
             {

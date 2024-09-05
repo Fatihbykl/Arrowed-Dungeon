@@ -24,6 +24,8 @@ namespace Gameplay.Managers
             if (Instance != null)
             {
                 Debug.LogError("Found more than one Game Manager in the scene.");
+                Destroy(this);
+                return;
             }
             Instance = this;
         }

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcff3a5a705644c4e9a3068b0236a108, type: 3}
+  m_Name: Gem
+  m_EditorClassIdentifier: 
+  id: 1
+  colours:
+  - {r: 0.28773582, g: 0.821934, b: 1, a: 1}
+  - {r: 0.48584908, g: 0.8728747, b: 1, a: 1}
+  sizes:
+  - 1
+  - 1.1
+  - 0.9
+  font: {fileID: 11400000, guid: aa2f3c655b3634b2b852b64fd197fd58, type: 2}
+  bold: 0
+  italic: 0
+  underline: 0
+  strikethrough: 0
+  lifetime: 0.5
+  numberOfColourAlternations: 2
+  numberOfSizeAlternations: 3
+  colourAlternationDuration: 0.1
+  sizeAlternationDuration: 0.1
+  enterDuration: 0.1
+  exitDuration: 0.1
+  maxDrift: 1
+  maxHeight: 0.25
+  popModifier: 0.75
+  colourAlternationMode: 1
+  sizeAlternationMode: 1
+  enterType: 0200000004000000
+  exitType: 2
