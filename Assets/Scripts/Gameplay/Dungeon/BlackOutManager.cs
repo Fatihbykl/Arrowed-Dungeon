@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -15,8 +16,13 @@ namespace Gameplay.Dungeon
     {
         public Room[] rooms;
         public int startingRoomIndex;
+        public Material opaqueMaterial;
+        public Material transparentMaterial;
+        public Material transparentMaterialNoColor;
 
         private int _currentRoom = -1;
+        private readonly Color _blackColor = Color.black;
+        private readonly Color _transparentColor = new Color(0, 0, 0, 0);
 
         private void Start()
         {
@@ -30,11 +36,10 @@ namespace Gameplay.Dungeon
             _currentRoom = roomIndex;
             var room = rooms[roomIndex];
             
-            //room.insideBlackout.SetActive(false);
-            room.insideBlackout.GetComponent<MeshRenderer>().material.DOColor(new Color(0, 0, 0, 0), 0.5f);
+            FadeBlackouts(room.insideBlackout.GetComponent<MeshRenderer>(), _transparentColor);
             foreach (var blackout in room.outsideBlackouts)
             {
-                blackout.GetComponent<MeshRenderer>().material.DOColor(new Color(0, 0, 0, 1), 0.5f);
+                FadeBlackouts(blackout.GetComponent<MeshRenderer>(), _blackColor);
             }
         }
 
@@ -45,11 +50,20 @@ namespace Gameplay.Dungeon
             _currentRoom = -1;
             var room = rooms[roomIndex];
             
-            room.insideBlackout.GetComponent<MeshRenderer>().material.DOColor(new Color(0, 0, 0, 1), 0.5f);
+            FadeBlackouts(room.insideBlackout.GetComponent<MeshRenderer>(), _blackColor);
             foreach (var blackout in room.outsideBlackouts)
             {
-                blackout.GetComponent<MeshRenderer>().material.DOColor(new Color(0, 0, 0, 0), 0.5f);
+                FadeBlackouts(blackout.GetComponent<MeshRenderer>(), _transparentColor);
             }
+        }
+
+        private async void FadeBlackouts(MeshRenderer meshRenderer, Color color, float duration = 0.5f)
+        {
+            meshRenderer.material = color == _transparentColor ? transparentMaterial : transparentMaterialNoColor;
+            
+            await meshRenderer.material.DOColor(color, duration);
+
+            if (color == _blackColor) { meshRenderer.material = opaqueMaterial; }
         }
     }
 }
