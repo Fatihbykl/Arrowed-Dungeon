@@ -21,7 +21,6 @@ namespace Gameplay.Player
         public MicroBar hpBar;
         public GameObject arrow;
         public GameObject handSlot;
-        public Projectile arrowPrefab;
         public GameObject visualEffects;
 
         [Header("Sound Effects")]
@@ -34,6 +33,7 @@ namespace Gameplay.Player
         [HideInInspector] public bool castingAbility;
         [HideInInspector] public bool isInvulnerable;
 
+        private PlayerArrowSwitcher _playerArrowSwitcher;
         private CapsuleCollider _capsuleCollider;
         private InputAction _attackAction;
         private AudioSource _audioSource;
@@ -50,6 +50,7 @@ namespace Gameplay.Player
         private void Awake()
         {
             _attackAction = GetComponent<PlayerInput>().actions["Attack"];
+            _playerArrowSwitcher = GetComponent<PlayerArrowSwitcher>();
             _bow = handSlot.transform.GetChild(_bowIndex).gameObject;
             _capsuleCollider = GetComponent<CapsuleCollider>();
             _playerStats = GetComponent<PlayerStats>();
@@ -125,7 +126,7 @@ namespace Gameplay.Player
         {
             var targetPos = currentTarget.transform.position;
             targetPos.y = 1f;
-            Projectile projectile = Instantiate(arrowPrefab);
+            var projectile = Instantiate(_playerArrowSwitcher.GetCurrentArrowPrefab()).GetComponent<Projectile>();
             projectile.transform.position = _bow.transform.position;
             projectile.transform.LookAt(targetPos);
             projectile.target = currentTarget;

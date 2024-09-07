@@ -16,6 +16,7 @@ namespace Gameplay.StatusEffectSystem.EnemyStatus
         public override void ApplyStatus(GameObject target)
         {
             _enemy = target.GetComponent<Enemy.Enemy>();
+            if (_enemy == null) { return; }
             
             Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, explosionRange, enemyMask);
             AudioManager.Instance.PlayRandomSoundFXClip(soundClips, _enemy.transform);

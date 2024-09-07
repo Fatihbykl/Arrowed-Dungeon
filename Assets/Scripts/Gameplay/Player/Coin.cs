@@ -41,7 +41,6 @@ namespace Gameplay.Player
                     Gem += amount;
                     break;
             }
-            Debug.Log($"Gold: {Gold}, Gem: {Gem}");
             EventManager.EmitEvent(EventStrings.CurrencyUpdated);
         }
 

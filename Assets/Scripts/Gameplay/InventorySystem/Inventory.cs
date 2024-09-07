@@ -59,7 +59,7 @@ namespace Gameplay.InventorySystem
         public void RemoveItem(Item item, int count)
         {
             var slot = GetInventorySlot(item);
-            if (slot == null) { return; }
+            if (slot == null || slot.itemCount == -1) { return; }
             
             slot.DecreaseCount(count);
             if (slot.itemCount <= 0)

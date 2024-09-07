@@ -13,7 +13,8 @@ namespace Gameplay.InventorySystem
         ShoulderPad = 3,
         Gloves = 4,
         Weapon = 5,
-        Others = 6
+        Others = 6,
+        Arrow = 7
     }
 
     public enum ItemRarity

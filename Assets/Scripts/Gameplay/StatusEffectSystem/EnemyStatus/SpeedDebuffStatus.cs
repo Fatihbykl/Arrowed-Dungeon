@@ -18,6 +18,7 @@ namespace Gameplay.StatusEffectSystem.EnemyStatus
         public override void ApplyStatus(GameObject target)
         {
             _enemy = target.GetComponent<Enemy.Enemy>();
+            if (_enemy == null) { return; }
             
             AudioManager.Instance.PlayRandomSoundFXClip(soundClips, _enemy.transform);
             if (!_enemy.isInStatusEffect)

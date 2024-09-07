@@ -7,7 +7,6 @@ Shader "Custom/Mask"
 		Tags {
 			"RenderType" = "Opaque"
 		}
-
 		Pass {
 			ZWrite Off
 		}
