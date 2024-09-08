@@ -18,9 +18,6 @@ namespace Gameplay.Managers
 
         private void Awake()
         {
-            QualitySettings.vSyncCount = 0;
-            Application.targetFrameRate = 300;
-            
             if (Instance != null)
             {
                 Debug.LogError("Found more than one Game Manager in the scene.");
