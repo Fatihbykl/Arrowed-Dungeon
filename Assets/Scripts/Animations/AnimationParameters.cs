@@ -12,7 +12,6 @@ namespace Animations
         public static readonly int EquipBow = Animator.StringToHash("EquipBow");
         public static readonly int DisarmBow = Animator.StringToHash("DisarmBow");
         public static readonly int SkyShot = Animator.StringToHash("SkyShot");
-        public static readonly int Dash = Animator.StringToHash("Dash");
         public static readonly int MultiShotStart = Animator.StringToHash("MultiShotStart");
         public static readonly int MultiShotEnd = Animator.StringToHash("MultiShotEnd");
         

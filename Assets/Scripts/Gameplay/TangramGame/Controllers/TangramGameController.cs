@@ -98,7 +98,6 @@ namespace Gameplay.TangramGame.Controllers
             {
                 if (Inventory.Instance.HasId(spawnedContent.Content.id))
                 {
-                    Debug.Log("test");
                     spawnedContent.gameObject.SetActive(true);
                 }
             }

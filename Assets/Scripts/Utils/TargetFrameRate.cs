@@ -7,8 +7,8 @@ namespace Utils
     {
         private void Awake()
         {
-            QualitySettings.vSyncCount = 0;
-            Application.targetFrameRate = 60;
+            QualitySettings.vSyncCount = 1;
+            Application.targetFrameRate = 300;
         }
     }
 }

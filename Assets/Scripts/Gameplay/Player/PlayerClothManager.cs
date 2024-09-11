@@ -7,6 +7,7 @@ namespace Gameplay.Player
     public class PlayerClothManager : MonoBehaviour
     {
         public GameObject wearables;
+        public GameObject[] defaultClothes;
 
         private void Start()
         {
@@ -37,6 +38,11 @@ namespace Gameplay.Player
             for (int i = 0; i < wearables.transform.childCount; i++)
             {
                 wearables.transform.GetChild(i).gameObject.SetActive(false);
+            }
+
+            foreach (var cloth in defaultClothes)
+            {
+                cloth.SetActive(true);
             }
         }
     }

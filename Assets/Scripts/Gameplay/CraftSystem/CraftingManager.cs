@@ -1,23 +1,21 @@
 using System;
 using System.Collections.Generic;
+using Events;
+using Gameplay.CraftSystem.DynamicScroll;
 using Gameplay.InventorySystem;
 using Gameplay.Player;
 using TMPro;
 using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Gameplay.CraftSystem
 {
     public class CraftingManager : MonoBehaviour
     {
-        public CraftingRecipe[] recipes;
-        public GameObject content;
         public RarityColorsFramesInfo rarityInfo;
         
         [Header("Recipe Details")]
-        public GameObject recipeSlotPrefab;
         public GameObject recipeInfoParent;
         public GameObject recipeInfoPrefab;
         public int recipeInfoRowCount;
@@ -34,19 +32,15 @@ namespace Gameplay.CraftSystem
         public Image popupImage;
         public TextMeshProUGUI popupText;
         
-        public static Action<CraftingSlotUI> RecipeClicked;
-        
-        private List<GameObject> _slots;
         private List<GameObject> _rows;
         private CraftingRecipe _lastClickedRecipe;
         private int _addedChance;
 
         private void Start()
         {
-            RecipeClicked += OnRecipeClicked;
+            EventManager.StartListening(EventStrings.RecipeClicked, OnRecipeClicked);
 
             _addedChance = 0;
-            _slots = new List<GameObject>();
             _rows = new List<GameObject>();
             
             InstantiateSlots();
@@ -54,17 +48,6 @@ namespace Gameplay.CraftSystem
 
         private void InstantiateSlots()
         {
-            for (int i = 0; i < recipes.Length; i++)
-            {
-                var slotUI = Instantiate(recipeSlotPrefab, content.transform);
-                var recipe = recipes[i].GetCopy();
-
-                slotUI.GetComponent<CraftingSlotUI>().recipe = recipe;
-                slotUI.GetComponent<CraftingSlotUI>().Init(rarityInfo);
-                
-                _slots.Add(slotUI);
-            }
-
             for (int i = 0; i < recipeInfoRowCount; i++)
             {
                 var row = Instantiate(recipeInfoPrefab, recipeInfoParent.transform);
@@ -74,8 +57,10 @@ namespace Gameplay.CraftSystem
             }
         }
 
-        public void OnRecipeClicked(CraftingSlotUI slot)
+        public void OnRecipeClicked()
         {
+            var slot = (RecipeData)EventManager.GetSender(EventStrings.RecipeClicked);
+            
             _lastClickedRecipe = slot.recipe;
             ClearRecipeInfo();
             UpdateCraftChance();
@@ -161,6 +146,11 @@ namespace Gameplay.CraftSystem
             {
                 _rows[i].SetActive(false);
             }
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.StartListening(EventStrings.RecipeClicked, OnRecipeClicked);
         }
     }
 }

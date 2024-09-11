@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4dadd0d5aab914e88aefbe415a8039, type: 3}
+  m_Name: New Crafting Recipe 2
+  m_EditorClassIdentifier: 
+  materials:
+  - item: {fileID: 11400000, guid: 546588d9bd6ffde4f94306a99840a1f4, type: 2}
+    itemCount: 1
+  result:
+    item: {fileID: 11400000, guid: 1d0f2c2868521e94f80fc70dbda61621, type: 2}
+    itemCount: 1
+  craftCost:
+    amount: 200
+    coinType: 0
+  craftChance: 54

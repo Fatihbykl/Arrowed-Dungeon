@@ -8,7 +8,6 @@ namespace Utils
     {
         public GameObject worldObject;
         public GameObject targetScreenPosition;
-        public Canvas canvas;
 
         private void Start()
         {
@@ -22,10 +21,7 @@ namespace Utils
             var cam = Camera.main;
             var objPos = worldObject.transform.position;
             
-            var position = cam.WorldToScreenPoint(targetScreenPosition.transform.position);
-            position.z = (canvas.transform.position - cam.transform.position).magnitude;
-            
-            var worldPos = cam.ScreenToWorldPoint(position);
+            var worldPos = cam.ScreenToWorldPoint(targetScreenPosition.transform.position);
             worldPos.y = objPos.y;
             worldPos.z = objPos.z;
             

@@ -32,7 +32,6 @@ namespace Gameplay.AbilitySystem.Player
         {
             _player.castingAbility = true;
             _player.animator.SetLayerWeight(1, 0);
-            _player.animator.SetTrigger(AnimationParameters.Dash);
             
             BlinkDash();
         }
