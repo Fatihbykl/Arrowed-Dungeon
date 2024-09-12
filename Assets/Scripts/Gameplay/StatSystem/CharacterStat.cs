@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Gameplay.StatSystem
@@ -22,6 +23,14 @@ namespace Gameplay.StatSystem
 	{
 		[SerializeField]
 		protected float baseValue;
+
+		[Space(10)] [Header("Improvement Per Level")]
+		[InfoBox("For percentage, set value between 0 and 1. Use negative value if you want to decrease base value.")]
+		public float improvementValue;
+		public bool isThatValuePercentage;
+
+
+		[Space(10)] [Header("Bounds")]
 		public bool useUpperBound;
 		public bool useLowerBound;
 		public float upperBound;
@@ -39,7 +48,6 @@ namespace Gameplay.StatSystem
 			get => default;
 			set {  }
 		}
-		
 
 		private readonly List<StatModifier> _statModifiers;
 		public readonly ReadOnlyCollection<StatModifier> statModifiers;
@@ -53,6 +61,14 @@ namespace Gameplay.StatSystem
 		public CharacterStat(float baseValue) : this()
 		{
 			this.baseValue = baseValue;
+		}
+		
+		public void UpdateBaseValue()
+		{
+			Debug.Log($"New Value: {baseValue}");
+			if (isThatValuePercentage) { baseValue += baseValue * improvementValue; }
+			else { baseValue += improvementValue; }
+			Debug.Log($"New Value: {baseValue}");
 		}
 
 		public virtual void AddModifier(StatModifier mod)

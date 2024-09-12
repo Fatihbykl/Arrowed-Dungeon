@@ -13,5 +13,6 @@ namespace Events
         public static readonly string ShopBuyButtonClicked = "ShopBuyButtonClicked";
         public static readonly string CurrencyUpdated = "CurrencyUpdated";
         public static readonly string RecipeClicked = "RecipeClicked";
+        public static readonly string LevelUpgraded = "LevelUpgraded";
     }
 }

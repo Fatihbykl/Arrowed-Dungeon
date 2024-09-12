@@ -1,3 +1,5 @@
+using System;
+using Events;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -5,53 +7,62 @@ namespace Gameplay.Managers
     public class ExperienceManager : MonoBehaviour
     {
         public static ExperienceManager Instance { get; private set; }
-        
-        [SerializeField] private AnimationCurve experienceCurve;
 
-        public int _currentLevel, _totalExperience, _previousLevelExperience, _nextLevelExperience;
+        public int CurrentLevel { get; private set; }
+        public int TotalExperience { get; private set; }
+        public int NextLevelExperience { get; private set; }
+        public int PreviousLevelExperience { get; private set; }
 
         private void Awake()
         {
             if (Instance != null && Instance != this)
             {
-                Debug.LogError("Found more than one Inventory in the scene.");
+                Debug.LogError("Found more than one Experience Manager in the scene.");
                 Destroy(this);
                 return;
             }
             Instance = this;
 
+            CurrentLevel = 1;
             UpdateVariables();
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                AddExperience(50);
+            }
+        }
+
+        private int GetLevelExperience(int level)
+        {
+            // a_n = 25/3 (n^^3 + 6n^^2 + 5n)
+            var exp = (25 / 3f) * (Mathf.Pow(level, 3) + 6 * Mathf.Pow(level, 2) + 5 * level);
+            return Mathf.RoundToInt(exp);
         }
 
         public void AddExperience(int amount)
         {
-            _totalExperience += amount;
+            TotalExperience += amount;
             CheckForLevelUp();
-        }
-        
-        void Update() 
-        {
-            if(Input.GetMouseButtonDown(0))
-            {
-                AddExperience(5);
-            }
         }
 
         void CheckForLevelUp()
         {
-            if(_totalExperience >= _nextLevelExperience)
-            {
-                _currentLevel++;
-                UpdateVariables();
+            if (TotalExperience < NextLevelExperience) return;
+            
+            CurrentLevel++;
+            UpdateVariables();
 
-                // Start level up sequence... Possibly vfx?
-            }
+            EventManager.EmitEvent(EventStrings.LevelUpgraded);
+            Debug.Log("Level Upgraded");
         }
 
         void UpdateVariables()
         {
-            _previousLevelExperience = (int)experienceCurve.Evaluate(_currentLevel);
-            _nextLevelExperience = (int)experienceCurve.Evaluate(_currentLevel + 1);
+            PreviousLevelExperience = GetLevelExperience(CurrentLevel - 1);
+            NextLevelExperience = GetLevelExperience(CurrentLevel);
         }
     }
 }

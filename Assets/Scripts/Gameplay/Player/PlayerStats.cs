@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Events;
 using Gameplay.InventorySystem;
 using Gameplay.StatSystem;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace Gameplay.Player
         private void Start()
         {
             Inventory.Instance.EquipmentChanged += OnEquipmentChanged;
+            EventManager.StartListening(EventStrings.LevelUpgraded, OnLevelUpgraded);
         }
 
         public void InitHealth()
@@ -85,6 +87,22 @@ namespace Gameplay.Player
         {
             RemoveAllModifiersFromStats();
             UpdateStatsWithEquipments(Inventory.Instance.equipmentSlots);
+        }
+
+        private void OnLevelUpgraded()
+        {
+            maxHealth.UpdateBaseValue();
+            damage.UpdateBaseValue();
+            armor.UpdateBaseValue();
+            missChance.UpdateBaseValue();
+            runningSpeed.UpdateBaseValue();
+            walkingSpeed.UpdateBaseValue();
+            attackCooldown.UpdateBaseValue();
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.StopListening(EventStrings.LevelUpgraded, OnLevelUpgraded);
         }
     }
 }
