@@ -309,6 +309,52 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &307055104
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307055106}
+  - component: {fileID: 307055105}
+  m_Layer: 0
+  m_Name: DataPersistanceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &307055105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307055104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d7ed7b1738707468b77cb93a4c3927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: test
+  useEncryption: 0
+--- !u!4 &307055106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307055104}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 678.6755, y: 607.9777, z: -151.05681}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &315476966
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,19 +665,19 @@ PrefabInstance:
     - target: {fileID: 315381591748723492, guid: fe2e04db55869004aaad10345e1241b8,
         type: 3}
       propertyPath: inventorySlots.Array.size
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 315381591748723492, guid: fe2e04db55869004aaad10345e1241b8,
         type: 3}
       propertyPath: inventorySlots.Array.data[0].item
       value: 
-      objectReference: {fileID: 11400000, guid: 00141a9bb5b3281469cd8ce237b1deb9,
+      objectReference: {fileID: 11400000, guid: d27c13307cd394747b6866c36292d4da,
         type: 2}
     - target: {fileID: 315381591748723492, guid: fe2e04db55869004aaad10345e1241b8,
         type: 3}
       propertyPath: inventorySlots.Array.data[1].item
       value: 
-      objectReference: {fileID: 11400000, guid: 8bc844905c3b8a441b018782356c15ad,
+      objectReference: {fileID: 11400000, guid: 81a73c875547d3945b80e6417929d91e,
         type: 2}
     - target: {fileID: 315381591748723492, guid: fe2e04db55869004aaad10345e1241b8,
         type: 3}
@@ -660,12 +706,12 @@ PrefabInstance:
     - target: {fileID: 315381591748723492, guid: fe2e04db55869004aaad10345e1241b8,
         type: 3}
       propertyPath: inventorySlots.Array.data[0].itemCount
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 315381591748723492, guid: fe2e04db55869004aaad10345e1241b8,
         type: 3}
       propertyPath: inventorySlots.Array.data[1].itemCount
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 315381591748723492, guid: fe2e04db55869004aaad10345e1241b8,
         type: 3}
@@ -7775,6 +7821,7 @@ SceneRoots:
   - {fileID: 1538480324}
   - {fileID: 960688495}
   - {fileID: 2061110968}
+  - {fileID: 307055106}
   - {fileID: 1098965045}
   - {fileID: 910716563}
   - {fileID: 456270762}

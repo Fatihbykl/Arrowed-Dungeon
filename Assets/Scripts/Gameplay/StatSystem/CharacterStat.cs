@@ -65,10 +65,8 @@ namespace Gameplay.StatSystem
 		
 		public void UpdateBaseValue()
 		{
-			Debug.Log($"New Value: {baseValue}");
 			if (isThatValuePercentage) { baseValue += baseValue * improvementValue; }
 			else { baseValue += improvementValue; }
-			Debug.Log($"New Value: {baseValue}");
 		}
 
 		public virtual void AddModifier(StatModifier mod)

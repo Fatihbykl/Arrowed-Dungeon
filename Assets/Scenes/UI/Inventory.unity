@@ -7100,7 +7100,7 @@ PrefabInstance:
     - target: {fileID: 4452653267295958488, guid: 2a47e1ec42ffd634f891b5ee86aceef0,
         type: 3}
       propertyPath: m_RaycastTarget
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5423612114169947961, guid: 2a47e1ec42ffd634f891b5ee86aceef0,
         type: 3}
@@ -8378,34 +8378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bed0d46fb9a1aa4f8b32434a1ef81f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  experienceCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 100
-      value: 10000
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _currentLevel: 0
-  _totalExperience: 0
-  _previousLevelExperience: 0
-  _nextLevelExperience: 0
 --- !u!4 &1531007210
 Transform:
   m_ObjectHideFlags: 0
@@ -8452,7 +8424,7 @@ PrefabInstance:
     - target: {fileID: 4452653267295958488, guid: 2a47e1ec42ffd634f891b5ee86aceef0,
         type: 3}
       propertyPath: m_RaycastTarget
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5423612114169947961, guid: 2a47e1ec42ffd634f891b5ee86aceef0,
         type: 3}
@@ -18746,7 +18718,7 @@ PrefabInstance:
     - target: {fileID: 4452653267295958488, guid: 2a47e1ec42ffd634f891b5ee86aceef0,
         type: 3}
       propertyPath: m_RaycastTarget
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5423612114169947961, guid: 2a47e1ec42ffd634f891b5ee86aceef0,
         type: 3}
@@ -19121,48 +19093,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth:
     baseValue: 10
+    improvementValue: 0
+    isThatValuePercentage: 0
     useUpperBound: 0
     useLowerBound: 0
     upperBound: 0
     lowerBound: 0
   damage:
     baseValue: 20
+    improvementValue: 0
+    isThatValuePercentage: 0
     useUpperBound: 0
     useLowerBound: 0
     upperBound: 0
     lowerBound: 0
   armor:
     baseValue: 30
+    improvementValue: 0
+    isThatValuePercentage: 0
     useUpperBound: 0
     useLowerBound: 0
     upperBound: 0
     lowerBound: 0
   missChance:
     baseValue: 40
+    improvementValue: 0
+    isThatValuePercentage: 0
     useUpperBound: 0
     useLowerBound: 0
     upperBound: 0
     lowerBound: 0
   runningSpeed:
     baseValue: 3
+    improvementValue: 0
+    isThatValuePercentage: 0
     useUpperBound: 0
     useLowerBound: 0
     upperBound: 0
     lowerBound: 0
   walkingSpeed:
     baseValue: 2
+    improvementValue: 0
+    isThatValuePercentage: 0
     useUpperBound: 0
     useLowerBound: 0
     upperBound: 0
     lowerBound: 0
   attackCooldown:
     baseValue: 1
+    improvementValue: 0
+    isThatValuePercentage: 0
     useUpperBound: 0
     useLowerBound: 0
     upperBound: 0
     lowerBound: 0
   health:
     baseValue: 0
+    improvementValue: 0
+    isThatValuePercentage: 0
     useUpperBound: 0
     useLowerBound: 0
     upperBound: 0

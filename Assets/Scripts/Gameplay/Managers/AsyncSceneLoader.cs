@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Events;
 using TMPro;
@@ -12,11 +13,17 @@ namespace Gameplay.Managers
         public GameObject loadingScreen;
         public Slider slider;
         public TextMeshProUGUI text;
-        
+
+        private void Start()
+        {
+            EventManager.EmitEvent(EventStrings.SceneLoaded);
+        }
+
         public void LoadScene(string sceneName)
         {
             if (loadingScreen) { loadingScreen.SetActive(true); }
             
+            EventManager.EmitEvent(EventStrings.SceneChanged);
             StartCoroutine(LoadAsyncScene(sceneName));
         }
 

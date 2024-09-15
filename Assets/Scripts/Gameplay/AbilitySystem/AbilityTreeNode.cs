@@ -15,9 +15,9 @@ namespace Gameplay.AbilitySystem
         public GameObject lockBg;
         public GameObject lockImage;
 
-        public bool IsUnlocked { get; private set; }
-        public bool IsBought { get; private set; }
-        public bool IsEquipped { get; private set; }
+        public bool IsUnlocked { get; set; }
+        public bool IsBought { get; set; }
+        public bool IsEquipped { get; set; }
 
         private void Start()
         {
@@ -41,6 +41,8 @@ namespace Gameplay.AbilitySystem
 
             IsUnlocked = true;
             lockImage.SetActive(false);
+
+            if (IsBought) { lockBg.SetActive(false); }
         }
 
         public void EquipAbility()

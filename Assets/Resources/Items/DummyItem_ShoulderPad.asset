@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec20a1f968fad5b488d01008c5309b27, type: 3}
-  m_Name: StandardArrow
+  m_Name: DummyItem_ShoulderPad
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 8c9dc47e0f9959c4eb5ed7b4562d3e5e, type: 3}
-  id: standard_arrow
-  title: Standard Arrow
+  icon: {fileID: 21300000, guid: 004f51d0f7ae14345b961eab8d2b8bf4, type: 3}
+  id: dummy
+  title: 
   description: 
-  cost:
-    amount: 0
-    coinType: 0
-  itemType: 7
-  itemRarity: 0
-  clothIndex: 0
-  modifiers: []
+  itemType: 3
+  itemRarity: 5
+  clothIndex: -1
+  modifiers:
+  - Value: 0
+    Type: 0
+    TargetStat: 0
+    Order: 0

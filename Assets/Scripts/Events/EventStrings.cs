@@ -14,5 +14,7 @@ namespace Events
         public static readonly string CurrencyUpdated = "CurrencyUpdated";
         public static readonly string RecipeClicked = "RecipeClicked";
         public static readonly string LevelUpgraded = "LevelUpgraded";
+        public static readonly string SceneLoaded = "SceneLoaded";
+        public static readonly string SceneChanged = "SceneChanged";
     }
 }

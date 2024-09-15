@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using DataPersistance;
+using DataPersistance.Data;
 using Events;
 using Gameplay.InventorySystem;
 using NaughtyAttributes;
@@ -10,7 +13,7 @@ using UnityEngine.UI;
 
 namespace Gameplay.AbilitySystem
 {
-    public class AbilityTree : MonoBehaviour
+    public class AbilityTree : MonoBehaviour, IDataPersistence
     {
         public AbilityTreeNode[] nodes;
         public Image[] equipSlots;
@@ -26,13 +29,13 @@ namespace Gameplay.AbilitySystem
         public GameObject buyButton;
 
         private AbilityTreeNode _lastSender;
-        private List<AbilityBase> _equippedAbilities;
+        private List<AbilityBase> _equippedAbilities = new(3) { null, null, null };
 
         private void Start()
         {
             EventManager.StartListening(EventStrings.AbilityNodeClicked, OnAbilityNodeClicked);
 
-            _equippedAbilities = new List<AbilityBase>(3) { null, null, null };
+            //_equippedAbilities = new List<AbilityBase>(3) { null, null, null };
         }
 
         private void OnDestroy()
@@ -144,6 +147,45 @@ namespace Gameplay.AbilitySystem
         public void ClosePopup()
         {
             popupPanel.SetActive(false);
+        }
+
+        public bool IsLoaded { get; set; }
+
+        public void LoadData(GameData data)
+        {
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                var nodeData = data.abilityData.abilityTreeInfo[i];
+                nodes[i].IsBought = nodeData.isBought;
+                nodes[i].IsUnlocked = nodeData.isUnlocked;
+                nodes[i].IsEquipped = nodeData.isEquipped;
+            }
+            
+            for (var i = 0; i < data.abilityData.equippedSkills.Count; i++)
+            {
+                var skillName = data.abilityData.equippedSkills[i];
+                var path = $"Abilities/Player/{skillName}";
+                var skill = Resources.Load<AbilityBase>(path);
+
+                _equippedAbilities[i] = skill;
+            }
+            
+            UpdateNodeUI();
+            UpdateEquippedSlotsUI();
+        }
+
+        public void SaveData(GameData data)
+        {
+            var equippedSkills = _equippedAbilities
+                .Where(ability => ability != null)
+                .Select(ability => ability.name).ToList();
+
+            var abilityNodes = nodes.Select(
+                node => new AbilityTreeNodeInfo(node.IsUnlocked, node.IsBought, node.IsEquipped)
+            ).ToList();
+            
+            data.abilityData.equippedSkills = equippedSkills;
+            data.abilityData.abilityTreeInfo = abilityNodes;
         }
     }
 }

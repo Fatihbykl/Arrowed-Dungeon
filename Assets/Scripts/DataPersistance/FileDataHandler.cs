@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using DataPersistance.Data;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace DataPersistance
 {
@@ -45,7 +46,8 @@ namespace DataPersistance
                     }
 
                     // deserialize the data from Json back into the C# object
-                    loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
+                    //loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
+                    loadedData = JsonConvert.DeserializeObject<GameData>(dataToLoad);
                 }
                 catch (Exception e)
                 {
@@ -65,8 +67,7 @@ namespace DataPersistance
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
                 // serialize the C# game data object into Json
-                string dataToStore = JsonUtility.ToJson(data, true);
-
+                string dataToStore = JsonConvert.SerializeObject(data, Formatting.Indented);
                 // optionally encrypt the data
                 if (useEncryption)
                 {

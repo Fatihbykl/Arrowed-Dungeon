@@ -56,7 +56,6 @@ namespace Gameplay.Managers
             UpdateVariables();
 
             EventManager.EmitEvent(EventStrings.LevelUpgraded);
-            Debug.Log("Level Upgraded");
         }
 
         void UpdateVariables()

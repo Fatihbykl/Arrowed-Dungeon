@@ -1,4 +1,6 @@
 using System;
+using DataPersistance;
+using DataPersistance.Data;
 using Events;
 using TMPro;
 using UnityEngine;
@@ -9,7 +11,7 @@ namespace Gameplay.Player
     [Serializable]
     public struct Cost { public int amount; public CoinType coinType; }
     
-    public class Coin : MonoBehaviour
+    public class Coin : MonoBehaviour, IDataPersistence
     {
         public int Gold { get; private set; }
         public int Gem { get; private set; }
@@ -84,6 +86,20 @@ namespace Gameplay.Player
             EventManager.EmitEvent(EventStrings.CurrencyUpdated);
             
             return true;
+        }
+
+        public bool IsLoaded { get; set; }
+
+        public void LoadData(GameData data)
+        {
+            Gold = data.coinData.gold;
+            Gem = data.coinData.gem;
+        }
+
+        public void SaveData(GameData data)
+        {
+            data.coinData.gold = Gold;
+            data.coinData.gem = Gem;
         }
     }
 }
