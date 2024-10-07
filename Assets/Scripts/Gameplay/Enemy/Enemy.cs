@@ -10,7 +10,6 @@ using UnityEngine;
 using UnityHFSM;
 using NaughtyAttributes;
 using DG.Tweening;
-using FSM;
 using Gameplay.AbilitySystem;
 using Gameplay.DamageDealers;
 using Gameplay.Managers;
@@ -19,7 +18,6 @@ using Gameplay.Movement.Controllers;
 using Gameplay.StatSystem;
 using UI.Dynamic_Floating_Text.Scripts;
 using UI.MicroBar;
-using Random = UnityEngine.Random;
 
 namespace Gameplay.Enemy
 {
@@ -51,7 +49,7 @@ namespace Gameplay.Enemy
         [HorizontalLine(color: EColor.White, height: 1f)]
         [Space(5)]
         public AbilityBase[] abilities;
-        public Transform[] waypoints;
+        public GameObject waypointObject;
         public bool isRanged;
         [ShowIf("isRanged")]
         public GameObject projectileSpawnPosition;
@@ -90,7 +88,6 @@ namespace Gameplay.Enemy
         [HideInInspector] public int currentWaypoint;
         [HideInInspector] public bool playerDetected;
         [HideInInspector] public bool castingAbility;
-        [HideInInspector] public bool letAIManagerSetDestination;
         [HideInInspector] public bool isInStatusEffect;
         [HideInInspector] public LayerMask playerMask;
 
@@ -112,7 +109,6 @@ namespace Gameplay.Enemy
             playerDetected = false;
             waypointReached = false;
             canMoveNextWaypoint = true;
-            letAIManagerSetDestination = false;
             currentWaypoint = 0;
             
             // event
@@ -271,6 +267,11 @@ namespace Gameplay.Enemy
         private void OnHealthChanged()
         {
             hpBar.UpdateHealthBar(enemyStats.health.Value);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position, sphereRadius);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace UI
     [Serializable]
     public struct HintTarget
     {
+        public string hintId;
         public TargetPositionType targetPositionType;
         public GameObject targetObject;
         [TextArea]
@@ -27,28 +29,22 @@ namespace UI
         public TextMeshProUGUI hintPopupText;
         public HintTarget[] hints;
 
-        private int _nextHintIndex;
+        public static HintManager Instance { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
-            TestHint();
+            if (Instance != null)
+            {
+                Debug.LogError("Found more than one Hint Manager in the scene.");
+                Destroy(this);
+                return;
+            }
+            Instance = this;
         }
-
-        private async void TestHint()
+        
+        public void OpenHint(string id)
         {
-            await UniTask.WaitForSeconds(2);
-            OpenHint();
-            // await UniTask.WaitForSeconds(5);
-            // CloseHint();
-            // await UniTask.WaitForSeconds(2);
-            // OpenHint();
-            // await UniTask.WaitForSeconds(5);
-            // CloseHint();
-        }
-
-        public void OpenHint()
-        {
-            var hint = hints[_nextHintIndex];
+            var hint = hints.FirstOrDefault(h => h.hintId == id);
             var position = GetPositionOfTarget(hint);
             var popupPosition = GetPositionOfPopup(position);
             
@@ -63,7 +59,6 @@ namespace UI
         {
             Time.timeScale = 1;
             hintUI.SetActive(false);
-            _nextHintIndex++;
         }
 
         private Vector3 GetPositionOfTarget(HintTarget target)
@@ -80,7 +75,7 @@ namespace UI
 
         private Vector2 GetPositionOfPopup(Vector3 targetPos)
         {
-            Vector3 pos = new Vector3(0,100,0);
+            Vector3 pos = new Vector3(0,-100,0);
             var boundX = 960;
 
             if (targetPos.x > boundX) { pos.x = -450; }

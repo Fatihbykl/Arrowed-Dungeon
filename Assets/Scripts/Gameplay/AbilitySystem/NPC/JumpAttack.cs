@@ -49,7 +49,6 @@ namespace Gameplay.AbilitySystem.NPC
             
             _enemy.castingAbility = true;
             _enemy.agentController.speed = 1f;
-            _enemy.letAIManagerSetDestination = false;
             _enemy.animator.SetTrigger(AnimationParameters.JumpAttack);
         }
 
@@ -95,7 +94,6 @@ namespace Gameplay.AbilitySystem.NPC
         public override void BeginCooldown()
         {
             _enemy.castingAbility = false;
-            _enemy.letAIManagerSetDestination = true;
             _enemy.agentController.speed = _enemy.enemyStats.chaseSpeed.Value;
         }
 

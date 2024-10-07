@@ -1443,7 +1443,6 @@ Transform:
   m_Children:
   - {fileID: 6875280673609804962}
   - {fileID: 6794847819620598791}
-  - {fileID: 8076179924948665347}
   m_Father: {fileID: 568190079826255724}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7452446900354496524
@@ -1556,7 +1555,12 @@ MonoBehaviour:
     - prefab: {fileID: 4543749832274054588, guid: f125eefc0d9f78b43bbe6190f0d64690,
         type: 3}
       weight: 2
-      count: 7
+      count: 1
+  - lootsWithWeight:
+    - prefab: {fileID: 6293336248504998634, guid: 5cc19f03d542beb4a844895b13491ea8,
+        type: 3}
+      weight: 2
+      count: 1
   spawnPosition: {fileID: 7829454871905791174}
   delayAfterEveryItem: 0.1
 --- !u!114 &3956406963686125219
@@ -1573,46 +1577,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStats:
     damage:
-      baseValue: 10
+      baseValue: 5
+      improvementValue: 0
+      isThatValuePercentage: 0
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     maxHealth:
-      baseValue: 100
+      baseValue: 50
+      improvementValue: 0
+      isThatValuePercentage: 0
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     health:
       baseValue: 0
+      improvementValue: 0
+      isThatValuePercentage: 0
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     armor:
-      baseValue: 20
+      baseValue: 2
+      improvementValue: 0
+      isThatValuePercentage: 0
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
     chaseSpeed:
-      baseValue: 2
+      baseValue: 3
+      improvementValue: 0
+      isThatValuePercentage: 0
       useUpperBound: 0
       useLowerBound: 0
       upperBound: 0
       lowerBound: 0
   abilities:
   - {fileID: 11400000, guid: 341fa1a89f3e68e44a43aafbf5d12d8b, type: 2}
-  waypoints:
-  - {fileID: 0}
+  waypointObject: {fileID: 0}
   isRanged: 0
   projectileSpawnPosition: {fileID: 0}
   healVFXPrefab: {fileID: 2486035236481326651, guid: 3143db565f4a5fc41ad870af2284fb53,
     type: 3}
   hpBar: {fileID: 801916337073198525}
-  sphereRadius: 3
-  waypointWaitTime: 2
+  sphereRadius: 8
+  waypointWaitTime: 3
   patrolSpeed: 1.5
   stoppingDistance: 1.5
   blinkIntensity: 5
@@ -1643,7 +1656,6 @@ MonoBehaviour:
   currentWaypoint: 0
   playerDetected: 0
   castingAbility: 0
-  letAIManagerSetDestination: 0
   isInStatusEffect: 0
   playerMask:
     serializedVersion: 2
@@ -1680,7 +1692,7 @@ MonoBehaviour:
   _maxMidAirJumps: 1
   _useRootMotion: 0
   _rootMotionRotation: 0
-  _autoBraking: 1
+  _autoBraking: 0
   _brakingDistance: 2
   _stoppingDistance: 1
   groundMask:
@@ -1722,7 +1734,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8192
   _groundLimit: 60
   _stepOffset: 0.4
   _ledgeOffset: 0
@@ -2127,78 +2139,4 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
     type: 3}
   m_PrefabInstance: {fileID: 1904544158825054988}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &3517721354165082453
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 638053782576925723}
-    m_Modifications:
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6307130897221162520, guid: 5153303409ac49c469bc131d64a2f672,
-        type: 3}
-      propertyPath: m_Name
-      value: CoinSplash
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5153303409ac49c469bc131d64a2f672, type: 3}
---- !u!4 &8076179924948665347 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4667187394634849622, guid: 5153303409ac49c469bc131d64a2f672,
-    type: 3}
-  m_PrefabInstance: {fileID: 3517721354165082453}
   m_PrefabAsset: {fileID: 0}

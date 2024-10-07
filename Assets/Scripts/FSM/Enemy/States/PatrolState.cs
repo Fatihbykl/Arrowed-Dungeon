@@ -17,7 +17,7 @@ namespace FSM.Enemy.States
             _enemy.waypointReached = false;
             _enemy.agentController.agent.isStopped = false;
             _enemy.agentController.speed = _enemy.patrolSpeed;
-            _enemy.agentController.agent.SetDestination(_enemy.waypoints[_enemy.currentWaypoint].position);
+            _enemy.agentController.agent.SetDestination(_enemy.waypointObject.transform.GetChild(_enemy.currentWaypoint).position);
         }
 
         public override void OnLogic()
@@ -33,7 +33,7 @@ namespace FSM.Enemy.States
 
         private void NextWaypoint()
         {
-            _enemy.currentWaypoint = (_enemy.currentWaypoint + 1) % _enemy.waypoints.Length;
+            _enemy.currentWaypoint = (_enemy.currentWaypoint + 1) % _enemy.waypointObject.transform.childCount;
         }
 
         public override void OnExit()

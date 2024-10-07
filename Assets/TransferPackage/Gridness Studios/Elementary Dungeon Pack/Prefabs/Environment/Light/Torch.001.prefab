@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4017966000716739786}
   - component: {fileID: 5415792567544169245}
   - component: {fileID: 5830543014562206761}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: Torch.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7718735139592785643}
   - component: {fileID: 8864456433353350953}
   - component: {fileID: 2076336196805431842}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 6972883539705096264}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: -0.006, y: 0.474, z: 0.546}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -130,8 +130,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.9137255, g: 0.6862745, b: 0.4862745, a: 1}
-  m_Intensity: 15
-  m_Range: 10
+  m_Intensity: 2
+  m_Range: 3
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -169,13 +169,13 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: -2.523566e-26, z: 7.82e-43, w: 8e-44}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -219,7 +219,7 @@ PrefabInstance:
     - target: {fileID: 5866797894309309924, guid: bab6f8b1a78b9074f882429a36d26da3,
         type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5866797894309309924, guid: bab6f8b1a78b9074f882429a36d26da3,
         type: 3}

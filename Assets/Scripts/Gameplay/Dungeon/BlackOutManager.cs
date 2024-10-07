@@ -26,6 +26,14 @@ namespace Gameplay.Dungeon
 
         private void Start()
         {
+            for (int i = 0; i < rooms.Length; i++)
+            {
+                foreach (var blackout in rooms[i].outsideBlackouts)
+                {
+                    FadeBlackouts(blackout.GetComponent<MeshRenderer>(), _transparentColor);
+                }
+            }
+            
             EnterRoom(startingRoomIndex);
         }
 
@@ -35,7 +43,7 @@ namespace Gameplay.Dungeon
             
             _currentRoom = roomIndex;
             var room = rooms[roomIndex];
-            
+
             FadeBlackouts(room.insideBlackout.GetComponent<MeshRenderer>(), _transparentColor);
             foreach (var blackout in room.outsideBlackouts)
             {
@@ -49,7 +57,7 @@ namespace Gameplay.Dungeon
 
             _currentRoom = -1;
             var room = rooms[roomIndex];
-            
+
             FadeBlackouts(room.insideBlackout.GetComponent<MeshRenderer>(), _blackColor);
             foreach (var blackout in room.outsideBlackouts)
             {
@@ -57,7 +65,7 @@ namespace Gameplay.Dungeon
             }
         }
 
-        private async void FadeBlackouts(MeshRenderer meshRenderer, Color color, float duration = 0.5f)
+        private async void FadeBlackouts(MeshRenderer meshRenderer, Color color, float duration = 0.1f)
         {
             meshRenderer.material = color == _transparentColor ? transparentMaterial : transparentMaterialNoColor;
             
