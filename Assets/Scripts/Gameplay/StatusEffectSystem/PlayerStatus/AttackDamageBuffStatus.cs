@@ -26,7 +26,7 @@ namespace Gameplay.StatusEffectSystem.PlayerStatus
         private async void BuffPlayer()
         {
             _attackDamageModifier = new StatModifier(attackDamagePercentage, StatModType.PercentAdd);
-            _playerStats.attackCooldown.AddModifier(_attackDamageModifier);
+            _playerStats.damage.AddModifier(_attackDamageModifier);
 
             await UniTask.WaitForSeconds(duration);
             RemoveStatus();
@@ -34,7 +34,7 @@ namespace Gameplay.StatusEffectSystem.PlayerStatus
 
         public override void RemoveStatus()
         {
-            _playerStats.attackCooldown.RemoveModifier(_attackDamageModifier);
+            _playerStats.damage.RemoveModifier(_attackDamageModifier);
         }
     }
 }

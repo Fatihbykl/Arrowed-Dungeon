@@ -31,7 +31,7 @@ namespace Gameplay.AbilitySystem.Player
         public override void Activate(GameObject target, Vector3 position)
         {
             _player.castingAbility = true;
-            _player.transform.DOLookAt(position, .25f);
+            //_player.transform.DOLookAt(position, .25f);
             _player.animator.SetTrigger(AnimationParameters.SkyShot);
             _circleScale = damageRadius / 4.5f;
             

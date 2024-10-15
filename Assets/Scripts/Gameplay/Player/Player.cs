@@ -59,7 +59,7 @@ namespace Gameplay.Player
             _fov = GetComponent<FieldOfView>();
 
             _playerStats.InitHealth();
-            //hpBar.Initialize(_playerStats.health.BaseValue);
+            hpBar.Initialize(_playerStats.health.BaseValue);
             PrepareAbilities();
         }
 
@@ -73,6 +73,9 @@ namespace Gameplay.Player
             {
                 Attack();
             }
+            
+            hpBar.transform.position =
+                new Vector3(transform.position.x - 0.5f, hpBar.transform.position.y, transform.position.z);
         }
 
         public void TakeDamage(int damage)
@@ -91,7 +94,7 @@ namespace Gameplay.Player
             
             if (_playerStats.health.Value <= 0) { Die(); }
 
-            //hpBar.UpdateHealthBar(_playerStats.health.Value);
+            hpBar.UpdateHealthBar(_playerStats.health.Value);
         }
         
         private void CreateFloatingText(string damage, DynamicTextData data)

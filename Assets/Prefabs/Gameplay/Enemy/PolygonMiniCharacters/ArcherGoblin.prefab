@@ -256,8 +256,7 @@ MonoBehaviour:
       lowerBound: 0
   abilities:
   - {fileID: 11400000, guid: ba096f1d7eb67264b98be622efa6c73c, type: 2}
-  waypoints:
-  - {fileID: 0}
+  waypointObject: {fileID: 0}
   isRanged: 1
   projectileSpawnPosition: {fileID: 4686515799329647579}
   healVFXPrefab: {fileID: 2486035236481326651, guid: 3143db565f4a5fc41ad870af2284fb53,
@@ -295,7 +294,6 @@ MonoBehaviour:
   currentWaypoint: 0
   playerDetected: 0
   castingAbility: 0
-  letAIManagerSetDestination: 0
   isInStatusEffect: 0
   playerMask:
     serializedVersion: 2
@@ -374,7 +372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8192
   _groundLimit: 60
   _stepOffset: 0.4
   _ledgeOffset: 0
@@ -2132,7 +2130,7 @@ PrefabInstance:
     - target: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.798
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
         type: 3}
@@ -2142,27 +2140,27 @@ PrefabInstance:
     - target: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.8660254
       objectReference: {fileID: 0}
     - target: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2827868873617603975, guid: c8450559e89b3b3469da375c5308d0e5,
         type: 3}
@@ -2179,6 +2177,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 9215516540648577841, guid: c8450559e89b3b3469da375c5308d0e5,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.21755074
+      objectReference: {fileID: 0}
+    - target: {fileID: 9215516540648577841, guid: c8450559e89b3b3469da375c5308d0e5,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.21755074
+      objectReference: {fileID: 0}
+    - target: {fileID: 9215516540648577841, guid: c8450559e89b3b3469da375c5308d0e5,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.3660378
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2191,7 +2204,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 5068392315810115360}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d779446027b6f034f9d448761b76a0bd, type: 3}
   m_Name: 

@@ -14,11 +14,12 @@ namespace Gameplay.AbilitySystem.Player
         public override void OnCreate(GameObject owner)
         {
             _player = owner.GetComponent<Gameplay.Player.Player>();
+            castTime = statusEffect.duration;
         }
 
         public override void Activate(GameObject target)
         {
-            _player.castingAbility = true;
+            //_player.castingAbility = true;
             // animation
             statusEffect.ApplyStatus(_player.gameObject);
             _player.visualEffects.transform.GetChild(particleIndex).gameObject.SetActive(true);
@@ -26,7 +27,7 @@ namespace Gameplay.AbilitySystem.Player
 
         public override void BeginCooldown()
         {
-            _player.castingAbility = false;
+            //_player.castingAbility = false;
         }
     }
 }

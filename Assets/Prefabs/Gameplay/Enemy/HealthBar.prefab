@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 22d6ab82cb06ba34bb17f5c4b3dd6fe4, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.043137256, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -195,7 +195,7 @@ Transform:
   m_GameObject: {fileID: 4835216033543204396}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.5, y: 1.798, z: -0}
+  m_LocalPosition: {x: -0.5, y: 2, z: -0}
   m_LocalScale: {x: 1, y: 0.10000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4835216033543204396}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d779446027b6f034f9d448761b76a0bd, type: 3}
   m_Name: 
@@ -222,9 +222,9 @@ MonoBehaviour:
   _uiBackground: {fileID: 0}
   _uiPrimaryBar: {fileID: 0}
   _uiGhostBar: {fileID: 0}
-  _barPrimaryColor: {r: 0, g: 1, b: 0, a: 1}
-  _barGhostHurtColor: {r: 1, g: 0, b: 0, a: 1}
-  _barGhostHealColor: {r: 1, g: 1, b: 1, a: 1}
+  _barPrimaryColor: {r: 1, g: 0.043137256, b: 0, a: 1}
+  _barGhostHurtColor: {r: 0.3660378, g: 0.21755074, b: 0.21755074, a: 1}
+  _barGhostHealColor: {r: 0.554717, g: 0.53213227, b: 0.19990745, a: 1}
   _barAdaptiveColor: {r: 1, g: 0, b: 0, a: 1}
   _barFlashingColor: {r: 1, g: 0, b: 0, a: 1}
   _ghostBarAlpha: 0.6
@@ -331,7 +331,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 1.05, y: 1.25}
+  m_Size: {x: 1.02, y: 1.1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

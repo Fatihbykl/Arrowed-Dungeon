@@ -34,14 +34,16 @@ namespace UI.Joystick.Joysticks
             
             if (skillType == SkillType.Directional)
             {
-                _indicator = Instantiate(directionalIndicator, GameManager.Instance.playerObject.transform, false);
+                //_indicator = Instantiate(directionalIndicator, GameManager.Instance.playerObject.transform, false);
+                _indicator = directionalIndicator;
                 _indicator.transform.localPosition = _indicatorResetPos;
                 _indicator.SetActive(false);
             }
 
             if (skillType == SkillType.Regional)
             {
-                _indicator = Instantiate(regionalIndicator, GameManager.Instance.playerObject.transform);
+                //_indicator = Instantiate(regionalIndicator, GameManager.Instance.playerObject.transform);
+                _indicator = regionalIndicator;
                 _indicator.transform.localPosition = _indicatorResetPos;
                 _indicator.SetActive(false);
             }
@@ -51,16 +53,17 @@ namespace UI.Joystick.Joysticks
         {
             if (!abilityHolder) { return; }
             
-            if (abilityHolder.currentState == AbilityHolder.AbilityState.Cooldown)
+            switch (abilityHolder.currentState)
             {
-                cooldownImage.fillAmount = abilityHolder._cooldownTimer / abilityHolder.ability.cooldown;
-                _cooldownText.text = ((int)abilityHolder._cooldownTimer + 1).ToString();
+                case AbilityHolder.AbilityState.Cooldown:
+                    cooldownImage.fillAmount = abilityHolder._cooldownTimer / abilityHolder.ability.cooldown;
+                    _cooldownText.text = ((int)abilityHolder._cooldownTimer + 1).ToString();
+                    break;
+                case AbilityHolder.AbilityState.Ready:
+                    _cooldownText.text = "";
+                    break;
             }
 
-            if (abilityHolder.currentState == AbilityHolder.AbilityState.Ready)
-            {
-                _cooldownText.text = "";
-            }
             if (!_skillPressed) { return; }
 
             switch (skillType)

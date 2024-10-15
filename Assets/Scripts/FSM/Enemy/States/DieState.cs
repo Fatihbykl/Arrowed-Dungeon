@@ -29,7 +29,6 @@ namespace FSM.Enemy.States
             // deactivate hp bar and collider for prevent further attacks
             _enemy.capsuleCollider.enabled = false;
             _enemy.hpBar.gameObject.SetActive(false);
-            _enemy.GetComponentInChildren<ParticleSystem>().Play();
             
             // play animation
             _enemy.animator.SetTrigger(AnimationParameters.Die);

@@ -16,7 +16,7 @@ namespace Gameplay.Managers
         public GameObject[] skillButtons;
 
         private EventsGroup _eventsGroup = new EventsGroup();
-        private void Start()
+        private void Awake()
         {
             _eventsGroup.Add(EventStrings.GamePaused, OnGamePaused);
             _eventsGroup.Add(EventStrings.GameContinued, OnGameContinued);

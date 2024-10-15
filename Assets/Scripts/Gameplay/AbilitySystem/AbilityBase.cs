@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Gameplay.AbilitySystem
@@ -12,13 +13,15 @@ namespace Gameplay.AbilitySystem
     }
     public abstract class AbilityBase : ScriptableObject, IComparable<AbilityBase>
     {
+        [ShowAssetPreview]
+        public Sprite icon;
         public string title;
+        [TextArea]
         public string description;
         public float cooldown;
         public float castTime;
         public float castRange;
         public SkillType skillType;
-        public Sprite icon;
 
         public virtual void OnCreate(GameObject owner) { }
         public virtual bool IsReady() { return true; }

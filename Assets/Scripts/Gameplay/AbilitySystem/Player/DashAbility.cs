@@ -14,6 +14,7 @@ namespace Gameplay.AbilitySystem.Player
         public float dashDistance;
         public GameObject dashStartParticle;
         public GameObject dashEndParticle;
+        public LayerMask dashObstaclesLayer;
         
         private Gameplay.Player.Player _player;
         private PlayerMovement _playerMovement;
@@ -44,11 +45,13 @@ namespace Gameplay.AbilitySystem.Player
 
             startPos.y = 0.1f;
             destination.y = 0.1f;
-
-            if (Physics.Linecast(startPos, destination, out obstacle))
+            
+            if (Physics.Linecast(startPos, destination, out obstacle, dashObstaclesLayer))
             {
-                destination = startPos + _playerMovement.moveDirection * (obstacle.distance - 0.5f);
+                destination = obstacle.point;
             }
+            
+            Debug.Log(destination);
             
             _dashStartParticle = Instantiate(dashStartParticle, startPos, Quaternion.identity);
             _dashEndParticle = Instantiate(dashEndParticle, destination, Quaternion.identity);
@@ -67,7 +70,7 @@ namespace Gameplay.AbilitySystem.Player
         {
             foreach (var meshRenderer in _meshRenderers)
             {
-                meshRenderer.material.DOColor(new Color(88 / 255f, 184 / 255f, 1f, 1f) * 500f, 2f);
+                meshRenderer.material.DOColor(new Color(88 / 255f, 184 / 255f, 1f, 1f) * 100f, 2f);
                 meshRenderer.material.DOColor(Color.white, 2f);
             }
         }
